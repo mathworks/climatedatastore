@@ -1,5 +1,5 @@
 <deployment-project plugin="plugin.toolbox" plugin-version="1.0">
-  <configuration file="C:\localProjects\climatedatastore\Climate Data Store Toolbox for MATLAB.prj" location="C:\localProjects\climatedatastore" name="Climate Data Store Toolbox for MATLAB" target="target.toolbox" target-name="Package Toolbox">
+  <configuration build-checksum="2963137483" file="C:\localProjects\climatedatastore\Climate Data Store Toolbox for MATLAB.prj" location="C:\localProjects\climatedatastore" name="Climate Data Store Toolbox for MATLAB" target="target.toolbox" target-name="Package Toolbox">
     <param.appname>Climate Data Store Toolbox for MATLAB</param.appname>
     <param.authnamewatermark />
     <param.email />
@@ -7,7 +7,7 @@
     <param.summary>MATLAB(R) Tools to access the Climate Data Store (https://cds.climate.copernicus.eu/)</param.summary>
     <param.description>MATLAB Tools to access the Climate Data Store (https://cds.climate.copernicus.eu/).  It is a wealth of information about the Earth's past, present and future climate. There are hundreds of data sets associated with climate change.</param.description>
     <param.screenshot>${PROJECT_ROOT}\img\copernicus_logo.jpg</param.screenshot>
-    <param.version>1.2.0.23</param.version>
+    <param.version>1.2.0.25</param.version>
     <param.output>${PROJECT_ROOT}\Climate Data Store Toolbox for MATLAB.mltbx</param.output>
     <param.products.name />
     <param.products.id />
@@ -28,11 +28,25 @@ README.md
 SECURITY.md
 CONTRIBUTING.md</param.exclude.filters>
     <param.exclude.pcodedmfiles>true</param.exclude.pcodedmfiles>
-    <param.examples />
+    <param.examples>&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;examples&gt;
+   &lt;exampleCategory name="doc"&gt;
+      &lt;example name="ComparingIceThickness" type="html"&gt;
+         &lt;file type="source"&gt;/doc/html/ComparingIceThickness.html&lt;/file&gt;
+         &lt;file type="main"&gt;/doc/ComparingIceThickness.mlx&lt;/file&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="GettingStarted" type="html"&gt;
+         &lt;file type="source"&gt;/doc/html/GettingStarted.html&lt;/file&gt;
+         &lt;file type="main"&gt;/doc/GettingStarted.mlx&lt;/file&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+   &lt;/exampleCategory&gt;
+&lt;/examples&gt;</param.examples>
     <param.demosxml />
     <param.apps />
     <param.registered.apps />
-    <param.docs />
+    <param.docs>${PROJECT_ROOT}\info.xml</param.docs>
     <param.getting.started.guide>${PROJECT_ROOT}\doc\GettingStarted.mlx</param.getting.started.guide>
     <param.matlabpath.excludes />
     <param.javaclasspath.excludes />
@@ -62,11 +76,9 @@ CONTRIBUTING.md</param.exclude.filters>
       <param.products.version />
       <param.platforms />
       <param.exclude.pcodedmfiles />
-      <param.examples />
       <param.demosxml />
       <param.apps />
       <param.registered.apps />
-      <param.docs />
       <param.matlabpath.excludes />
       <param.javaclasspath.excludes />
       <param.required.addons />
@@ -90,7 +102,9 @@ CONTRIBUTING.md</param.exclude.filters>
     <fileset.rootfiles>
       <file>${PROJECT_ROOT}\climateDataStoreDownload.m</file>
       <file>${PROJECT_ROOT}\CONTRIBUTING.MD</file>
+      <file>${PROJECT_ROOT}\demos.xml</file>
       <file>${PROJECT_ROOT}\doc</file>
+      <file>${PROJECT_ROOT}\info.xml</file>
       <file>${PROJECT_ROOT}\license.txt</file>
       <file>${PROJECT_ROOT}\util</file>
     </fileset.rootfiles>

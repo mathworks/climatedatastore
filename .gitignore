@@ -2,6 +2,5 @@
 .MATLABDriveTag
 *.asv
 *.mltbx
-info.xml
 doc/html/*.html
 **/*.nc
