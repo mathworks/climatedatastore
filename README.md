@@ -120,4 +120,4 @@ The license is available in the License file within this repository
 
 _Note that each data set in the Copernicus Climate Data Store has its own license terms.  You should review the license terms for the data set that you are planning to use to ensure that it can be used in the way that you have planned._
 
-&copy; 2021, The MathWorks, Inc.
+&copy; 2021-2022, The MathWorks, Inc.
