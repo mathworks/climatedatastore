@@ -1,6 +1,6 @@
 # Climate Data Store Toolbox for MATLAB
 
-[![View Climate Data Store Toolbox on File Exchange](https://www.mathworks.com/matlabcentral/images/matlab-file-exchange.svg)](https://www.mathworks.com/matlabcentral/fileexchange/climatedatastore)
+[![View Climate Data Store Toolbox on File Exchange](https://www.mathworks.com/matlabcentral/images/matlab-file-exchange.svg)](https://www.mathworks.com/matlabcentral/fileexchange/104550-climate-data-store-toolbox-for-matlab)
 
 MATLAB&reg; Tools to access [The Climate Data Store](https://cds.climate.copernicus.eu/).  It is a wealth of information about the Earth's past, present and future climate. There are hundreds of data sets associated with climate change. This toolbox allows you to easily access data and download it for analysis in MATLAB.
 
