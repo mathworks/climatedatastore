@@ -54,6 +54,22 @@ classdef longTest < matlab.unittest.TestCase
             verifyEqual(testCase, cdsFuture.State,"completed")
             delete(cdsFuture.OutputArguments{1})
         end
+
+        function parkercoyeTest(testCase)
+            datasetOptions.product_type = 'monthly_averaged_reanalysis';
+            datasetOptions.variable = 'surface_pressure';
+            datasetOptions.format = 'grib';
+            datasetOptions.year = '2021';
+            datasetOptions.month = '01';
+            datasetOptions.time = '00:00';
+            
+            downloadedFilePaths = climateDataStoreDownload('reanalysis-era5-land-monthly-means',datasetOptions);
+            verifyTrue(testCase, exist(downloadedFilePaths,"file") == 2)
+            [~,~,ext] = fileparts(downloadedFilePaths);
+            verifyEqual(testCase, ext,".grib")
+
+            delete(downloadedFilePaths)
+        end
     end
     
 end
