@@ -4,3 +4,6 @@
 *.mltbx
 doc/html/*.html
 **/*.nc
+**/*.csv
+**/*.zip
+**/*.grib

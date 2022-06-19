@@ -15,7 +15,7 @@ Thank you for your interest in contributing to a MathWorks repository!  We encou
 
 ## Guidelines
 
-We don't have best practices for writing MATLAB code, but we do have some recommendations:
+We don't have best practices for writing MATLAB&reg; code, but we do have some recommendations:
 
 * You should not have any warnings or errors in the [code analyzer report](http://www.mathworks.com/help/matlab/matlab_prog/matlab-code-analyzer-report.html)
 * [Loren Shure's blog](https://blogs.mathworks.com/loren) has [great advice on improving your MATLAB code](https://blogs.mathworks.com/loren/category/best-practice/)

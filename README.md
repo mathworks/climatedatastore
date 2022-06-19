@@ -9,14 +9,22 @@ MATLAB&reg; Tools to access [The Climate Data Store](https://cds.climate.coperni
 | Function | Description |
 | ------ | ------ |
 |  `climateDataStoreDownload` | Get data from Copernicus Climate Data Store |
+|  `climateDataStoreDownloadASync` | Queue a request data from Copernicus Climate Data Store and continue working in MATLAB. |
 
 ## Usage
 
    1. See the notes below for information on first time install
-   2. type `help climateDataStoreDownload` for help on using the function
+   2. type `help climateDataStoreDownload` or  `help climateDataStoreDownloadAsync` for help on using the functions
    3. Find your dataset at [Climate Data Store](https://cds.climate.copernicus.eu/#!/home) and click on the "download data" tab.  Make your selections for the subset of data you want.  Click "show API request" at the bottom.
-   4. Use `climateDataStoreDownload` to get the data.  The first parameter is the name of the data set to retrieve, and will be used as the name of the directory to put the downloaded files in.  The second parameter is a MATLAB version of the python structure that selects what subset of the data to download. `climateDataStoreDownload` downloads the files, and returns a list of files that were downloaded.  Typically, these are NetCDF files with an .nu extension, which are read using the [ncinfo](https://www.mathworks.com/help/matlab/ref/ncinfo.html) and [ncread](https://www.mathworks.com/help/matlab/ref/ncread.html) functions.  Note that downloading the files can take some time, depending on how large they are.
+   4. Use `climateDataStoreDownload` to get the data.  The first parameter is the name of the data set to retrieve.  The second parameter is a MATLAB version of the python structure that selects what subset of the data to download. `climateDataStoreDownload` downloads the files, and returns a list of files that were downloaded.    Note that downloading the files can take some time, depending on how large they are. If you have really large files, `climateDataStoreDownloadAsync can be helpful.
+   
+   Typically, files returned are:
 
+   | File Type | Extension | MATLAB Functions |
+   |-----------|-----------|------------------|
+   | NetCDF    | `.nu`       | [`ncinfo`](https://www.mathworks.com/help/matlab/ref/ncinfo.html) , [`ncread`](https://www.mathworks.com/help/matlab/ref/ncread.html) |
+   | GRIB      | `.grib`      | [`ncinfo`](https://www.mathworks.com/help/matlab/ref/ncinfo.html) , [`ncread`](https://www.mathworks.com/help/matlab/ref/ncread.html) |
+   | text      | `.txt` , `.csv` | [`readtable`](https://www.mathworks.com/help/matlab/ref/readtable.html)
 ## First time Install
 
 * Requires MATLAB release R2019a or newer
@@ -33,7 +41,10 @@ This demonstrates a number of MATLAB features, including:
 * [Toolbox Packaging](https://www.mathworks.com/help/matlab/matlab_prog/create-and-share-custom-matlab-toolboxes.html)
 * [MATLAB Projects](https://www.mathworks.com/help/matlab/projects.html)
 * [Argument validation](https://www.mathworks.com/help/matlab/matlab_prog/function-argument-validation-1.html)
-
+* [MATLAB Classes](https://www.mathworks.com/help/matlab/object-oriented-programming.html)
+  * [Static Methods](https://www.mathworks.com/help/matlab/matlab_oop/static-methods.html)
+  * [Property Access Methods](https://www.mathworks.com/help/matlab/matlab_oop/property-access-methods.html)
+  
 ## Example: Getting Started with Copernicus Climate Data Store Toolbox
 
 [The sea ice thickness dataset](https://cds.climate.copernicus.eu/cdsapp#!/dataset/satellite-sea-ice-thickness) provides monthly gridded data of sea ice thickness for the Arctic region based on satellite radar altimetry observations. Sea ice is an important component of our climate system and a sensitive indicator of climate change. Its presence or its retreat has a strong impact on air-sea interactions, the Earth’s energy budget as well as marine ecosystems. It is recognized by the Global Climate Observing System as an Essential Climate Variable. Sea ice thickness is one of the parameters commonly used to characterize sea ice, alongside sea ice concentration, sea ice edge, and sea ice type, also available in the Climate Data Store.
