@@ -9,7 +9,7 @@ MATLAB&reg; Tools to access [The Climate Data Store](https://cds.climate.coperni
 | Function | Description |
 | ------ | ------ |
 |  `climateDataStoreDownload` | Get data from Copernicus Climate Data Store |
-|  `climateDataStoreDownloadASync` | Queue a request data from Copernicus Climate Data Store and continue working in MATLAB. |
+|  `climateDataStoreDownloadAsync` | Queue a request data from Copernicus Climate Data Store and continue working in MATLAB. |
 
 ## Usage
 
@@ -27,10 +27,11 @@ Note that downloading the files can take some time, depending on how large they 
    | NetCDF    | `.nu`       | [`ncinfo`](https://www.mathworks.com/help/matlab/ref/ncinfo.html) , [`ncread`](https://www.mathworks.com/help/matlab/ref/ncread.html) |
    | GRIB      | `.grib`      | [`ncinfo`](https://www.mathworks.com/help/matlab/ref/ncinfo.html) , [`ncread`](https://www.mathworks.com/help/matlab/ref/ncread.html) |
    | text      | `.txt` , `.csv` | [`readtable`](https://www.mathworks.com/help/matlab/ref/readtable.html)
+
 ## First time Install
 
 * Requires MATLAB release R2019a or newer
-* Install the toolbox by doubleclicking on the `climatedatastore.mltbx` file.
+* Install the toolbox by using the Add-on explorer in MATLAB, or by downloading the `climatedatastore.mltbx` file attached to the latest release on GitHub, then doubleclicking on it.
 * This relies on the [CDS Python API](https://github.com/ecmwf/cdsapi) created by the European Centre for Medium-Range Weather Forecasts (ECMWF). You'll need to have python installed.  Get it from the [Python Download page](https://www.python.org/downloads/). See [this MATLAB documentation](https://www.mathworks.com/help/matlab/matlab_external/install-supported-python-implementation.html) for more information.
 * The toolbox will automatically configure python and download and install the CSAPI package (you can manually install using `pip3 install cdsapi`)
 * The toolbox will prompt you the first time for CSAPI credentials.  Visit [How to use the CDS API](https://cds.climate.copernicus.eu/api-how-to) for more info.
