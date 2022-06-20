@@ -103,6 +103,8 @@ classdef climateDataStoreDownloadFuture < handle
                 if e.identifier == "MATLAB:Python:PyException"
                     if contains(string(e.message),"name not found")
                         obj.Error = MException("climateDataStore:NameNotFound","Data Set Name not found");
+                    elseif contains(string(e.message),"not agreed to the required terms and conditions")
+                        obj.Error = MException("climateDataStore:agreeToTC",string(e.message));
                     else
                         obj.Error = e;
                     end
@@ -274,6 +276,8 @@ classdef climateDataStoreDownloadFuture < handle
             error = obj.CdsResult.reply{'error'};
             if contains(string(error{'message'}),"not valid")
                 obj.Error = MException("climateDataStore:InvalidRequest",string(error{'reason'}));
+            elseif contains(string(error{'message'}),"not agreed to the required terms and conditions")
+                obj.Error = MException("climateDataStore:agreeToTC",string(error{'reason'}));
             else
                 obj.Error = MException("climateDataStore:UnknownError",string(error{'reason'}));
             end

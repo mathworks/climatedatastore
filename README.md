@@ -4,14 +4,30 @@
 
 MATLAB&reg; Tools to access [The Climate Data Store](https://cds.climate.copernicus.eu/).  It is a wealth of information about the Earth's past, present and future climate. There are hundreds of data sets associated with climate change. This toolbox allows you to easily access data and download it for analysis in MATLAB.
 
-## Functions
+More info on using the toolbox [below](#using-the-climate-data-store-toolbox).
+
+## Collaborating on the Climate Data Store Toolbox
+
+* clone the repository.  Open the project
+* we welcome contributions large and small
+* Create issues
+* Fix a documentation or "good first" issue
+* craete a pull request
+* See [CONTRIBUTING.MD](CONTRIBUTING.MD)
+
+
+## Using the Climate Data Store Toolbox
+
+*This is just a quick overview -- install and look at `GettingStarted.mlx` for more information on using the Toolbox.*
+
+### Functions
 
 | Function | Description |
 | ------ | ------ |
 |  `climateDataStoreDownload` | Get data from Copernicus Climate Data Store |
 |  `climateDataStoreDownloadAsync` | Queue a request data from Copernicus Climate Data Store and continue working in MATLAB. |
 
-## Usage
+### Usage
 
    1. See the notes below for information on first time install
    2. type `help climateDataStoreDownload` or  `help climateDataStoreDownloadAsync` for help on using the functions
@@ -28,7 +44,7 @@ Note that downloading the files can take some time, depending on how large they 
    | GRIB      | `.grib`      | [`ncinfo`](https://www.mathworks.com/help/matlab/ref/ncinfo.html) , [`ncread`](https://www.mathworks.com/help/matlab/ref/ncread.html) |
    | text      | `.txt` , `.csv` | [`readtable`](https://www.mathworks.com/help/matlab/ref/readtable.html)
 
-## First time Install
+### First time Install
 
 * Requires MATLAB release R2019a or newer
 * Install the toolbox by using the Add-on explorer in MATLAB, or by downloading the `climatedatastore.mltbx` file attached to the latest release on GitHub, then doubleclicking on it.
@@ -36,7 +52,7 @@ Note that downloading the files can take some time, depending on how large they 
 * The toolbox will automatically configure python and download and install the CSAPI package (you can manually install using `pip3 install cdsapi`)
 * The toolbox will prompt you the first time for CSAPI credentials.  Visit [How to use the CDS API](https://cds.climate.copernicus.eu/api-how-to) for more info.
 
-## MATLAB Features Used
+### MATLAB Features Used
 
 This demonstrates a number of MATLAB features, including:
 
@@ -48,7 +64,7 @@ This demonstrates a number of MATLAB features, including:
   * [Static Methods](https://www.mathworks.com/help/matlab/matlab_oop/static-methods.html)
   * [Property Access Methods](https://www.mathworks.com/help/matlab/matlab_oop/property-access-methods.html)
 
-## Example: Getting Started with Copernicus Climate Data Store Toolbox
+### Example: Getting Started with Copernicus Climate Data Store Toolbox
 
 [The sea ice thickness dataset](https://cds.climate.copernicus.eu/cdsapp#!/dataset/satellite-sea-ice-thickness) provides monthly gridded data of sea ice thickness for the Arctic region based on satellite radar altimetry observations. Sea ice is an important component of our climate system and a sensitive indicator of climate change. Its presence or its retreat has a strong impact on air-sea interactions, the Earth’s energy budget as well as marine ecosystems. It is recognized by the Global Climate Observing System as an Essential Climate Variable. Sea ice thickness is one of the parameters commonly used to characterize sea ice, alongside sea ice concentration, sea ice edge, and sea ice type, also available in the Climate Data Store.
 
@@ -83,7 +99,7 @@ downloadedFilePaths = climateDataStoreDownload(datasetName,datasetOptions);
 2021-11-10 10:38:15,378 INFO Download rate 2.8M/s
 ```
 
-### Read and format ice thickness data from 2011 and 2021
+**Read and format ice thickness data from 2011 and 2021.**
 
 Transform and load the latitude, longitude, and ice thickness.
 
@@ -106,7 +122,7 @@ head(ice2021)
 
 _Generated using Copernicus Climate Change Service information 2021_
 
-### Visually compare March ice thickness in 2011 and 2021
+**Visually compare March ice thickness in 2011 and 2021**
 
 ```matlab:Code
 subplot(1,2,1)

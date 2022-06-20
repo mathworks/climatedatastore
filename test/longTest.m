@@ -72,6 +72,41 @@ classdef longTest < matlab.unittest.TestCase
 
             delete(downloadedFilePaths)
         end
+
+        function glofasTest(testCase)
+            datasetOptions.system_version = 'version_3_1';
+            datasetOptions.hydrological_model = 'lisflood';
+            datasetOptions.product_type = 'control_reforecast';
+            datasetOptions.variable = 'river_discharge_in_the_last_24_hours';
+            datasetOptions.hyear = '2018';
+            datasetOptions.hmont = 'january';
+            datasetOptions.hday = '03';
+            datasetOptions.leadtime_hour = '24';
+            datasetOptions.format = 'grib';
+            datasetOptions.area = ['31', '-91', '29', '-89'];
+
+            downloadedFilePaths = climateDataStoreDownload('cems-glofas-reforecast',datasetOptions);
+            verifyTrue(testCase, exist(downloadedFilePaths,"file") == 2)
+            [~,~,ext] = fileparts(downloadedFilePaths);
+            verifyEqual(testCase, ext,".grib")
+
+            delete(downloadedFilePaths)
+        end
+
+        function cmip6Test(testCase)
+            datasetOptions.temporal_resolution = 'monthly';
+            datasetOptions.experiment = 'ssp5_8_5';
+            datasetOptions.level = 'single_levels';
+            datasetOptions.variable = 'total_runoff';
+            datasetOptions.model = 'ukesmi_0_11';
+
+            downloadedFilePaths = climateDataStoreDownload('cems-glofas-reforecast',datasetOptions);
+            verifyTrue(testCase, exist(downloadedFilePaths,"file") == 2)
+            [~,~,ext] = fileparts(downloadedFilePaths);
+            verifyEqual(testCase, ext,".grib")
+
+            delete(downloadedFilePaths)
+        end
     end
     
 end
