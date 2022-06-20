@@ -205,6 +205,20 @@ classdef climateDataStoreDownloadTest < matlab.unittest.TestCase
             verifyError(testCase,failingFunction,'climateDataStore:needCredentialFile')
         end
 
+        function noTandCTest(testCase)
+            datasetName ="satellite-fire-burned-area";
+            datasetOptions.origin = 'esa_cci';
+            datasetOptions.sensor = 'modis';
+            datasetOptions.variable = 'grid_variables';
+            datasetOptions.version = '5_1_1cds';
+            datasetOptions.year = '2019';
+            datasetOptions.month = '12';
+            datasetOptions.nominal_day = '01';
+
+            failingFunction = @()(climateDataStoreDownload(datasetName, datasetOptions));
+            verifyError(testCase,failingFunction,'climateDataStore:agreeToTC')
+        end
+
         function exampleTest(testCase)
             % Run the examples to make sure they complete
             addpath(fullfile("climatedatastoreToolbox","doc"))
