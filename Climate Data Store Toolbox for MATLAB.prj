@@ -1,13 +1,13 @@
 <deployment-project plugin="plugin.toolbox" plugin-version="1.0">
   <configuration build-checksum="2963137483" file="C:\localProjects\climatedatastore\Climate Data Store Toolbox for MATLAB.prj" location="C:\localProjects\climatedatastore" name="Climate Data Store Toolbox for MATLAB" target="target.toolbox" target-name="Package Toolbox">
     <param.appname>Climate Data Store Toolbox for MATLAB</param.appname>
-    <param.authnamewatermark />
+    <param.authnamewatermark>Rob Purser</param.authnamewatermark>
     <param.email />
     <param.company>MathWorks</param.company>
     <param.summary>MATLAB(R) Tools to access the Climate Data Store (https://cds.climate.copernicus.eu/)</param.summary>
-    <param.description>MATLAB Tools to access the Climate Data Store (https://cds.climate.copernicus.eu/).  It is a wealth of information about the Earth's past, present and future climate. There are hundreds of data sets associated with climate change.</param.description>
-    <param.screenshot>${PROJECT_ROOT}\img\copernicus_logo.jpg</param.screenshot>
-    <param.version>2.0.0.27</param.version>
+    <param.description>MATLAB Tools to access the Climate Data Store (https://cds.climate.copernicus.eu/).  It is a wealth of information about the Earth's past, present and future climate. There are hundreds of data sets associated with climate change.  See the GettingStarted.mlx in the doc directory!</param.description>
+    <param.screenshot>${PROJECT_ROOT}\img\ToolboxPackaging.jpg</param.screenshot>
+    <param.version>2.1.0.29</param.version>
     <param.output>${PROJECT_ROOT}\Climate Data Store Toolbox for MATLAB.mltbx</param.output>
     <param.products.name />
     <param.products.id />
@@ -46,8 +46,8 @@ CONTRIBUTING.md</param.exclude.filters>
     <param.demosxml />
     <param.apps />
     <param.registered.apps />
-    <param.docs>${PROJECT_ROOT}\info.xml</param.docs>
-    <param.getting.started.guide>${PROJECT_ROOT}\doc\GettingStarted.mlx</param.getting.started.guide>
+    <param.docs>${PROJECT_ROOT}\climatedatastoreToolbox\info.xml</param.docs>
+    <param.getting.started.guide>${PROJECT_ROOT}\climatedatastoreToolbox\doc\GettingStarted.mlx</param.getting.started.guide>
     <param.matlabpath.excludes />
     <param.javaclasspath.excludes />
     <param.exported.on.package>true</param.exported.on.package>
@@ -68,7 +68,6 @@ CONTRIBUTING.md</param.exclude.filters>
     <param.additional.sw.mac.url />
     <param.additional.sw.linux.url />
     <unset>
-      <param.authnamewatermark />
       <param.email />
       <param.output />
       <param.products.name />
@@ -97,16 +96,16 @@ CONTRIBUTING.md</param.exclude.filters>
       <param.additional.sw.linux.url />
     </unset>
     <fileset.rootdir>
-      <file>${PROJECT_ROOT}</file>
+      <file>${PROJECT_ROOT}\climatedatastoreToolbox</file>
     </fileset.rootdir>
     <fileset.rootfiles>
-      <file>${PROJECT_ROOT}\climateDataStoreDownload.m</file>
-      <file>${PROJECT_ROOT}\CONTRIBUTING.MD</file>
-      <file>${PROJECT_ROOT}\demos.xml</file>
-      <file>${PROJECT_ROOT}\doc</file>
-      <file>${PROJECT_ROOT}\info.xml</file>
-      <file>${PROJECT_ROOT}\license.txt</file>
-      <file>${PROJECT_ROOT}\util</file>
+      <file>${PROJECT_ROOT}\climatedatastoreToolbox\climateDataStoreDownload.m</file>
+      <file>${PROJECT_ROOT}\climatedatastoreToolbox\climateDataStoreDownloadAsync.m</file>
+      <file>${PROJECT_ROOT}\climatedatastoreToolbox\climateDataStoreDownloadFuture.m</file>
+      <file>${PROJECT_ROOT}\climatedatastoreToolbox\demos.xml</file>
+      <file>${PROJECT_ROOT}\climatedatastoreToolbox\doc</file>
+      <file>${PROJECT_ROOT}\climatedatastoreToolbox\info.xml</file>
+      <file>${PROJECT_ROOT}\climatedatastoreToolbox\util</file>
     </fileset.rootfiles>
     <fileset.depfun.included />
     <fileset.depfun.excluded />

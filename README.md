@@ -61,18 +61,18 @@ datasetName ="satellite-sea-ice-thickness";
 Select the data to download from the dataset (see [this webpage](https://cds.climate.copernicus.eu/cdsapp#!/dataset/satellite-sea-ice-thickness?tab=form) for options). This is a "MATLABized" version of the python structure that is generated in the API request.
 
 ```matlab:Code
-options.version = "1_0";
-options.variable = "all";
-options.satellite = "cryosat_2";
-options.cdr_type = ["cdr","icdr"]; 
-options.year = ["2011","2021"]; 
-options.month = "03";
+datasetOptions.version = "1_0";
+datasetOptions.variable = "all";
+datasetOptions.satellite = "cryosat_2";
+datasetOptions.cdr_type = ["cdr","icdr"]; 
+datasetOptions.year = ["2011","2021"]; 
+datasetOptions.month = "03";
 ```
 
 Download the data from Climate Data Store using **`climateDataStoreDownload`**. It is put in a directory called "satellite-sea-ice-thickness."
 
 ```matlab:Code
-downloadedFilePaths = climateDataStoreDownload('satellite-sea-ice-thickness',options);
+downloadedFilePaths = climateDataStoreDownload(datasetName,datasetOptions);
 ```
 
 ```text:Output
@@ -88,8 +88,8 @@ downloadedFilePaths = climateDataStoreDownload('satellite-sea-ice-thickness',opt
 Transform and load the latitude, longitude, and ice thickness.
 
 ```matlab:Code
-ice2011 = readSatelliteSeaIceThickness("satellite-sea-ice-thickness\ice_thickness_nh_ease2-250_cdr-v1p0_201103.nc");
-ice2021 = readSatelliteSeaIceThickness("satellite-sea-ice-thickness\ice_thickness_nh_ease2-250_icdr-v1p0_202103.nc");
+ice2011 = readSatelliteSeaIceThickness(downloadedFilePaths(1));
+ice2021 = readSatelliteSeaIceThickness(downloadedFilePaths(2));
 head(ice2021)
 ```
 

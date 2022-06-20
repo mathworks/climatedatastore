@@ -1,6 +1,8 @@
 classdef longTest < matlab.unittest.TestCase
     % Tests that can take a long time to run, if CDS is backed up
     
+    % Copyright 2022 The MathWorks, Inc.
+
     methods(TestClassSetup)
         % Shared setup for the entire test class
     end
