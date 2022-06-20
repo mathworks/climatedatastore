@@ -8,12 +8,6 @@ More info on using the toolbox [below](#using-the-climate-data-store-toolbox).
 
 ## Collaborating on the Climate Data Store Toolbox
 
-* clone the repository.  Open the project
-* we welcome contributions large and small
-* Create issues
-* Fix a documentation or "good first" issue
-* craete a pull request
-* See [CONTRIBUTING.MD](CONTRIBUTING.MD)
 
 
 ## Using the Climate Data Store Toolbox
