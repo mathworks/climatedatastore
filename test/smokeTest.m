@@ -1,6 +1,8 @@
 classdef smokeTest < matlab.unittest.TestCase
 % General purpose test that runs quickly to exercise high percentage of toolbox for use in version testing
 
+% Copyright 2022 The MathWorks, Inc.
+
     methods(TestClassSetup)
         % Shared setup for the entire test class
     end

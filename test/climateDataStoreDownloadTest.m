@@ -1,6 +1,9 @@
 classdef climateDataStoreDownloadTest < matlab.unittest.TestCase
 % Basic tests to check majority of functionality.
 
+% Copyright 2022 The MathWorks, Inc.
+
+
     methods(TestClassSetup)
         % Shared setup for the entire test class
     end
@@ -200,6 +203,14 @@ classdef climateDataStoreDownloadTest < matlab.unittest.TestCase
             datasetOptions.month = "03";
             failingFunction = @()(climateDataStoreDownload(datasetName, datasetOptions,DontPromptForCredentials=true));
             verifyError(testCase,failingFunction,'climateDataStore:needCredentialFile')
+        end
+
+        function exampleTest(testCase)
+            % Run the examples to make sure they complete
+            addpath(fullfile("climatedatastoreToolbox","doc"))
+            verifyWarningFree(testCase,str2func("GettingStarted"))
+            verifyWarningFree(testCase,str2func("ComparingIceThickness"))
+            rmpath(fullfile("climatedatastoreToolbox","doc"))
         end
     end
 
