@@ -4,11 +4,26 @@
 
 MATLAB&reg; Tools to access [The Climate Data Store](https://cds.climate.copernicus.eu/).  It is a wealth of information about the Earth's past, present and future climate. There are hundreds of data sets associated with climate change. This toolbox allows you to easily access data and download it for analysis in MATLAB.
 
-More info on using the toolbox [below](#using-the-climate-data-store-toolbox).
+Please report bugs and suggest enhancements by [creating a new issue on GitHub](https://github.com/mathworks/climatedatastore/issues).
+
+More info on installing and using the toolbox [below](#using-the-climate-data-store-toolbox).
 
 ## Collaborating on the Climate Data Store Toolbox
 
+We're always excited to have people make improvements large and small to Climate Data Store Toolbox.  **Contributions do not have to be code!** If you see a way to explain things more clearly or a great example of how to use something, please contribute it (or a link to your content).  Please [create issues](https://github.com/mathworks/climatedatastore/issues) even if you don't code the solution.  We also welcome pull requests to resolve issues that we haven't gotten to yet!  See [CONTRIBUTING.MD](CONTRIBUTING.MD) for more information.
 
+How to get started improving the toolbox:
+
+1. **Clone the repository:**  using MATLAB:
+   1. In MATLAB, switch to the directory where you want the project created.
+   1. Right click in the current folder browser, and choose *Source Control/Manage Files...*
+   1. Set the repository path to `https://github.com/mathworks/climatedatastore.git`, and set Sandbox to the directory you want created.  
+   1. Click (Retrieve).  Files will be cloned locally.
+1. Open the `climatedatastore.prj` -- You're ready to make edits!
+1. When you're done, run the test suite.
+1. Create a pull request.
+
+**Looking for ideas?** Fix a ["good first" issue!](https://github.com/mathworks/climatedatastore/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22)
 
 ## Using the Climate Data Store Toolbox
 
@@ -93,7 +108,7 @@ downloadedFilePaths = climateDataStoreDownload(datasetName,datasetOptions);
 2021-11-10 10:38:15,378 INFO Download rate 2.8M/s
 ```
 
-**Read and format ice thickness data from 2011 and 2021.**
+#### **Read and format ice thickness data from 2011 and 2021.**
 
 Transform and load the latitude, longitude, and ice thickness.
 
@@ -114,9 +129,9 @@ head(ice2021)
 |7|01-Mar-2021|50.9112|147.6573|0.8933|
 |8|01-Mar-2021|50.6540|147.0948|0.1271|
 
-_Generated using Copernicus Climate Change Service information 2021_
+Citation: *Generated using Copernicus Climate Change Service information 2022*
 
-**Visually compare March ice thickness in 2011 and 2021**
+#### **Visually compare March ice thickness in 2011 and 2021**
 
 ```matlab:Code
 subplot(1,2,1)
@@ -136,12 +151,12 @@ f.Position(3) = f.Position(3)*2;
 
 ![figure_0.png](img/icevisualization.png)
 
-_Generated using Copernicus Climate Change Service information 2021_
+Citation: *Generated using Copernicus Climate Change Service information 2022*
 
 ## License
 
 The license is available in the License file within this repository
 
-_Note that each data set in the Copernicus Climate Data Store has its own license terms.  You should review the license terms for the data set that you are planning to use to ensure that it can be used in the way that you have planned._
+Note: *each data set in the Copernicus Climate Data Store has its own license terms.  You should review the license terms for the data set that you are planning to use to ensure that it can be used in the way that you have planned.*
 
 &copy; 2021-2022, The MathWorks, Inc.
