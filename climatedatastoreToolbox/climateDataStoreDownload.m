@@ -50,9 +50,8 @@ function [filePaths, citation] = climateDataStoreDownload(datasetName,datasetOpt
     f.wait(options.Timeout);
     if f.State == "failed"
         throwAsCaller(f.Error)
-    elseif f.State ~= "completed"
-        throwAsCaller(MException("climateDataStore:UnexpectedState","cdsRequestState should be complete, it's %s",f.State))
     end
+    assert(f.State == "completed","climateDataStore:UnexpectedState","cdsRequestState should be complete, it's %s",f.State)
 
     filePaths = f.OutputArguments{1};
     citation = f.OutputArguments{2};

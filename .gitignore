@@ -2,7 +2,8 @@
 .MATLABDriveTag
 *.asv
 *.mltbx
-doc/html/*.html
+climatedatastoreToolbox/doc/html/**
+report/**
 **/*.nc
 **/*.csv
 **/*.zip

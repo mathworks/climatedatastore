@@ -97,7 +97,6 @@ function setupPythonIfNeeded()
             error("setupPythonIfNeeded:cantGetProgramFiles","Cannot retreive location of program files directory.")
         end
         programFilesPath = strtrim(string(programFilesPath));
-        warning("don't know if this is correct")
         pythonDir = fullfile(programFilesPath,"Python");
     end
 
