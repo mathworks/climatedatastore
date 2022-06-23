@@ -4,7 +4,10 @@
 *.mltbx
 climatedatastoreToolbox/doc/html/**
 report/**
+
+# Climate Data Store specific
 **/*.nc
 **/*.csv
 **/*.zip
 **/*.grib
+buildfile.m
