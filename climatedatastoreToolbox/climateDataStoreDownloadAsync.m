@@ -55,6 +55,7 @@ function F = climateDataStoreDownloadAsync(datasetName,datasetOptions,options)
         datasetOptions (1,1) struct
         options.DontExpandZIP (1,1) logical = false;
         options.DontPromptForCredentials (1,1) logical = false;
+        options.UseMocks (1,1) logical = false;
     end
 
     F = climateDataStoreDownloadFuture(datasetName,datasetOptions, options);

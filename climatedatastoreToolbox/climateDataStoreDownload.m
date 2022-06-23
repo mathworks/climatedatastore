@@ -44,6 +44,7 @@ function [filePaths, citation] = climateDataStoreDownload(datasetName,datasetOpt
         options.DontExpandZIP (1,1) logical = false;
         options.DontPromptForCredentials (1,1) logical = false;
         options.Timeout (1,1) double {mustBePositive} = Inf;
+        options.UseMocks (1,1) logical = false;
     end
   
     f = climateDataStoreDownloadFuture(datasetName, datasetOptions,options);

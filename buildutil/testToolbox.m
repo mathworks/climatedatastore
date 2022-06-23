@@ -1,9 +1,9 @@
-function testToolbox(testName, showReports)
+function testToolbox(connectToServer, showReports)
 %RUNTESTWITHCODECOVERAGE Summary of this function goes here
 %   Detailed explanation goes here
 
     arguments
-        testName (1,1) string = ""
+        connectToServer (1,1) logical = false;
         showReports (1,1) logical = false;
     end
     
@@ -15,11 +15,8 @@ function testToolbox(testName, showReports)
             mkdir(outputDirectory)
         end
         import matlab.unittest.plugins.CodeCoveragePlugin
-        if testName == ""
-            suite = testsuite();
-        else
-            suite = testsuite(testName);
-        end
+        P = matlab.unittest.parameters.Parameter.fromData('useMock', struct('value', ~connectToServer));
+        suite = matlab.unittest.TestSuite.fromClass(?climateDataStoreDownloadTest,'ExternalParameters',P);
         runner = testrunner("textoutput");
     
         if showReports

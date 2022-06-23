@@ -76,8 +76,8 @@ classdef climateDataStoreDownloadFuture < handle
             end
 
             % Diagnostics
-            setupPythonIfNeeded();
-            setupCDSAPIIfNeeded(~options.DontPromptForCredentials);
+%             setupPythonIfNeeded();
+%             setupCDSAPIIfNeeded(~options.DontPromptForCredentials);
         
             % Get the name of the calling function
             frames = dbstack(1);
@@ -87,13 +87,16 @@ classdef climateDataStoreDownloadFuture < handle
 
             % Convert the structure from strings to char and cellstr.
             datasetOptions = climateDataStoreDownloadFuture.makeStringsChars(datasetOptions);
+% 
+%             obj.CdsapiClient = py.cdsapi.Client();
+% 
+%             % Don't show the progress information
+%             obj.CdsapiClient.quiet = true;
+%             obj.CdsapiClient.progress = false;
+%             obj.CdsapiClient.wait_until_complete = false;
 
-            obj.CdsapiClient = py.cdsapi.Client();
-
-            % Don't show the progress information
-            obj.CdsapiClient.quiet = true;
-            obj.CdsapiClient.progress = false;
-            obj.CdsapiClient.wait_until_complete = false;
+% This is all one line to get code coverage
+if options.UseMocks,obj.CdsapiClient = cdsapi_ClientMock(options);else,obj.CdsapiClient = cdsapi_Client(options);end
             
             obj.StartDateTime = datetime('now');
             try
@@ -114,8 +117,9 @@ classdef climateDataStoreDownloadFuture < handle
                 obj.StateInternal = "failed";
                 return
             end
-            reply = obj.CdsResult.reply;
-            obj.ID = string(reply{'request_id'});
+%            reply = obj.CdsResult.reply;
+%            obj.ID = string(reply{'request_id'});
+            obj.ID = obj.CdsResult.request_id;
             obj.update();
         end
         
@@ -219,8 +223,9 @@ classdef climateDataStoreDownloadFuture < handle
                 obj.StateInternal = "failed";
                 return
             end
-            reply = obj.CdsResult.reply;
-            obj.StateInternal = string(reply{'state'});
+%             reply = obj.CdsResult.reply;
+%             obj.StateInternal = string(reply{'state'});
+            obj.StateInternal = obj.CdsResult.state;
             if obj.StateInternal == "completed"
                 obj.getResultsIfAvailable();
             elseif obj.StateInternal == "failed"
@@ -233,10 +238,12 @@ classdef climateDataStoreDownloadFuture < handle
                 return
             end
                
-            reply = obj.CdsResult.reply;
-            if reply{'state'} == "completed"
+%             reply = obj.CdsResult.reply;
+%             if reply{'state'} == "completed"
+            if obj.CdsResult.state == "completed"
                 obj.FinishDateTime = datetime('now');
-                [~,filenameOnCDS,extOnCDS] = fileparts(string(reply{'location'}));
+             %   [~,filenameOnCDS,extOnCDS] = fileparts(string(reply{'location'}));
+                [~,filenameOnCDS,extOnCDS] = fileparts(obj.CdsResult.location);
                 filenameOnCDS = filenameOnCDS + extOnCDS;
                 localFilename = obj.InputArguments{1} + "-" + string(obj.FinishDateTime,"yyyyMMddhhmmss");
                 downloadedFileName = string(obj.CdsResult.download(filenameOnCDS));
@@ -273,13 +280,22 @@ classdef climateDataStoreDownloadFuture < handle
             end
                
             obj.FinishDateTime = datetime('now');
-            error = obj.CdsResult.reply{'error'};
-            if contains(string(error{'message'}),"not valid")
-                obj.Error = MException("climateDataStore:InvalidRequest",string(error{'reason'}));
-            elseif contains(string(error{'message'}),"not agreed to the required terms and conditions")
-                obj.Error = MException("climateDataStore:agreeToTC",string(error{'reason'}));
+%             error = obj.CdsResult.reply{'error'};
+%             errormessage = string(error{'message'});
+%             errorreason = string(error{'reason'});
+%             if contains(errormessage ,"not valid")
+%                 obj.Error = MException("climateDataStore:InvalidRequest",errorreason);
+%             elseif contains(errormessage, "not agreed to the required terms and conditions")
+%                 obj.Error = MException("climateDataStore:agreeToTC",errorreason);
+%             else
+%                 obj.Error = MException("climateDataStore:UnknownError",errorreason);
+%             end
+            if contains(obj.CdsResult.errormessage ,"not valid")
+                obj.Error = MException("climateDataStore:InvalidRequest",obj.CdsResult.errorreason);
+            elseif contains(obj.CdsResult.errormessage, "not agreed to the required terms and conditions")
+                obj.Error = MException("climateDataStore:agreeToTC",obj.CdsResult.errorreason);
             else
-                obj.Error = MException("climateDataStore:UnknownError",string(error{'reason'}));
+                obj.Error = MException("climateDataStore:UnknownError",obj.CdsResult.errorreason);
             end
             obj.StateInternal = "failed";
             obj.areResultsUpdated = true;

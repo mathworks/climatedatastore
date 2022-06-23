@@ -18,7 +18,7 @@ function buildToolbox(releaseType)
     disp("code check complete.");
 
     % Run unit tests and capture code coverage
-    testToolbox("climateDataStoreDownloadTest")
+    testToolbox()
     disp("test complete");
 
     % Generate HTML files
