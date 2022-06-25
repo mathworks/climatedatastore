@@ -35,7 +35,7 @@ jobs:
         uses: matlab-actions/run-tests@v1
         with:
           source-folder: climatedatastoreToolbox
-          select-by-tag: Unit
+          select-by-tag: SupportsMock
           test-results-junit: report/test-results.xml
           code-coverage-cobertura: report/coverage.xml
           
