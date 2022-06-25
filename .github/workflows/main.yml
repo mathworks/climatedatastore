@@ -39,9 +39,16 @@ jobs:
           test-results-junit: report/test-results.xml
           code-coverage-cobertura: report/coverage.xml
           
-      # Publish the results
+      # Publish test results
       - name: Publish Test Results
         uses: EnricoMi/publish-unit-test-result-action@v1
         if: always()
         with:
           files: "report/test-results.xml"
+          
+     # Save the contents of the report directory as an artifact
+      - name: Save Report Directory
+        uses: actions/upload-artifact@v3
+        with:
+          name: report
+          path: report
