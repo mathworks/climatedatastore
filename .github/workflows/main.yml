@@ -51,8 +51,8 @@ jobs:
         uses: irongut/CodeCoverageSummary@v1.2.0
         with:
           filename: report/coverage.xml     
-          badge : true
-          format : markdown
+          badge: true
+          format: markdown
           
      # Save the code coverage XML as an artifact
       - name: Save Report Directory
