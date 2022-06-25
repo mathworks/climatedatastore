@@ -1,8 +1,8 @@
 # Climate Data Store Toolbox for MATLAB
 
-[![View Climate Data Store Toolbox on File Exchange](https://www.mathworks.com/matlabcentral/images/matlab-file-exchange.svg)](https://www.mathworks.com/matlabcentral/fileexchange/104550-climate-data-store-toolbox-for-matlab)
+[![View Climate Data Store Toolbox on File Exchange](https://www.mathworks.com/matlabcentral/images/matlab-file-exchange.svg)](https://www.mathworks.com/matlabcentral/fileexchange/104550-climate-data-store-toolbox-for-matlab) ![GitHub top language](https://img.shields.io/github/languages/top/mathworks/climatedatastore)  [![Climate Data CI/CD](https://github.com/mathworks/climatedatastore/actions/workflows/main.yml/badge.svg)](https://github.com/mathworks/climatedatastore/actions/workflows/main.yml) ![GitHub Repo stars](https://img.shields.io/github/stars/mathworks/climatedatastore?style=social)
 
-![GitHub top language](https://img.shields.io/github/languages/top/mathworks/climatedatastore) ![MATLAB Code Coverage](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fmathworks%2Fclimatedatastore%2Fmain%2Frelease%2Fbadge%2Fcode_coverage.json) ![MATLAB Code Issues](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fmathworks%2Fclimatedatastore%2Fmain%2Frelease%2Fbadge%2Fcode_issues.json) ![GitHub issues by-label](https://img.shields.io/github/issues-raw/mathworks/climatedatastore/bug)
+![MATLAB Code Coverage](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fmathworks%2Fclimatedatastore%2Fmain%2Frelease%2Fbadge%2Fcode_coverage.json) ![MATLAB Code Issues](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fmathworks%2Fclimatedatastore%2Fmain%2Frelease%2Fbadge%2Fcode_issues.json) ![GitHub issues by-label](https://img.shields.io/github/issues-raw/mathworks/climatedatastore/bug)
 
 MATLAB&reg; Tools to access [The Climate Data Store](https://cds.climate.copernicus.eu/).  It is a wealth of information about the Earth's past, present and future climate. There are hundreds of data sets associated with climate change. This toolbox allows you to easily access data and download it for analysis in MATLAB.
 
@@ -14,7 +14,7 @@ More info on installing and using the toolbox [below](#using-the-climate-data-st
 
 We're always excited to have people make improvements large and small to Climate Data Store Toolbox.  **Contributions do not have to be code!** If you see a way to explain things more clearly or a great example of how to use something, please contribute it (or a link to your content).  Please [create issues](https://github.com/mathworks/climatedatastore/issues) even if you don't code the solution.  We also welcome pull requests to resolve issues that we haven't gotten to yet!  See [CONTRIBUTING.MD](CONTRIBUTING.MD) for more information.
 
-How to get started improving the toolbox:
+### How to get started improving the toolbox:
 
 1. **Clone the repository:**  using MATLAB:
    1. In MATLAB, switch to the directory where you want the project created.
@@ -26,6 +26,23 @@ How to get started improving the toolbox:
 1. Create a pull request.
 
 **Looking for ideas?** Fix a ["good first" issue!](https://github.com/mathworks/climatedatastore/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22)
+
+### MATLAB Features Used
+
+This demonstrates a number of MATLAB features, including:
+
+* [Calling Python From MATLAB](https://www.mathworks.com/help/matlab/call-python-libraries.html)
+* [Toolbox Packaging](https://www.mathworks.com/help/matlab/matlab_prog/create-and-share-custom-matlab-toolboxes.html)
+* [MATLAB Projects](https://www.mathworks.com/help/matlab/projects.html)
+* [Argument validation](https://www.mathworks.com/help/matlab/matlab_prog/function-argument-validation-1.html)
+* [Unit Tests](https://www.mathworks.com/help/matlab/matlab-unit-test-framework.html)
+  * [Code Coverage (Cobertura)](https://www.mathworks.com/help/matlab/ref/matlab.unittest.plugins.codecoverage.coberturaformat-class.html)
+  * [Mocking Framework](https://www.mathworks.com/help/matlab/mocking-framework.html)
+  * [Parameters in Unit Tests](https://www.mathworks.com/help/matlab/matlab_prog/use-parameters-in-class-based-tests.html)
+* [MATLAB Classes](https://www.mathworks.com/help/matlab/object-oriented-programming.html)
+  * [Static Methods](https://www.mathworks.com/help/matlab/matlab_oop/static-methods.html)
+  * [Property Access Methods](https://www.mathworks.com/help/matlab/matlab_oop/property-access-methods.html)
+* [GitHub Actions](https://github.com/matlab-actions/overview)
 
 ## Using the Climate Data Store Toolbox
 
@@ -62,18 +79,6 @@ Note that downloading the files can take some time, depending on how large they 
 * This relies on the [CDS Python API](https://github.com/ecmwf/cdsapi) created by the European Centre for Medium-Range Weather Forecasts (ECMWF). You'll need to have python installed.  Get it from the [Python Download page](https://www.python.org/downloads/). See [this MATLAB documentation](https://www.mathworks.com/help/matlab/matlab_external/install-supported-python-implementation.html) for more information.
 * The toolbox will automatically configure python and download and install the CSAPI package (you can manually install using `pip3 install cdsapi`)
 * The toolbox will prompt you the first time for CSAPI credentials.  Visit [How to use the CDS API](https://cds.climate.copernicus.eu/api-how-to) for more info.
-
-### MATLAB Features Used
-
-This demonstrates a number of MATLAB features, including:
-
-* [Calling Python From MATLAB](https://www.mathworks.com/help/matlab/call-python-libraries.html)
-* [Toolbox Packaging](https://www.mathworks.com/help/matlab/matlab_prog/create-and-share-custom-matlab-toolboxes.html)
-* [MATLAB Projects](https://www.mathworks.com/help/matlab/projects.html)
-* [Argument validation](https://www.mathworks.com/help/matlab/matlab_prog/function-argument-validation-1.html)
-* [MATLAB Classes](https://www.mathworks.com/help/matlab/object-oriented-programming.html)
-  * [Static Methods](https://www.mathworks.com/help/matlab/matlab_oop/static-methods.html)
-  * [Property Access Methods](https://www.mathworks.com/help/matlab/matlab_oop/property-access-methods.html)
 
 ### Example: Getting Started with Copernicus Climate Data Store Toolbox
 
