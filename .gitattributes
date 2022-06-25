@@ -26,3 +26,8 @@
 *.pdf binary
 *.png binary
 *.xlsx binary
+
+## Specific to climate data store
+*.nc binary
+*.zip binary
+*.grib binary
