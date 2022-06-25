@@ -107,15 +107,5 @@ classdef specializedTest < matlab.unittest.TestCase
 
             delete(downloadedFilePaths)
         end
-
-        function exampleTest(testCase)
-            % Run the examples to make sure they complete
-            addpath(fullfile("climatedatastoreToolbox","doc"))
-            verifyWarningFree(testCase,str2func("GettingStarted"))
-            verifyWarningFree(testCase,str2func("ComparingIceThickness"))
-            rmpath(fullfile("climatedatastoreToolbox","doc"))
-            close(gcf)
-        end
-    end
-    
+    end   
 end

@@ -14,8 +14,8 @@ classdef smokeTest < matlab.unittest.TestCase
         % Setup for each test
     end
 
-    methods(Test)
-        % Test methods
+    methods(Test, TestTags = {'SupportsMock'})
+        % Tests that support mocks
 
         function climateDataStoreDownloadAsyncTest(testCase, useMock)
             datasetName ="satellite-sea-ice-thickness";
@@ -277,6 +277,17 @@ classdef smokeTest < matlab.unittest.TestCase
 
             verifyError(testCase,failingFunction,'climateDataStore:agreeToTC')
 
+        end
+    end
+    methods
+        % These tests don't support mocking
+        function exampleTest(testCase)
+            % Run the examples to make sure they complete
+            addpath(fullfile("climatedatastoreToolbox","doc"))
+            verifyWarningFree(testCase,str2func("GettingStarted"))
+            verifyWarningFree(testCase,str2func("ComparingIceThickness"))
+            rmpath(fullfile("climatedatastoreToolbox","doc"))
+            close(gcf)
         end
     end
 
