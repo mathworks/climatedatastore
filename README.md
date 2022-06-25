@@ -2,7 +2,7 @@
 
 [![View Climate Data Store Toolbox on File Exchange](https://www.mathworks.com/matlabcentral/images/matlab-file-exchange.svg)](https://www.mathworks.com/matlabcentral/fileexchange/104550-climate-data-store-toolbox-for-matlab)
 
-![GitHub top language](https://img.shields.io/github/languages/top/mathworks/climatedatastore) ![MATLAB Code Coverage](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fmathworks%2Fclimatedatastore%2Fmain%2Frelease%2Fbadge%2Fcode_coverage.json) ![MATLAB Code Issues](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fmathworks%2Fclimatedatastore%2Fmain%2Frelease%2Fbadge%2Fcode_issues_.json) ![GitHub issues by-label](https://img.shields.io/github/issues-raw/mathworks/climatedatastore/bug)
+![GitHub top language](https://img.shields.io/github/languages/top/mathworks/climatedatastore) ![MATLAB Code Coverage](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fmathworks%2Fclimatedatastore%2Fmain%2Frelease%2Fbadge%2Fcode_coverage.json) ![MATLAB Code Issues](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fmathworks%2Fclimatedatastore%2Fmain%2Frelease%2Fbadge%2Fcode_issues.json) ![GitHub issues by-label](https://img.shields.io/github/issues-raw/mathworks/climatedatastore/bug)
 
 MATLAB&reg; Tools to access [The Climate Data Store](https://cds.climate.copernicus.eu/).  It is a wealth of information about the Earth's past, present and future climate. There are hundreds of data sets associated with climate change. This toolbox allows you to easily access data and download it for analysis in MATLAB.
 
