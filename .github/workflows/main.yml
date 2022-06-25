@@ -46,6 +46,20 @@ jobs:
         with:
           files: "report/test-results.xml"
           
+      # Publish code coverage results
+      - name: Code Coverage Summary Report
+        uses: irongut/CodeCoverageSummary@v1.2.0
+        with:
+          filename: report/coverage.xml     
+          badge : true
+          format : markdown
+          
+     # Save the code coverage XML as an artifact
+      - name: Save Report Directory
+        uses: actions/upload-artifact@v3
+        with:
+          path: report/coverage.xml
+          
      # Save the contents of the report directory as an artifact
       - name: Save Report Directory
         uses: actions/upload-artifact@v3
