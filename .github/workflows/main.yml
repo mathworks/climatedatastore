@@ -47,12 +47,12 @@ jobs:
           files: "report/test-results.xml"
           
       # Publish code coverage results
-      - name: Code Coverage Summary Report
-        uses: irongut/CodeCoverageSummary@v1.2.0
-        with:
-          filename: report/coverage.xml     
-          badge: true
-          format: markdown
+      #- name: Code Coverage Summary Report
+      #  uses: irongut/CodeCoverageSummary@v1.2.0
+      #  with:
+      #    filename: report/coverage.xml     
+      #    badge: true
+      #    format: markdown
           
      # Save the code coverage XML as an artifact
       - name: Save Report Directory
