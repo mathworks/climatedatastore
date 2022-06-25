@@ -245,6 +245,24 @@ classdef smokeTest < matlab.unittest.TestCase
 
         end
 
+        function noTandCTest(testCase, useMock)
+            datasetName ="satellite-sea-ice-thickness";
+            datasetOptions.version = "1_0";
+            datasetOptions.variable = "all";
+            datasetOptions.satellite = "needtoagree";
+            datasetOptions.cdr_type = ["cdr","icdr"]; 
+            datasetOptions.year = "2021"; 
+            datasetOptions.month = "03";
+
+            failingFunction = @()(climateDataStoreDownload(datasetName, datasetOptions, UseMocks=useMock));
+
+            verifyError(testCase,failingFunction,'climateDataStore:agreeToTC')
+
+        end
+    end
+    methods
+        % These tests don't support mocking
+
         function noCredentials(testCase, useMock)
             %rename the credential file and set up teardown function to restore it
             movefile(fullfile(getUserDirectory,".cdsapirc"),fullfile(getUserDirectory,".cdsapirc_renamed"))
@@ -264,23 +282,6 @@ classdef smokeTest < matlab.unittest.TestCase
 
         end
 
-        function noTandCTest(testCase, useMock)
-            datasetName ="satellite-sea-ice-thickness";
-            datasetOptions.version = "1_0";
-            datasetOptions.variable = "all";
-            datasetOptions.satellite = "needtoagree";
-            datasetOptions.cdr_type = ["cdr","icdr"]; 
-            datasetOptions.year = "2021"; 
-            datasetOptions.month = "03";
-
-            failingFunction = @()(climateDataStoreDownload(datasetName, datasetOptions, UseMocks=useMock));
-
-            verifyError(testCase,failingFunction,'climateDataStore:agreeToTC')
-
-        end
-    end
-    methods
-        % These tests don't support mocking
         function exampleTest(testCase)
             % Run the examples to make sure they complete
             addpath(fullfile("climatedatastoreToolbox","doc"))
