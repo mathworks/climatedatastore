@@ -1,9 +1,9 @@
-classdef climateDataStoreDownloadTest < matlab.unittest.TestCase
+classdef smokeTest < matlab.unittest.TestCase
 % Basic tests to check majority of functionality.
 
 % Copyright 2022 The MathWorks, Inc.
     properties(TestParameter)
-        useMock = struct('value', false);
+        useMock = struct('value', true);
     end
 
     methods(TestClassSetup)
@@ -277,18 +277,6 @@ classdef climateDataStoreDownloadTest < matlab.unittest.TestCase
 
             verifyError(testCase,failingFunction,'climateDataStore:agreeToTC')
 
-        end
-
-        function exampleTest(testCase, useMock)
-            if useMock
-                assumeFail(testCase,"Cannot test examples with Mocks");
-            end
-            % Run the examples to make sure they complete
-            addpath(fullfile("climatedatastoreToolbox","doc"))
-            verifyWarningFree(testCase,str2func("GettingStarted"))
-            verifyWarningFree(testCase,str2func("ComparingIceThickness"))
-            rmpath(fullfile("climatedatastoreToolbox","doc"))
-            close(gcf)
         end
     end
 

@@ -1,4 +1,4 @@
-classdef longTest < matlab.unittest.TestCase
+classdef specializedTest < matlab.unittest.TestCase
     % Tests that can take a long time to run, if CDS is backed up
     
     % Copyright 2022 The MathWorks, Inc.
@@ -106,6 +106,15 @@ classdef longTest < matlab.unittest.TestCase
             verifyEqual(testCase, ext,".grib")
 
             delete(downloadedFilePaths)
+        end
+
+        function exampleTest(testCase)
+            % Run the examples to make sure they complete
+            addpath(fullfile("climatedatastoreToolbox","doc"))
+            verifyWarningFree(testCase,str2func("GettingStarted"))
+            verifyWarningFree(testCase,str2func("ComparingIceThickness"))
+            rmpath(fullfile("climatedatastoreToolbox","doc"))
+            close(gcf)
         end
     end
     

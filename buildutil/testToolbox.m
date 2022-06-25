@@ -16,7 +16,7 @@ function testToolbox(connectToServer, showReports)
         end
         import matlab.unittest.plugins.CodeCoveragePlugin
         P = matlab.unittest.parameters.Parameter.fromData('useMock', struct('value', ~connectToServer));
-        suite = matlab.unittest.TestSuite.fromClass(?climateDataStoreDownloadTest,'ExternalParameters',P);
+        suite = matlab.unittest.TestSuite.fromClass(?smokeTest,'ExternalParameters',P);
         runner = testrunner("textoutput");
     
         if showReports
