@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: Climate Data CI/CD
+name: Climate Data CI
 
 # Controls when the workflow will run
 on:
@@ -15,7 +15,7 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
+  # This workflow contains a single job called "test"
   test:
     name: Test Climate Data Store
     # The type of runner that the job will run on
@@ -40,11 +40,18 @@ jobs:
           code-coverage-cobertura: report/coverage.xml
           
       # Publish test results
-      - name: Publish Test Results
+      - name: Publish Test Results (EnricoMi/publish-unit-test-result-action@v1)
         uses: EnricoMi/publish-unit-test-result-action@v1
         if: always()
         with:
           files: "report/test-results.xml"
+          
+      # Publish test results
+      - name: Publish Test Results (mikepenz/action-junit-report@v3)
+        uses: mikepenz/action-junit-report@v3
+        if: always() # always run even if the previous step fails
+        with:
+          report_paths: "report/test-results.xml"
           
       # Publish code coverage results
       #- name: Code Coverage Summary Report
@@ -53,9 +60,35 @@ jobs:
       #    filename: report/coverage.xml     
       #    badge: true
       #    format: markdown
+
+      - name: Produce the coverage report
+        uses: insightsengineering/coverage-action@v2
+        with:
+          # Path to the Cobertura XML report.
+          path: report/coverage.xml  
+          # Minimum total coverage, if you want to the
+          # workflow to enforce it as a standard.
+          # This has no effect if the `fail` arg is set to `false`.
+          threshold: 85
+          # Fail the workflow if the minimum code coverage
+          # reuqirements are not satisfied.
+          fail: true
+          # Publish the rendered output as a PR comment
+          publish: true
+          # Create a coverage diff report.
+          diff: true
+          # Branch to diff against.
+          # Compare the current coverage to the coverage
+          # determined on this branch.
+          diff-branch: main
+          # This is where the coverage reports for the
+          # `diff-branch` are stored.
+          # Branch is created if it doesn't already exist'.
+          diff-storage: _xml_coverage_reports
           
      # Save the contents of the report directory as an artifact
       - name: Save Report Directory
         uses: actions/upload-artifact@v3
+        if: always()
         with:
           path: report
