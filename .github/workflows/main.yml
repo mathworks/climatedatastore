@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: Climate Data CI/CD
+name: Climate Data CI
 
 # Controls when the workflow will run
 on:
@@ -15,7 +15,7 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
+  # This workflow contains a single job called "test"
   test:
     name: Test Climate Data Store
     # The type of runner that the job will run on
@@ -31,7 +31,7 @@ jobs:
         uses: matlab-actions/setup-matlab@v1
 
       # Runs all tests in the project 
-      - name: Run tests and generate artifacts
+      - name: Run tests
         uses: matlab-actions/run-tests@v1
         with:
           source-folder: climatedatastoreToolbox
@@ -46,9 +46,27 @@ jobs:
         with:
           files: "report/test-results.xml"
           
+      # Publish code coverage results
+      #- name: Code Coverage Summary Report
+      #  uses: irongut/CodeCoverageSummary@v1.2.0
+      #  with:
+      #    filename: report/coverage.xml     
+      #    badge: true
+      #    format: markdown
+
+      - name: Produce the coverage report
+        uses: insightsengineering/coverage-action@v2
+        if: always() # always run even if the previous step fails
+        with:
+          # Path to the Cobertura XML report.
+          path: report/coverage.xml  
+          # Fail the workflow if the minimum code coverage
+          # requirements are not satisfied.
+          fail: false
+          
      # Save the contents of the report directory as an artifact
       - name: Save Report Directory
         uses: actions/upload-artifact@v3
+        if: always()
         with:
-          name: report
           path: report
