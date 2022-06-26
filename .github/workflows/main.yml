@@ -46,13 +46,6 @@ jobs:
         with:
           files: "report/test-results.xml"
           
-      # Publish test results
-      - name: Publish Test Results (mikepenz/action-junit-report@v3)
-        uses: mikepenz/action-junit-report@v3
-        if: always() # always run even if the previous step fails
-        with:
-          report_paths: "report/test-results.xml"
-          
       # Publish code coverage results
       #- name: Code Coverage Summary Report
       #  uses: irongut/CodeCoverageSummary@v1.2.0
@@ -63,6 +56,7 @@ jobs:
 
       - name: Produce the coverage report
         uses: insightsengineering/coverage-action@v2
+        if: always() # always run even if the previous step fails
         with:
           # Path to the Cobertura XML report.
           path: report/coverage.xml  
@@ -72,7 +66,7 @@ jobs:
           threshold: 85
           # Fail the workflow if the minimum code coverage
           # reuqirements are not satisfied.
-          fail: true
+          fail: false
           # Publish the rendered output as a PR comment
           publish: true
           # Create a coverage diff report.
