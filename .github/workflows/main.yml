@@ -31,7 +31,7 @@ jobs:
         uses: matlab-actions/setup-matlab@v1
 
       # Runs all tests in the project 
-      - name: Run tests and generate artifacts
+      - name: Run tests
         uses: matlab-actions/run-tests@v1
         with:
           source-folder: climatedatastoreToolbox
@@ -40,7 +40,7 @@ jobs:
           code-coverage-cobertura: report/coverage.xml
           
       # Publish test results
-      - name: Publish Test Results (EnricoMi/publish-unit-test-result-action@v1)
+      - name: Publish Test Results
         uses: EnricoMi/publish-unit-test-result-action@v1
         if: always()
         with:
@@ -61,10 +61,8 @@ jobs:
           # Path to the Cobertura XML report.
           path: report/coverage.xml  
           # Fail the workflow if the minimum code coverage
-          # reuqirements are not satisfied.
+          # requirements are not satisfied.
           fail: false
-          # Publish the rendered output as a PR comment
-          publish: true
           
      # Save the contents of the report directory as an artifact
       - name: Save Report Directory
