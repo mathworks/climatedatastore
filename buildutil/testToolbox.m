@@ -30,6 +30,8 @@ function testToolbox(connectToServer, htmlReports)
     end
     
     runner = TestRunner.withTextOutput('OutputDetail', Verbosity.Detailed);
+
+    codecoverageFileName = fullfile(outputDirectory,"codecoverage.xml");
     
     if htmlReports
         htmlReport = CoverageReport(outputDirectory,'MainFile',"codecoverage.html");
@@ -37,7 +39,7 @@ function testToolbox(connectToServer, htmlReports)
         runner.addPlugin(p)
     else
         runner.addPlugin(XMLPlugin.producingJUnitFormat('report/test-results.xml'));
-        runner.addPlugin(CodeCoveragePlugin.forFolder({'climatedatastoreToolbox'}, 'IncludingSubfolders', false, 'Producing', CoberturaFormat('report/codecoverage.xml')));
+        runner.addPlugin(CodeCoveragePlugin.forFolder({'climatedatastoreToolbox'}, 'IncludingSubfolders', false, 'Producing', CoberturaFormat(codecoverageFileName)));
     end
     
     results = runner.run(suite);
