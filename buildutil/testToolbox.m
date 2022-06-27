@@ -47,31 +47,25 @@ function testToolbox(connectToServer, htmlReports)
         results.generateHTMLReport(outputDirectory,'MainFile',"testreport.html");
     end
     
-    if ~htmlReports
+    if ~htmlReports && ~verLessThan('matlab','9.9')
         % Generate the JSON files for the shields in the readme.md
+        % Don't bother before R2020b, since readstruct isn't avaliable.
 
-        codecoverageFileName = fullfile(outputDirectory,"codecoverage.xml");
-        if verLessThan('matlab','9.9')
-            % R2020a compatible
-            xmlDOM = parseFile(matlab.io.xml.dom.Parser,codecoverageFileName);
-            codeCoverageRate = str2double(xmlDOM.Children.getAttribute("line-rate"));
-        else
-            % readstruct was introduced in R2020b / version 9.9
-            codecovInfo = readstruct(codecoverageFileName);
-            codeCoverageRate = codecovInfo.line_rateAttribute;
-        end
+        % readstruct was introduced in R2020b / version 9.9
+        codecovInfo = readstruct(codecoverageFileName);
+        codeCoverageRate = codecovInfo.line_rateAttribute;
         
-%         codeCoverageRate = round(codeCoverageRate * 100,1);
-%         if codeCoverageRate > 95
-%             color = "green";
-%         elseif codeCoverageRate > 85
-%             color = "orange";
-%         elseif codeCoverageRate > 75
-%             color = "yellow";
-%         else
-%             color = "red";
-%         end
-        %writeBadgeJSONFile("code coverage",codeCoverageRate + "%", color)
+        codeCoverageRate = round(codeCoverageRate * 100,1);
+        if codeCoverageRate > 95
+            color = "green";
+        elseif codeCoverageRate > 85
+            color = "orange";
+        elseif codeCoverageRate > 75
+            color = "yellow";
+        else
+            color = "red";
+        end
+        writeBadgeJSONFile("code coverage",codeCoverageRate + "%", color)
     end
     
     results.assertSuccess()
