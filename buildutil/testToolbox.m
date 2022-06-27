@@ -42,8 +42,8 @@ function testToolbox(connectToServer, htmlReports)
     
     results = runner.run(suite);
 
-    if ~isMATLABReleaseOlderThan("R2022a")
-        % This report is only available in R2022a and later.
+    if ~verLessThan('matlab','9.8') && ~isMATLABReleaseOlderThan("R2022a")
+        % This report is only available in R2022a and later.  isMATLABReleaseOlderThan wasn't added until MATLAB 2020b / version 9.8 
         results.generateHTMLReport(outputDirectory,'MainFile',"testreport.html");
     end
     
