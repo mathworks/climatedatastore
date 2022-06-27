@@ -70,7 +70,7 @@ classdef climateDataStoreDownloadFuture < handle
     methods
         function obj = climateDataStoreDownloadFuture(datasetName, datasetOptions,options)
             arguments
-                datasetName (1,1) string {mustBeNonzeroLengthText}
+                datasetName (1,1) string
                 datasetOptions (1,1) struct
                 options (1,1) struct;
             end

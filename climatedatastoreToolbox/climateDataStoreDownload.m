@@ -43,7 +43,7 @@ function [filePaths, citation] = climateDataStoreDownload(datasetName,datasetOpt
         datasetOptions (1,1) struct
         options.DontExpandZIP (1,1) logical = false;
         options.DontPromptForCredentials (1,1) logical = false;
-        options.Timeout (1,1) double {mustBePositive} = Inf;
+        options.Timeout (1,1) double = Inf;
         options.UseMocks (1,1) logical = false;
     end
   
