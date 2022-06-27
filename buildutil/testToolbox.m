@@ -42,8 +42,8 @@ function testToolbox(connectToServer, htmlReports)
     
     results = runner.run(suite);
 
-    if verLessThan('matlab','9.8') && ~isMATLABReleaseOlderThan("R2022a")
-        % This report is only available in R2022a and later.  isMATLABReleaseOlderThan wasn't added until MATLAB 2020b / version 9.8 
+    if verLessThan('matlab','9.9') && ~isMATLABReleaseOlderThan("R2022a")
+        % This report is only available in R2022a and later.  isMATLABReleaseOlderThan wasn't added until MATLAB 2020b / version 9.9
         results.generateHTMLReport(outputDirectory,'MainFile',"testreport.html");
     end
     
@@ -51,12 +51,12 @@ function testToolbox(connectToServer, htmlReports)
         % Generate the JSON files for the shields in the readme.md
 
         codecoverageFileName = fullfile(outputDirectory,"codecoverage.xml");
-        if verLessThan('matlab','9.8')
+        if verLessThan('matlab','9.9')
             % R2020a compatible
             xmlDOM = parseFile(matlab.io.xml.dom.Parser,codecoverageFileName);
             codeCoverageRate = str2double(xmlDOM.Children.getAttribute("line-rate"));
         else
-            % readstruct was introduced in R2020b / version 9.8
+            % readstruct was introduced in R2020b / version 9.9
             codecovInfo = readstruct(codecoverageFileName);
             codeCoverageRate = codecovInfo.line_rateAttribute;
         end
