@@ -39,7 +39,7 @@ function [filePaths, citation] = climateDataStoreDownload(datasetName,datasetOpt
 % Copyright 2021-2022 The MathWorks, Inc.
 
     arguments
-        datasetName (1,1) string {mustBeNonzeroLengthText}
+        datasetName (1,1) string
         datasetOptions (1,1) struct
         options.DontExpandZIP (1,1) logical = false;
         options.DontPromptForCredentials (1,1) logical = false;
