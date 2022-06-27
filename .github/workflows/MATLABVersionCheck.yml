@@ -30,12 +30,9 @@ jobs:
 
       # Runs all tests in the project 
       - name: Run tests
-        uses: matlab-actions/run-tests@v1
+        uses: matlab-actions/run-command@v1
         with:
-          source-folder: climatedatastoreToolbox
-          select-by-tag: SupportsMock
-          test-results-junit: report/test-results.xml
-          code-coverage-cobertura: report/coverage.xml
+          command: addpath("buildutil"),testToolbox()      
           
       # Publish test results
       - name: Publish Test Results
@@ -43,3 +40,10 @@ jobs:
         if: always()
         with:
           files: "report/test-results.xml"
+
+     # Save the contents of the report directory as an artifact
+      - name: Save Report Directory
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          path: report
