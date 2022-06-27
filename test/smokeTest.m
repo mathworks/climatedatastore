@@ -3,7 +3,7 @@ classdef smokeTest < matlab.unittest.TestCase
 
 % Copyright 2022 The MathWorks, Inc.
     properties(TestParameter)
-        useMock = struct('value', true);
+        useMock = struct('value', false);
     end
 
     methods(TestClassSetup)
@@ -246,13 +246,14 @@ classdef smokeTest < matlab.unittest.TestCase
         end
 
         function noTandCTest(testCase, useMock)
-            datasetName ="satellite-sea-ice-thickness";
-            datasetOptions.version = "1_0";
-            datasetOptions.variable = "all";
-            datasetOptions.satellite = "needtoagree";
-            datasetOptions.cdr_type = ["cdr","icdr"]; 
-            datasetOptions.year = "2021"; 
-            datasetOptions.month = "03";
+            datasetName ="satellite-fire-burned-area";
+            datasetOptions.origin = 'esa_cci';
+            datasetOptions.sensor = 'modis';
+            datasetOptions.variable = 'grid_variables';
+            datasetOptions.version = '5_1_1cds';
+            datasetOptions.year = '2019';
+            datasetOptions.month = '12';
+            datasetOptions.nominal_day = '01';
 
             failingFunction = @()(climateDataStoreDownload(datasetName, datasetOptions, "UseMocks",useMock));
 

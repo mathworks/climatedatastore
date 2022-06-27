@@ -30,13 +30,13 @@ classdef cdsapi_ResultMock < handle
                     switch datasetOptions.satellite
                         case "invalidsat"
                             obj.replyFailed("not valid","not valid")
-                        case "needtoagree"
-                            error("MATLAB:Python:PyException","not agreed to the required terms and conditions");
                         case "nocredentials"
                             error("climateDataStore:needCredentialFile","You must create a credential file.  Visit https://cds.climate.copernicus.eu/api-how-to for more info.")
                         otherwise
                             obj.replyComplete("satellite-sea-ice-thickness.zip");
                     end
+                case "satellite-fire-burned-area"
+                    error("MATLAB:Python:PyException","not agreed to the required terms and conditions");
                 case "insitu-observations-surface-land"
                     obj.replyComplete("insitu-observations-surface-land.zip");
                 case "cems-glofas-reforecast"
