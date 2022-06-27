@@ -32,7 +32,7 @@ function testToolbox(connectToServer, htmlReports)
     runner = TestRunner.withTextOutput('OutputDetail', Verbosity.Detailed);
     
     if htmlReports
-        htmlReport = CoverageReport(outputDirectory,MainFile = "codecoverage.html");
+        htmlReport = CoverageReport(outputDirectory,'MainFile',"codecoverage.html");
         p = CodeCoveragePlugin.forFolder("climatedatastoreToolbox","Producing",htmlReport);
         runner.addPlugin(p)
     else
@@ -41,7 +41,11 @@ function testToolbox(connectToServer, htmlReports)
     end
     
     results = runner.run(suite);
-    results.generateHTMLReport(outputDirectory,MainFile = "testreport.html");
+
+    if ~isMATLABReleaseOlderThan("R2022a")
+        % This report is only available in R2022a and later.
+        results.generateHTMLReport(outputDirectory,'MainFile',"testreport.html");
+    end
     
     if ~htmlReports
         % Generate the JSON files for the shields in the readme.md
