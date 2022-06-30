@@ -28,23 +28,23 @@ jobs:
         with:
           release: ${{ matrix.MATLABVersion }}
 
-      # Runs all tests in the project 
+      # Runs all tests in the project.  Put results in a version specific subdirectory
       - name: Run tests
         uses: matlab-actions/run-command@v1
         with:
-          command: addpath("buildutil"),testToolbox()      
+          command: addpath("buildutil"),testToolbox('ReportSubdirectory',"${{ matrix.MATLABVersion }}")     
           
       # Publish test results
       - name: Publish Test Results
         uses: EnricoMi/publish-unit-test-result-action@v1
         if: always()
         with:
-          files: "report/test-results.xml"
+          files: "report/${{ matrix.MATLABVersion }}/test-results.xml"
 
-     # Save the contents of the report directory as an artifact
+     # Save the contents of the report directory from each release into a single artifact
       - name: Save Report Directory
         uses: actions/upload-artifact@v3
         if: always()
         with:
-          name: report (${{ matrix.MATLABVersion }})
-          path: report
+          name: report
+          path: report/${{ matrix.MATLABVersion }}
