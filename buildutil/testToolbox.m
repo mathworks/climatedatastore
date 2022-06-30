@@ -39,7 +39,7 @@ function testToolbox(options)
         p = CodeCoveragePlugin.forFolder("climatedatastoreToolbox","Producing",htmlReport);
         runner.addPlugin(p)
     else
-        runner.addPlugin(XMLPlugin.producingJUnitFormat('report/test-results.xml'));
+        runner.addPlugin(XMLPlugin.producingJUnitFormat(fullfile(outputDirectory,'test-results.xml')));
         runner.addPlugin(CodeCoveragePlugin.forFolder({'climatedatastoreToolbox'}, 'IncludingSubfolders', false, 'Producing', CoberturaFormat(codecoverageFileName)));
     end
     
