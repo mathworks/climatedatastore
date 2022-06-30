@@ -1,10 +1,11 @@
-function testToolbox(connectToServer, htmlReports)
+function testToolbox(options)
     %RUNTESTWITHCODECOVERAGE Summary of this function goes here
     %   Detailed explanation goes here
     
     arguments
-        connectToServer (1,1) logical = false;
-        htmlReports (1,1) logical = false;
+        options.ConnectToServer (1,1) logical = false;
+        options.HtmlReports (1,1) logical = false;
+        options.ReportSubdirectory (1,1) string = "";
     end
     
     import matlab.unittest.TestSuite;
@@ -18,14 +19,14 @@ function testToolbox(connectToServer, htmlReports)
     oldpath  = addpath("test",genpath("climatedatastoreToolbox"));
     finalize = onCleanup(@()(path(oldpath)));
 
-    outputDirectory = "report";
+    outputDirectory = fullfile("report",options.ReportSubdirectory);
     if isempty(dir(outputDirectory))
         mkdir(outputDirectory)
     end
     
-    P = matlab.unittest.parameters.Parameter.fromData('useMock', struct('value', ~connectToServer));
+    P = matlab.unittest.parameters.Parameter.fromData('useMock', struct('value', ~options.ConnectToServer));
     suite = TestSuite.fromClass(?smokeTest,'ExternalParameters',P);
-    if ~connectToServer
+    if ~options.ConnectToServer
         suite = suite.selectIf(HasTag('SupportsMock'));
     end
     
@@ -33,7 +34,7 @@ function testToolbox(connectToServer, htmlReports)
 
     codecoverageFileName = fullfile(outputDirectory,"codecoverage.xml");
     
-    if htmlReports
+    if options.HtmlReports
         htmlReport = CoverageReport(outputDirectory,'MainFile',"codecoverage.html");
         p = CodeCoveragePlugin.forFolder("climatedatastoreToolbox","Producing",htmlReport);
         runner.addPlugin(p)
@@ -49,7 +50,7 @@ function testToolbox(connectToServer, htmlReports)
         results.generateHTMLReport(outputDirectory,'MainFile',"testreport.html");
     end
     
-    if ~htmlReports && ~verLessThan('matlab','9.9')
+    if ~options.HtmlReports && ~verLessThan('matlab','9.9')
         % Generate the JSON files for the shields in the readme.md
         % Don't bother before R2020b, since readstruct isn't avaliable.
 
