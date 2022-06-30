@@ -52,6 +52,7 @@ jobs:
       - name: Capture coverage summary
         id: get-codecoverage-markdown
         run: |
+          cat code-coverage-results.md
           body = $(cat code-coverage-results.md)
           body="${body//'%'/'%25'}"
           body="${body//$'\n'/'%0A'}"
@@ -75,4 +76,5 @@ jobs:
         uses: actions/upload-artifact@v3
         if: always()
         with:
+          name: report
           path: report
