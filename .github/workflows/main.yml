@@ -38,13 +38,13 @@ jobs:
           
       # Patch the Cobertura report to change NaNs to zeros
       - name: Fix up Test Results
-        run: sed 's/NaN/0/g' report/coverage.xml > report/coverage_cleaned.xml
+        run: sed 's/NaN/0/g' report/codecoverage.xml > report/codecoverage_cleaned.xml
           
       # Publish code coverage results
       - name: Code Coverage Summary Report
         uses: irongut/CodeCoverageSummary@v1.2.0
         with:
-          filename: report/coverage_cleaned.xml
+          filename: report/codecoverage_cleaned.xml
           badge: true
           format: markdown
           
