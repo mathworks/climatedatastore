@@ -39,6 +39,11 @@ jobs:
           test-results-junit: report/test-results.xml
           code-coverage-cobertura: report/coverage.xml
           
+      # Patch the Cobertura report to change NaNs to zeros
+      - name: Fix up Test Results
+        run: | 
+          sed 's/NaN/0/g' report/coverage.xml > report/coverage.xml
+          
       # Publish test results
       - name: Publish Test Results
         uses: EnricoMi/publish-unit-test-result-action@v1
@@ -47,12 +52,12 @@ jobs:
           files: "report/test-results.xml"
           
       # Publish code coverage results
-      #- name: Code Coverage Summary Report
-      #  uses: irongut/CodeCoverageSummary@v1.2.0
-      #  with:
-      #    filename: report/coverage.xml     
-      #    badge: true
-      #    format: markdown
+      - name: Code Coverage Summary Report
+        uses: irongut/CodeCoverageSummary@v1.2.0
+        with:
+          filename: report/coverage.xml     
+          badge: true
+          format: markdown
 
       - name: Produce the coverage report
         uses: insightsengineering/coverage-action@v2
