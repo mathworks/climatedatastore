@@ -3,7 +3,7 @@ classdef smokeTest < matlab.unittest.TestCase
 
 % Copyright 2022 The MathWorks, Inc.
     properties(TestParameter)
-        useMock = struct('value', false);
+        useMock = struct('value', true);
     end
 
     methods(TestClassSetup)
