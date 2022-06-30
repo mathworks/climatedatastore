@@ -42,7 +42,7 @@ jobs:
       # Patch the Cobertura report to change NaNs to zeros
       - name: Fix up Test Results
         run: | 
-          sed 's/NaN/0/g' report/coverage.xml > report/coverage.xml
+          cat report/coverage.xml;sed 's/NaN/0/g' report/coverage.xml > report/coverage.xml;cat report/coverage.xml
           
       # Publish test results
       - name: Publish Test Results
