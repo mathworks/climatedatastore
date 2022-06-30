@@ -52,7 +52,7 @@ jobs:
       - name: Capture coverage summary
         id: get-codecoverage-markdown
         run: |
-          body = $(cat code-coverage-results.md)
+          body=$(cat code-coverage-results.md)
           echo "::set-output name=body::$body"
 
       - name: Create code coverage comment
