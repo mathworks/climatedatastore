@@ -42,7 +42,17 @@ jobs:
       # Patch the Cobertura report to change NaNs to zeros
       - name: Fix up Test Results
         run: | 
-          cat report/coverage.xml;sed 's/NaN/0/g' report/coverage.xml > report/coverage.xml;cat report/coverage.xml
+          cat report/coverage.xml
+          sed 's/NaN/0/g' report/coverage.xml > report/coverage_cleaned.xml
+          cat report/coverage_cleaned.xml
+          
+      # Publish code coverage results
+      - name: Code Coverage Summary Report
+        uses: irongut/CodeCoverageSummary@v1.2.0
+        with:
+          filename: report/coverage_cleaned.xml
+          badge: true
+          format: markdown
           
       # Publish test results
       - name: Publish Test Results
@@ -50,24 +60,6 @@ jobs:
         if: always()
         with:
           files: "report/test-results.xml"
-          
-      # Publish code coverage results
-      - name: Code Coverage Summary Report
-        uses: irongut/CodeCoverageSummary@v1.2.0
-        with:
-          filename: report/coverage.xml     
-          badge: true
-          format: markdown
-
-      - name: Produce the coverage report
-        uses: insightsengineering/coverage-action@v2
-        if: always() # always run even if the previous step fails
-        with:
-          # Path to the Cobertura XML report.
-          path: report/coverage.xml  
-          # Fail the workflow if the minimum code coverage
-          # requirements are not satisfied.
-          fail: false
           
      # Save the contents of the report directory as an artifact
       - name: Save Report Directory
