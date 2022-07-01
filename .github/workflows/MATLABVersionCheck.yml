@@ -42,6 +42,7 @@ jobs:
           name: report
           path: report
   report:
+    needs: test
     runs-on: ubuntu-latest
     
     steps:
