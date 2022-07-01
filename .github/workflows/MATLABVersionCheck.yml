@@ -52,9 +52,10 @@ jobs:
       - uses: actions/download-artifact@v3
         with:
           name: report
+          path: report
           
-      #- name: Disp directory
-      #  run: ls -R   
+      - name: Disp directory
+        run: ls -R   
           
       # Publish test results from all the releases
       - name: Publish Test Results
@@ -62,4 +63,3 @@ jobs:
         if: always()
         with:
           files: "report/*/test-results.xml"
-          path: report
