@@ -54,9 +54,6 @@ jobs:
           name: report
           path: report
           
-      - name: Disp directory
-        run: ls -R   
-          
       # Publish test results from all the releases
       - name: Publish Test Results
         uses: EnricoMi/publish-unit-test-result-action@v1
