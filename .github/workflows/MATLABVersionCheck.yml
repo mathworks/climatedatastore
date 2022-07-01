@@ -46,14 +46,15 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
+      - uses: actions/checkout@v3
+    
       # Copy all the reports down into the container
       - uses: actions/download-artifact@v3
         with:
           name: report
           
-      - name: Disp directory
-        run: ls -R
-          
+      #- name: Disp directory
+      #  run: ls -R   
           
       # Publish test results from all the releases
       - name: Publish Test Results
@@ -61,3 +62,4 @@ jobs:
         if: always()
         with:
           files: "report/*/test-results.xml"
+          path: report
