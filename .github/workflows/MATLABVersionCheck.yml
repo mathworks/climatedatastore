@@ -9,7 +9,7 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
+  # This workflow contains a matrixed test job run across a bunch of releases of MATLAB, and then a reporting job
   test:
     strategy:
       fail-fast: false
@@ -33,13 +33,6 @@ jobs:
         uses: matlab-actions/run-command@v1
         with:
           command: addpath("buildutil"),testToolbox('ReportSubdirectory',"${{ matrix.MATLABVersion }}")     
-          
-      # Publish test results
-      - name: Publish Test Results
-        uses: EnricoMi/publish-unit-test-result-action@v1
-        if: always()
-        with:
-          files: "report/${{ matrix.MATLABVersion }}/test-results.xml"
 
      # Save the contents of the report directory from each release into a single artifact.  Since each release makes their own directory, they all update the same artifact.
       - name: Save Report Directory
@@ -48,3 +41,18 @@ jobs:
         with:
           name: report
           path: report
+  report:
+    runs-on: ubuntu-latest
+    
+    steps:
+      # Copy all the reports down into the container
+      - uses: actions/download-artifact@v3
+        with:
+          name: report
+          
+      # Publish test results from all the releases
+      - name: Publish Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v1
+        if: always()
+        with:
+          files: "report/**/test-results.xml"
