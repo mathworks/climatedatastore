@@ -56,4 +56,4 @@ jobs:
         uses: EnricoMi/publish-unit-test-result-action@v1
         if: always()
         with:
-          files: "report/**/test-results.xml"
+          files: "report/*/test-results.xml"
