@@ -35,7 +35,11 @@ jobs:
         uses: matlab-actions/run-command@v1
         with:
           command: addpath("buildutil"),testToolbox()     
-          
+
+      - uses: codecov/codecov-action@v3
+        with:
+          files: report/codecoverage.xml
+
       # Patch the Cobertura report to change NaNs to zeros
       - name: Fix up Test Results
         run: sed 's/NaN/0/g' report/codecoverage.xml > report/codecoverage_cleaned.xml
