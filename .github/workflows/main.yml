@@ -36,36 +36,10 @@ jobs:
         with:
           command: addpath("buildutil"),testToolbox()     
 
-      - uses: codecov/codecov-action@v3
+      - name: Upload code coverage report to Codecov (https://app.codecov.io/gh/mathworks/climatedatastore)
+        uses: codecov/codecov-action@v3
         with:
           files: report/codecoverage.xml
-
-      # Patch the Cobertura report to change NaNs to zeros
-      - name: Fix up Test Results
-        run: sed 's/NaN/0/g' report/codecoverage.xml > report/codecoverage_cleaned.xml
-          
-      # Publish code coverage results
-      - name: Code Coverage Summary Report
-        uses: irongut/CodeCoverageSummary@v1.2.0
-        with:
-          filename: report/codecoverage_cleaned.xml
-          badge: true
-          format: markdown
-          output: both
-      
-      - name: Capture coverage summary
-        id: get-codecoverage-markdown
-        run: |
-          body=$(cat code-coverage-results.md)
-          body="${body//'%'/'%25'}"
-          body="${body//$'\n'/'%0A'}"
-          body="${body//$'\r'/'%0D'}" 
-          echo "::set-output name=body::$body"
-
-      - name: Create code coverage comment
-        uses: peter-evans/commit-comment@v2
-        with:
-          body: ${{ steps.get-codecoverage-markdown.outputs.body }}        
           
       # Publish test results
       - name: Publish Test Results
