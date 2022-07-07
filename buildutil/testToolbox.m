@@ -13,6 +13,7 @@ function testToolbox(options)
     import matlab.unittest.Verbosity;
     import matlab.unittest.plugins.CodeCoveragePlugin;
     import matlab.unittest.plugins.XMLPlugin;
+    import matlab.unittest.plugins.codecoverage.CoverageReport;
     import matlab.unittest.plugins.codecoverage.CoberturaFormat;
     import matlab.unittest.selectors.HasTag;
     

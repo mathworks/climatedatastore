@@ -42,6 +42,21 @@ classdef cdsapi_ResultMock < handle
                 case "cems-glofas-reforecast"
                     % for cems-glofas-reforecast, wait 1 second, and then give a .grib file
                     obj.replyQueued("cems-glofas-reforecast.grib",1);
+                case "generate-python-error"
+                    % for generate-python-error, give a python error with an message that's not a known one
+                    error("MATLAB:Python:PyException","some other message");
+                case "generate-error-at-request"
+                    % for generate-error-at-request, give a non-python error
+                    error("MATLAB:UndefinedFunction","Unrecognized function or variable");
+                case "generate-error-type1-after-request"
+                    % for generate-error-after-request, fail after half a second with a non-python error
+                        obj.replyQueued("fail1",.5);
+                case "generate-error-type2-after-request"
+                    % for generate-error-after-request, fail after half a second with a non-python error
+                        obj.replyQueued("fail2",.5);
+                case "external-cancel"
+                    % for external-cancel, Have the object delete itself
+                        obj.replyQueued("cancel",.5);
                 otherwise
                     error("MATLAB:Python:PyException","name not found");
             end
@@ -50,7 +65,16 @@ classdef cdsapi_ResultMock < handle
         
         function update(obj)
             if obj.state == "queued" && datetime("now") > obj.WaitUntil
-                replyComplete(obj,obj.FilenameForDownload);
+                switch obj.FilenameForDownload 
+                    case "fail1"
+                        replyFailed(obj,"climateDataStore:UnknownError","Simulated error after request")
+                    case "fail2"
+                        error("climateDataStore:UnknownError","Simulated error after request")
+                    case "cancel"
+                        error("climateDataStore:notfoundmessage","HTTPError: 404")
+                    otherwise
+                        replyComplete(obj,obj.FilenameForDownload);
+                end
             end
         end
         

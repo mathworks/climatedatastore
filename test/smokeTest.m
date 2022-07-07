@@ -121,7 +121,7 @@ classdef smokeTest < matlab.unittest.TestCase
             datasetOptions.area = ["31","-91","29","-89"];
             
             cdsFuture = climateDataStoreDownloadAsync(datasetName, datasetOptions,"UseMocks",useMock);
-            % This can take a long time.  Assuming it didn't return immedately, cancel it.
+            % This test assumes it'll take a second or two to run.  If it return immediately, skip it
             if cdsFuture.State ~= "queued"
                 assumeFail(testCase,"Got response before cancelling");
                 return
@@ -132,6 +132,34 @@ classdef smokeTest < matlab.unittest.TestCase
             % Cancel the request
             cdsFuture.cancel();
             verifyEqual(testCase, cdsFuture.State,"failed")
+
+            % Cancel again to make sure that it's a no-op
+            cdsFuture.cancel();
+        end
+        
+        function timeoutTest(testCase, useMock)
+            datasetName = "cems-glofas-reforecast";
+            datasetOptions.variable = "river_discharge_in_the_last_24_hours";
+            datasetOptions.product_type = "control_reforecast";
+            datasetOptions.format = "grib";
+            datasetOptions.system_version = "version_3_1";
+            datasetOptions.hydrological_model = "lisflood";
+            datasetOptions.hyear = "2018";
+            datasetOptions.hmonth = "january";
+            datasetOptions.hday = "03";
+            datasetOptions.leadtime_hour = "24";
+            datasetOptions.area = ["31","-91","29","-89"];
+            
+            cdsFuture = climateDataStoreDownloadAsync(datasetName, datasetOptions,"UseMocks",useMock);
+            % This test assumes it'll take a second or two to run.  If it return immediately, skip it
+            if cdsFuture.State ~= "queued"
+                assumeFail(testCase,"Got response before waiting");
+                return
+            end
+            
+            failingFunction = @()(cdsFuture.wait(.5));
+
+            verifyError(testCase,failingFunction,"climateDataStore:timeout")
         end
         
         function gribAsyncTest(testCase, useMock)
@@ -226,8 +254,126 @@ classdef smokeTest < matlab.unittest.TestCase
             failingFunction = @()(climateDataStoreDownload(datasetName, datasetOptions, "UseMocks",useMock));
 
             verifyError(testCase,failingFunction,'climateDataStore:NameNotFound')
+        end
 
+        function unknownPythonErrorTest(testCase, useMock)
+            datasetName ="generate-python-error";
+            datasetOptions.version = "1_0";
+            datasetOptions.variable = "all";
+            datasetOptions.satellite = "cryosat_2";
+            datasetOptions.cdr_type = ["cdr","icdr"]; 
+            datasetOptions.year = "2021"; 
+            datasetOptions.month = "03";
             
+            failingFunction = @()(climateDataStoreDownload(datasetName, datasetOptions, "UseMocks",useMock));
+
+            verifyError(testCase,failingFunction,'MATLAB:Python:PyException')
+        end
+
+        function unknownErrorTest(testCase, useMock)
+            if ~useMock
+                assumeFail(testCase,"Cannot test for unknown error when connecting to server");
+            end
+
+            % Generate an error when request made
+            datasetName ="generate-error-at-request";
+            datasetOptions.version = "1_0";
+            datasetOptions.variable = "all";
+            datasetOptions.satellite = "cryosat_2";
+            datasetOptions.cdr_type = ["cdr","icdr"]; 
+            datasetOptions.year = "2021"; 
+            datasetOptions.month = "03";            
+            failingFunction = @()(climateDataStoreDownload(datasetName, datasetOptions, "UseMocks",useMock));
+            verifyError(testCase,failingFunction,"MATLAB:UndefinedFunction")
+    
+            % Generate an error after request made
+            datasetName = "generate-error-type1-after-request";
+            datasetOptions.variable = "river_discharge_in_the_last_24_hours";
+            datasetOptions.product_type = "generate_error";
+            datasetOptions.format = "grib";
+            datasetOptions.system_version = "version_3_1";
+            datasetOptions.hydrological_model = "lisflood";
+            datasetOptions.hyear = "2018";
+            datasetOptions.hmonth = "january";
+            datasetOptions.hday = "03";
+            datasetOptions.leadtime_hour = "24";
+            datasetOptions.area = ["31","-91","29","-89"];
+            
+            cdsFuture = climateDataStoreDownloadAsync(datasetName, datasetOptions,"UseMocks",useMock);
+            % This test assumes it'll take a second or two to run.  If it return immediately, skip it
+            if cdsFuture.State ~= "queued"
+                assumeFail(testCase,"Got response before waiting");
+                return
+            end
+            
+            cdsFuture.wait(2);
+
+            verifyEqual(testCase, 'climateDataStore:UnknownError', cdsFuture.Error.identifier)
+            verifyEqual(testCase, 'Simulated error after request', cdsFuture.Error.message)
+            verifyEqual(testCase, cdsFuture.NumOutputArguments,0)
+            verifyEmpty(testCase, cdsFuture.OutputArguments)
+            verifyEqual(testCase, cdsFuture.State,"failed")
+    
+            % Generate an slightly different error after request made
+            datasetName = "generate-error-type2-after-request";
+            datasetOptions.variable = "river_discharge_in_the_last_24_hours";
+            datasetOptions.product_type = "generate_error";
+            datasetOptions.format = "grib";
+            datasetOptions.system_version = "version_3_1";
+            datasetOptions.hydrological_model = "lisflood";
+            datasetOptions.hyear = "2018";
+            datasetOptions.hmonth = "january";
+            datasetOptions.hday = "03";
+            datasetOptions.leadtime_hour = "24";
+            datasetOptions.area = ["31","-91","29","-89"];
+            
+            cdsFuture = climateDataStoreDownloadAsync(datasetName, datasetOptions,"UseMocks",useMock);
+            % This test assumes it'll take a second or two to run.  If it return immediately, skip it
+            if cdsFuture.State ~= "queued"
+                assumeFail(testCase,"Got response before waiting");
+                return
+            end
+            
+            cdsFuture.wait(2);
+
+            verifyEqual(testCase, 'climateDataStore:UnknownError', cdsFuture.Error.identifier)
+            verifyEqual(testCase, 'Simulated error after request', cdsFuture.Error.message)
+            verifyEqual(testCase, cdsFuture.NumOutputArguments,0)
+            verifyEmpty(testCase, cdsFuture.OutputArguments)
+            verifyEqual(testCase, cdsFuture.State,"failed")
+        end
+
+        function externalCancelTest(testCase, useMock)
+            if ~useMock
+                assumeFail(testCase,"Cannot test for external cancel when connecting to server");
+            end
+
+            % Simulate a user cancelling the request on the web site
+            datasetName = "external-cancel";
+            datasetOptions.variable = "river_discharge_in_the_last_24_hours";
+            datasetOptions.product_type = "generate_error";
+            datasetOptions.format = "grib";
+            datasetOptions.system_version = "version_3_1";
+            datasetOptions.hydrological_model = "lisflood";
+            datasetOptions.hyear = "2018";
+            datasetOptions.hmonth = "january";
+            datasetOptions.hday = "03";
+            datasetOptions.leadtime_hour = "24";
+            datasetOptions.area = ["31","-91","29","-89"];
+            
+            cdsFuture = climateDataStoreDownloadAsync(datasetName, datasetOptions,"UseMocks",useMock);
+            % This test assumes it'll take a second or two to run.  If it return immediately, skip it
+            if cdsFuture.State ~= "queued"
+                assumeFail(testCase,"Got response before waiting");
+                return
+            end
+            
+            cdsFuture.wait(2);
+
+            verifyEqual(testCase, 'climateDataStore:RequestDeleted', cdsFuture.Error.identifier)
+            verifyEqual(testCase, cdsFuture.NumOutputArguments,0)
+            verifyEmpty(testCase, cdsFuture.OutputArguments)
+            verifyEqual(testCase, cdsFuture.State,"failed")
         end
 
         function badParameterTest(testCase, useMock)
