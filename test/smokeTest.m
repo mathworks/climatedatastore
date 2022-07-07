@@ -2,10 +2,6 @@ classdef smokeTest < matlab.unittest.TestCase
 % Basic tests to check majority of functionality.
 
 % Copyright 2022 The MathWorks, Inc.
-    properties(TestParameter)
-        useMock = struct('value', true);
-    end
-
     methods(TestClassSetup)
         % Shared setup for the entire test class
     end
@@ -17,7 +13,7 @@ classdef smokeTest < matlab.unittest.TestCase
     methods(Test, TestTags = {'SupportsMock'})
         % Tests that support mocks
 
-        function climateDataStoreDownloadAsyncTest(testCase, useMock)
+        function climateDataStoreDownloadAsyncTest(testCase)
             datasetName ="satellite-sea-ice-thickness";
             datasetOptions.version = "1_0";
             datasetOptions.variable = "all";
@@ -26,7 +22,7 @@ classdef smokeTest < matlab.unittest.TestCase
             datasetOptions.year = "2021"; 
             datasetOptions.month = "03";
 
-            cdsFuture = climateDataStoreDownloadAsync(datasetName, datasetOptions,"UseMocks",useMock);
+            cdsFuture = climateDataStoreDownloadAsync(datasetName, datasetOptions);
             cdsFuture.wait();
 
             % Validate that the returned class has not changed since test was written
@@ -64,7 +60,7 @@ classdef smokeTest < matlab.unittest.TestCase
             rmdir(filepath,"s")
         end
 
-        function climateDataStoreDownloadAsyncTestNoUnzip(testCase, useMock)
+        function climateDataStoreDownloadAsyncTestNoUnzip(testCase)
             datasetName ="satellite-sea-ice-thickness";
             datasetOptions.version = "1_0";
             datasetOptions.variable = "all";
@@ -74,7 +70,7 @@ classdef smokeTest < matlab.unittest.TestCase
             datasetOptions.month = "03";
 
 
-            cdsFuture = climateDataStoreDownloadAsync(datasetName, datasetOptions,"DontExpandZIP",true,"UseMocks",useMock);
+            cdsFuture = climateDataStoreDownloadAsync(datasetName, datasetOptions,"DontExpandZIP",true);
             cdsFuture.wait();
 
             
@@ -85,7 +81,7 @@ classdef smokeTest < matlab.unittest.TestCase
             delete(cdsFuture.OutputArguments{1})
         end
         
-        function seaIceTest(testCase, useMock)
+        function seaIceTest(testCase)
             datasetName ="satellite-sea-ice-thickness";
             datasetOptions.version = "1_0";
             datasetOptions.variable = "all";
@@ -95,7 +91,7 @@ classdef smokeTest < matlab.unittest.TestCase
             datasetOptions.month = "03";
 
 
-            [downloadedFilePaths,citation] = climateDataStoreDownload(datasetName,datasetOptions,"UseMocks",useMock);        
+            [downloadedFilePaths,citation] = climateDataStoreDownload(datasetName,datasetOptions);        
 
             
             [filepath,name,ext] =  fileparts(downloadedFilePaths);
@@ -107,7 +103,7 @@ classdef smokeTest < matlab.unittest.TestCase
             rmdir(filepath,"s")
         end
         
-        function cancelTest(testCase, useMock)
+        function cancelTest(testCase)
             datasetName = "cems-glofas-reforecast";
             datasetOptions.variable = "river_discharge_in_the_last_24_hours";
             datasetOptions.product_type = "control_reforecast";
@@ -120,7 +116,7 @@ classdef smokeTest < matlab.unittest.TestCase
             datasetOptions.leadtime_hour = "24";
             datasetOptions.area = ["31","-91","29","-89"];
             
-            cdsFuture = climateDataStoreDownloadAsync(datasetName, datasetOptions,"UseMocks",useMock);
+            cdsFuture = climateDataStoreDownloadAsync(datasetName, datasetOptions);
             % This test assumes it'll take a second or two to run.  If it return immediately, skip it
             if cdsFuture.State ~= "queued"
                 assumeFail(testCase,"Got response before cancelling");
@@ -137,7 +133,7 @@ classdef smokeTest < matlab.unittest.TestCase
             cdsFuture.cancel();
         end
         
-        function timeoutTest(testCase, useMock)
+        function timeoutTest(testCase)
             datasetName = "cems-glofas-reforecast";
             datasetOptions.variable = "river_discharge_in_the_last_24_hours";
             datasetOptions.product_type = "control_reforecast";
@@ -150,7 +146,7 @@ classdef smokeTest < matlab.unittest.TestCase
             datasetOptions.leadtime_hour = "24";
             datasetOptions.area = ["31","-91","29","-89"];
             
-            cdsFuture = climateDataStoreDownloadAsync(datasetName, datasetOptions,"UseMocks",useMock);
+            cdsFuture = climateDataStoreDownloadAsync(datasetName, datasetOptions);
             % This test assumes it'll take a second or two to run.  If it return immediately, skip it
             if cdsFuture.State ~= "queued"
                 assumeFail(testCase,"Got response before waiting");
@@ -162,7 +158,7 @@ classdef smokeTest < matlab.unittest.TestCase
             verifyError(testCase,failingFunction,"climateDataStore:timeout")
         end
         
-        function gribAsyncTest(testCase, useMock)
+        function gribAsyncTest(testCase)
             datasetName = "cems-glofas-reforecast";
             datasetOptions.variable = "river_discharge_in_the_last_24_hours";
             datasetOptions.product_type = "control_reforecast";
@@ -175,7 +171,7 @@ classdef smokeTest < matlab.unittest.TestCase
             datasetOptions.leadtime_hour = "24";
             datasetOptions.area = ["31","-91","29","-89"];
             
-            cdsFuture = climateDataStoreDownloadAsync(datasetName, datasetOptions,"UseMocks",useMock);
+            cdsFuture = climateDataStoreDownloadAsync(datasetName, datasetOptions);
             try
                 % Get the running duration to exercise that code
                 verifyClass(testCase, cdsFuture.RunningDuration,?duration)
@@ -194,7 +190,7 @@ classdef smokeTest < matlab.unittest.TestCase
             delete(cdsFuture.OutputArguments{1})
         end
 
-        function csvTest(testCase, useMock)
+        function csvTest(testCase)
             datasetName = "insitu-observations-surface-land";
             datasetOptions.time_aggregation = "daily";
             datasetOptions.variable = "accumulated_precipitation";
@@ -206,7 +202,7 @@ classdef smokeTest < matlab.unittest.TestCase
             datasetOptions.area = ["31","-91","29","-89"];
 
 
-            [downloadedFilePaths,citation] = climateDataStoreDownload(datasetName,datasetOptions,"UseMocks",useMock);
+            [downloadedFilePaths,citation] = climateDataStoreDownload(datasetName,datasetOptions);
 
             
             verifyTrue(testCase, exist(downloadedFilePaths(1),"file") == 2)
@@ -220,7 +216,7 @@ classdef smokeTest < matlab.unittest.TestCase
             rmdir(filepath,"s")
         end
 
-        function badDatasetNameAsyncTest(testCase, useMock)
+        function badDatasetNameAsyncTest(testCase)
             datasetName ="invalidname";
             datasetOptions.version = "1_0";
             datasetOptions.variable = "all";
@@ -230,7 +226,7 @@ classdef smokeTest < matlab.unittest.TestCase
             datasetOptions.month = "03";
 
 
-            cdsFuture = climateDataStoreDownloadAsync(datasetName, datasetOptions,"UseMocks",useMock);
+            cdsFuture = climateDataStoreDownloadAsync(datasetName, datasetOptions);
 
 
             verifyEqual(testCase, 'climateDataStore:NameNotFound', cdsFuture.Error.identifier)
@@ -242,7 +238,7 @@ classdef smokeTest < matlab.unittest.TestCase
             verifyEqual(testCase, cdsFuture.State,"failed")
         end
 
-        function badDatasetNameTest(testCase, useMock)
+        function badDatasetNameTest(testCase)
             datasetName ="invalidname";
             datasetOptions.version = "1_0";
             datasetOptions.variable = "all";
@@ -251,12 +247,12 @@ classdef smokeTest < matlab.unittest.TestCase
             datasetOptions.year = "2021"; 
             datasetOptions.month = "03";
             
-            failingFunction = @()(climateDataStoreDownload(datasetName, datasetOptions, "UseMocks",useMock));
+            failingFunction = @()(climateDataStoreDownload(datasetName, datasetOptions));
 
             verifyError(testCase,failingFunction,'climateDataStore:NameNotFound')
         end
 
-        function unknownPythonErrorTest(testCase, useMock)
+        function unknownPythonErrorTest(testCase)
             datasetName ="generate-python-error";
             datasetOptions.version = "1_0";
             datasetOptions.variable = "all";
@@ -265,16 +261,47 @@ classdef smokeTest < matlab.unittest.TestCase
             datasetOptions.year = "2021"; 
             datasetOptions.month = "03";
             
-            failingFunction = @()(climateDataStoreDownload(datasetName, datasetOptions, "UseMocks",useMock));
+            failingFunction = @()(climateDataStoreDownload(datasetName, datasetOptions));
 
             verifyError(testCase,failingFunction,'MATLAB:Python:PyException')
         end
 
-        function unknownErrorTest(testCase, useMock)
-            if ~useMock
-                assumeFail(testCase,"Cannot test for unknown error when connecting to server");
-            end
+        function badParameterTest(testCase)
+            datasetName ="satellite-sea-ice-thickness";
+            datasetOptions.version = "1_0";
+            datasetOptions.variable = "all";
+            datasetOptions.satellite = "invalidsat";
+            datasetOptions.cdr_type = ["cdr","icdr"]; 
+            datasetOptions.year = "2021"; 
+            datasetOptions.month = "03";
 
+            failingFunction = @()(climateDataStoreDownload(datasetName, datasetOptions));
+
+            verifyError(testCase,failingFunction,'climateDataStore:InvalidRequest')
+
+        end
+
+        function noTandCTest(testCase)
+            datasetName ="satellite-fire-burned-area";
+            datasetOptions.origin = 'esa_cci';
+            datasetOptions.sensor = 'modis';
+            datasetOptions.variable = 'grid_variables';
+            datasetOptions.version = '5_1_1cds';
+            datasetOptions.year = '2019';
+            datasetOptions.month = '12';
+            datasetOptions.nominal_day = '01';
+
+            failingFunction = @()(climateDataStoreDownload(datasetName, datasetOptions));
+
+            verifyError(testCase,failingFunction,'climateDataStore:agreeToTC')
+
+        end
+    end
+
+    methods(Test, TestTags = {'SupportsMock','RequiresMock'})
+        % Tests that require mocks
+
+        function unknownErrorTest(testCase)
             % Generate an error when request made
             datasetName ="generate-error-at-request";
             datasetOptions.version = "1_0";
@@ -283,7 +310,7 @@ classdef smokeTest < matlab.unittest.TestCase
             datasetOptions.cdr_type = ["cdr","icdr"]; 
             datasetOptions.year = "2021"; 
             datasetOptions.month = "03";            
-            failingFunction = @()(climateDataStoreDownload(datasetName, datasetOptions, "UseMocks",useMock));
+            failingFunction = @()(climateDataStoreDownload(datasetName, datasetOptions));
             verifyError(testCase,failingFunction,"MATLAB:UndefinedFunction")
     
             % Generate an error after request made
@@ -299,7 +326,7 @@ classdef smokeTest < matlab.unittest.TestCase
             datasetOptions.leadtime_hour = "24";
             datasetOptions.area = ["31","-91","29","-89"];
             
-            cdsFuture = climateDataStoreDownloadAsync(datasetName, datasetOptions,"UseMocks",useMock);
+            cdsFuture = climateDataStoreDownloadAsync(datasetName, datasetOptions);
             % This test assumes it'll take a second or two to run.  If it return immediately, skip it
             if cdsFuture.State ~= "queued"
                 assumeFail(testCase,"Got response before waiting");
@@ -327,7 +354,7 @@ classdef smokeTest < matlab.unittest.TestCase
             datasetOptions.leadtime_hour = "24";
             datasetOptions.area = ["31","-91","29","-89"];
             
-            cdsFuture = climateDataStoreDownloadAsync(datasetName, datasetOptions,"UseMocks",useMock);
+            cdsFuture = climateDataStoreDownloadAsync(datasetName, datasetOptions);
             % This test assumes it'll take a second or two to run.  If it return immediately, skip it
             if cdsFuture.State ~= "queued"
                 assumeFail(testCase,"Got response before waiting");
@@ -343,11 +370,7 @@ classdef smokeTest < matlab.unittest.TestCase
             verifyEqual(testCase, cdsFuture.State,"failed")
         end
 
-        function externalCancelTest(testCase, useMock)
-            if ~useMock
-                assumeFail(testCase,"Cannot test for external cancel when connecting to server");
-            end
-
+        function externalCancelTest(testCase)
             % Simulate a user cancelling the request on the web site
             datasetName = "external-cancel";
             datasetOptions.variable = "river_discharge_in_the_last_24_hours";
@@ -361,7 +384,7 @@ classdef smokeTest < matlab.unittest.TestCase
             datasetOptions.leadtime_hour = "24";
             datasetOptions.area = ["31","-91","29","-89"];
             
-            cdsFuture = climateDataStoreDownloadAsync(datasetName, datasetOptions,"UseMocks",useMock);
+            cdsFuture = climateDataStoreDownloadAsync(datasetName, datasetOptions);
             % This test assumes it'll take a second or two to run.  If it return immediately, skip it
             if cdsFuture.State ~= "queued"
                 assumeFail(testCase,"Got response before waiting");
@@ -376,41 +399,12 @@ classdef smokeTest < matlab.unittest.TestCase
             verifyEqual(testCase, cdsFuture.State,"failed")
         end
 
-        function badParameterTest(testCase, useMock)
-            datasetName ="satellite-sea-ice-thickness";
-            datasetOptions.version = "1_0";
-            datasetOptions.variable = "all";
-            datasetOptions.satellite = "invalidsat";
-            datasetOptions.cdr_type = ["cdr","icdr"]; 
-            datasetOptions.year = "2021"; 
-            datasetOptions.month = "03";
-
-            failingFunction = @()(climateDataStoreDownload(datasetName, datasetOptions, "UseMocks",useMock));
-
-            verifyError(testCase,failingFunction,'climateDataStore:InvalidRequest')
-
-        end
-
-        function noTandCTest(testCase, useMock)
-            datasetName ="satellite-fire-burned-area";
-            datasetOptions.origin = 'esa_cci';
-            datasetOptions.sensor = 'modis';
-            datasetOptions.variable = 'grid_variables';
-            datasetOptions.version = '5_1_1cds';
-            datasetOptions.year = '2019';
-            datasetOptions.month = '12';
-            datasetOptions.nominal_day = '01';
-
-            failingFunction = @()(climateDataStoreDownload(datasetName, datasetOptions, "UseMocks",useMock));
-
-            verifyError(testCase,failingFunction,'climateDataStore:agreeToTC')
-
-        end
     end
-    methods
+
+    methods(Test)
         % These tests don't support mocking
 
-        function noCredentials(testCase, useMock)
+        function noCredentials(testCase)
             %rename the credential file and set up teardown function to restore it
             movefile(fullfile(getUserDirectory,".cdsapirc"),fullfile(getUserDirectory,".cdsapirc_renamed"))
             addTeardown(testCase,@movefile,fullfile(getUserDirectory,".cdsapirc_renamed"),fullfile(getUserDirectory,".cdsapirc"))
@@ -423,7 +417,7 @@ classdef smokeTest < matlab.unittest.TestCase
             datasetOptions.year = "2021"; 
             datasetOptions.month = "03";
 
-            failingFunction = @()(climateDataStoreDownload(datasetName, datasetOptions,"DontPromptForCredentials",true, "UseMocks",useMock));
+            failingFunction = @()(climateDataStoreDownload(datasetName, datasetOptions,"DontPromptForCredentials",true));
 
             verifyError(testCase,failingFunction,'climateDataStore:needCredentialFile')
 

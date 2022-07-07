@@ -25,10 +25,13 @@ function testToolbox(options)
         mkdir(outputDirectory)
     end
     
-    P = matlab.unittest.parameters.Parameter.fromData('useMock', struct('value', ~options.ConnectToServer));
-    suite = TestSuite.fromClass(?smokeTest,'ExternalParameters',P);
-    if ~options.ConnectToServer
+    suite = TestSuite.fromClass(?smokeTest);
+    if options.ConnectToServer
+        suite = suite.selectIf(~HasTag('RequiresMock'));
+        cdsapi_Factory.useMocks(false);
+    else
         suite = suite.selectIf(HasTag('SupportsMock'));
+        cdsapi_Factory.useMocks(true);
     end
     
     runner = TestRunner.withTextOutput('OutputDetail', Verbosity.Detailed);
@@ -45,10 +48,12 @@ function testToolbox(options)
     end
     
     results = runner.run(suite);
+    cdsapi_Factory.useMocks(false);
 
     if ~verLessThan('matlab','9.9') && ~isMATLABReleaseOlderThan("R2022a")
         % This report is only available in R2022a and later.  isMATLABReleaseOlderThan wasn't added until MATLAB 2020b / version 9.9
         results.generateHTMLReport(outputDirectory,'MainFile',"testreport.html");
     end
+    
     results.assertSuccess()
 end

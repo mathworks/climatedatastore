@@ -85,7 +85,7 @@ classdef climateDataStoreDownloadFuture < handle
             datasetOptions = climateDataStoreDownloadFuture.makeStringsChars(datasetOptions);
 
             % Delegate to a factory so that mocking infrastructure doesn't impact code coverage
-            obj.CdsapiClient = cdsapi_Factory(options);
+            obj.CdsapiClient = cdsapi_Factory.getCdsapi(options);
 
 %             if options.UseMocks
 %                 obj.CdsapiClient = cdsapi_ClientMock(options);
