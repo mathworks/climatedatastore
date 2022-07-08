@@ -19,6 +19,8 @@ function buildToolbox(releaseType)
 
     % Run unit tests and capture code coverage
     testToolbox()
+    % Update Badges for GitHub.com
+    badgesforToolbox(rootDir)
     disp("test complete");
 
     % Generate HTML files

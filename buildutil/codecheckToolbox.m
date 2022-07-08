@@ -12,6 +12,8 @@ function codecheckToolbox(toolboxDir)
     % Generate the JSON files for the shields in the readme.md
     if issueCount == 0
         color = "green";
+    elseif issueCount == 1
+        color = "yellow";
     else
         color = "red";
     end

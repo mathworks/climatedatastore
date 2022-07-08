@@ -86,12 +86,6 @@ classdef climateDataStoreDownloadFuture < handle
 
             % Delegate to a factory so that mocking infrastructure doesn't impact code coverage
             obj.CdsapiClient = cdsapi_Factory.getCdsapi(options);
-
-%             if options.UseMocks
-%                 obj.CdsapiClient = cdsapi_ClientMock(options);
-%             else
-%                 obj.CdsapiClient = cdsapi_Client(options);
-%             end
             
             obj.StartDateTime = datetime('now');
             try
