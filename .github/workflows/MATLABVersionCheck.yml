@@ -64,16 +64,21 @@ jobs:
           name: report
           path: report
 
-      # Generate the badge for the releases tested
+      # Generate the JSON for the releases tested badge
       - name: Generate tested with badge
         uses: matlab-actions/run-command@v1
         with:
           command: addpath("buildutil"),badgesforToolbox()     
 
-      # Commit the badge for the releases tested
+      # Commit the JSON for the releases tested badge
       - name: commit changed files
+        if: always()
+        continue-on-error: true
+        env:
+          WORKFLOW: ${{ github.workspace }}
+          ACTOR: ${{ github.actor }}
         run: |
-          git config user.name "${{ env.GITHUB_WORKFLOW }} by ${{ env.GITHUB_ACTOR }}"
+          git config user.name "${{ github.workflow }} by ${{ github.actor }}"
           git config user.email "<>"
           git commit report/badge/tested_with.json -m "Update tested with releases badge"
           git fetch
