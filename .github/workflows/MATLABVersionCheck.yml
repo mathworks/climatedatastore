@@ -75,6 +75,8 @@ jobs:
       # Check in the badge for the releases tested
       - name: commit changed files
         run: |
+          git config user.name "${{ GITHUB_WORKFLOW }} by ${{ GITHUB_ACTOR }}"
+          git config user.email "<>"
           git commit -m "Update supported releases badge"
           git fetch
           git push
