@@ -45,7 +45,7 @@ jobs:
       - name: commit code issues badge JSON
         if: always()
         run: |
-          git config user.name "$GITHUB_WORKFLOW by $GITHUB_ACTOR"
+          git config user.name "${GITHUB_WORKFLOW} by ${GITHUB_ACTOR}"
           git config user.email "<>"
           git commit report/badge/code_issues.json -m "Update code issues badge"
           git fetch
