@@ -14,7 +14,7 @@ function buildToolbox(releaseType)
     toolboxDir = fullfile(rootDir,"climatedatastoreToolbox");
 
     % Check for code issues
-    codecheckToolbox(toolboxDir);
+    codecheckToolbox(rootDir);
     disp("code check complete.");
 
     % Run unit tests and capture code coverage

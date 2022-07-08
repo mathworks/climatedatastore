@@ -1,21 +1,32 @@
-function codecheckToolbox(toolboxDir)
+function codecheckToolbox(rootDir)
     arguments
-        toolboxDir (1,1) string  = pwd();
+        rootDir (1,1) string  = pwd();
     end
 
-    fileInfo = dir(fullfile(toolboxDir,"*.m"));
-    filesToCheck = fullfile(string({fileInfo.folder}'),string({fileInfo.name}'));
+    toolboxFileInfo = dir(fullfile(rootDir,"climatedatastoreToolbox","**","*.m*"));
+    filesToCheck = fullfile(string({toolboxFileInfo.folder}'),string({toolboxFileInfo.name}'));
+    
+    testFileInfo = dir(fullfile(rootDir,"test","*.m"));
+    filesToCheck = [filesToCheck;fullfile(string({testFileInfo.folder}'),string({testFileInfo.name}'))];
+
+    testFileInfo = dir(fullfile(rootDir,"buildutil","*.m"));
+    filesToCheck = [filesToCheck;fullfile(string({testFileInfo.folder}'),string({testFileInfo.name}'))];
+    
+    if isempty(filesToCheck)
+        error("climatedatastore:codeissues","No files to check.")
+    end
     issues = checkcode(filesToCheck);
     issues = [issues{:}];
     issueCount = size(issues,1);
 
     % Generate the JSON files for the shields in the readme.md
-    if issueCount == 0
-        color = "green";
-    elseif issueCount == 1
-        color = "yellow";
-    else
-        color = "red";
+    switch issueCount
+        case 0
+            color = "green";
+        case 1
+            color = "yellow";
+        otherwise
+            color = "red";
     end
     writeBadgeJSONFile("code issues",string(issueCount), color)
     
