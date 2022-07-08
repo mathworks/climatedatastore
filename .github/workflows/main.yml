@@ -41,9 +41,10 @@ jobs:
         with:
           command: addpath("buildutil"),codecheckToolbox()     
 
-      # Commit the badge for the releases tested
+      # Commit the JSON for the badge for the issues
       - name: commit code issues badge JSON
         if: always()
+        continue-on-error: true
         env:
           WORKFLOW: ${{ env.GITHUB_WORKFLOW }}
           ACTOR: ${{ env.GITHUB_ACTOR }}
