@@ -45,11 +45,8 @@ jobs:
       - name: commit code issues badge JSON
         if: always()
         continue-on-error: true
-        env:
-          WORKFLOW: ${{ github.workspace }}
-          ACTOR: ${{ github.actor }}
         run: |
-          git config user.name "${WORKFLOW} by ${ACTOR}"
+          git config user.name "${{ github.workflow }} by ${{ github.actor }}"
           git config user.email "<>"
           git commit report/badge/code_issues.json -m "Update code issues badge"
           git fetch
