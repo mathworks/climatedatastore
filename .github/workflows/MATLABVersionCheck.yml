@@ -70,7 +70,7 @@ jobs:
       - name: Generate tested with badge
         uses: matlab-actions/run-command@v1
         with:
-          command: addpath("buildutil"),badgesForToolbox()     
+          command: addpath("buildutil"),badgesforToolbox()     
 
       # Check in the badge for the releases tested
       - name: commit changed files
