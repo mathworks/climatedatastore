@@ -34,9 +34,26 @@ jobs:
       - name: Set up MATLAB
         uses: matlab-actions/setup-matlab@v1
 
+      # Check for MATLAB code issues in the project.
+      - name: Check for MATLAB code issues
+        uses: matlab-actions/run-command@v1
+        if: always()
+        with:
+          command: addpath("buildutil"),codecheckToolbox()     
+
+      # Commit the badge for the releases tested
+      - name: commit changed files
+        run: |
+          git config user.name "${{ env.GITHUB_WORKFLOW }} by ${{ env.GITHUB_ACTOR }}"
+          git config user.email "<>"
+          git commit report/badge/code_issues.json -m "Update code issues badge"
+          git fetch
+          git push
+          
       # Runs all tests in the project.
       - name: Run tests
         uses: matlab-actions/run-command@v1
+        if: always()
         with:
           command: addpath("buildutil"),testToolbox()     
 
