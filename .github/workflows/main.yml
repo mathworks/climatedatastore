@@ -44,7 +44,7 @@ jobs:
       # Commit the badge for the releases tested
       - name: commit changed files
         run: |
-          git config user.name "${{ env.GITHUB_WORKFLOW }} by ${{ env.GITHUB_ACTOR }}"
+          git config user.name "$GITHUB_WORKFLOW by $GITHUB_ACTOR"
           git config user.email "<>"
           git commit report/badge/code_issues.json -m "Update code issues badge"
           git fetch
