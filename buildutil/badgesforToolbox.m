@@ -5,6 +5,7 @@ function badgesforToolbox(rootDir)
     end
     
     releasesTestedWith = "";
+    releasesFailed = 0;
     % Go through the R2* directories and extract the failed test info
     releaseDirectoryInfo = dir(fullfile(rootDir,"report"));
     % Select only folders
@@ -24,10 +25,22 @@ function badgesforToolbox(rootDir)
                 releasesTestedWith = releasesTestedWith + " | ";
             end
             releasesTestedWith = releasesTestedWith + releaseName;
+        else
+            releasesFailed = releasesFailed + 1;
         end
     end
     if releasesTestedWith ~= ""
-        writeBadgeJSONFile("tested with", releasesTestedWith, "blue")
+        switch releasesFailed 
+            case 0
+                badgecolor = "green";
+            case 1
+                badgecolor = "orange";
+            case 2
+                badgecolor = "yellow";
+            otherwise
+                badgecolor = "red";
+        end
+        writeBadgeJSONFile("tested with", releasesTestedWith, badgecolor)
     end
 end
 
