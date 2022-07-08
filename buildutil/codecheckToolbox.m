@@ -19,6 +19,8 @@ function codecheckToolbox(rootDir)
     issues = [issues{:}];
     issueCount = size(issues,1);
 
+    fprintf("checked %d files with %d issue(s).\n",numel(filesToCheck),issueCount)
+
     % Generate the JSON files for the shields in the readme.md
     switch issueCount
         case 0
