@@ -45,8 +45,8 @@ jobs:
       - name: commit code issues badge JSON
         if: always()
         env:
-          WORKFLOW: ${{ GITHUB_WORKFLOW }}
-          ACTOR: ${{ GITHUB_ACTOR }}
+          WORKFLOW: ${{ env.GITHUB_WORKFLOW }}
+          ACTOR: ${{ env.GITHUB_ACTOR }}
         run: |
           git config user.name "${ WORKFLOW } by ${ ACTOR }"
           git config user.email "<>"
