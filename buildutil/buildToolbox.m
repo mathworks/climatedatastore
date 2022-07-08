@@ -3,7 +3,7 @@ function buildToolbox(releaseType)
     % Copyright 2022 The MathWorks, Inc.
     arguments
         releaseType {mustBeTextScalar,mustBeMember(releaseType,["build","major","minor","patch"])} = "build"
-    
+    end
 
     if isMATLABReleaseOlderThan("R2022a")
         error("climatedatatoolbox:releaseFromLatest","While the toolbox supports earlier versions, it should be build on the latest.")
