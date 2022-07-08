@@ -48,7 +48,7 @@ jobs:
           WORKFLOW: ${{ env.GITHUB_WORKFLOW }}
           ACTOR: ${{ env.GITHUB_ACTOR }}
         run: |
-          git config user.name "${ WORKFLOW } by ${ ACTOR }"
+          git config user.name "${WORKFLOW} by ${ACTOR}"
           git config user.email "<>"
           git commit report/badge/code_issues.json -m "Update code issues badge"
           git fetch
