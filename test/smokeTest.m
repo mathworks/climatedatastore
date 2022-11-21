@@ -153,7 +153,8 @@ classdef smokeTest < matlab.unittest.TestCase
                 return
             end
             
-            failingFunction = @()(cdsFuture.wait(.5));
+            % Wait only .1 seconds, so it'll timeout.
+            failingFunction = @()(cdsFuture.wait(.1));
 
             verifyError(testCase,failingFunction,"climateDataStore:timeout")
         end
