@@ -7,9 +7,6 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-permissions:
-  contents: write
-  
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a matrixed test job run across a bunch of releases of MATLAB, and then a reporting job
@@ -86,7 +83,7 @@ jobs:
           
       # Publish test results from all the releases
       - name: Publish Test Results
-        uses: EnricoMi/publish-unit-test-result-action@v1
+        uses: EnricoMi/publish-unit-test-result-action@v2
         if: always()
         with:
           files: "report/*/test-results.xml"
