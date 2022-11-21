@@ -150,7 +150,7 @@ classdef climateDataStoreDownloadFuture < handle
             waitTimer = tic;
             while obj.StateInternal ~= "completed" && obj.StateInternal ~= "failed" && toc(waitTimer) < timeout
                 drawnow();
-                pause(.5);
+                pause(.1);
                 obj.update();
             end
             if obj.StateInternal ~= "completed" && obj.StateInternal ~= "failed"
