@@ -20,8 +20,6 @@ jobs:
 
       - name: Set up MATLAB
         uses: matlab-actions/setup-matlab@v1
-        with:
-          release: ${{ matrix.MATLABVersion }}
 
       # Package the MLTBX
       - name: Package Toolbox
