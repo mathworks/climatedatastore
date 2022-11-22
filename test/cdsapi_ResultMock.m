@@ -40,8 +40,8 @@ classdef cdsapi_ResultMock < handle
                 case "insitu-observations-surface-land"
                     obj.replyComplete("insitu-observations-surface-land.zip");
                 case "cems-glofas-reforecast"
-                    % for cems-glofas-reforecast, wait 1 second, and then give a .grib file
-                    obj.replyQueued("cems-glofas-reforecast.grib",1);
+                    % for cems-glofas-reforecast, wait 2 seconds, and then give a .grib file
+                    obj.replyQueued("cems-glofas-reforecast.grib",2);
                 case "generate-python-error"
                     % for generate-python-error, give a python error with an message that's not a known one
                     error("MATLAB:Python:PyException","some other message");
