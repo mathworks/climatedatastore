@@ -1,0 +1,36 @@
+# Release Climate Data Store Toolbox across all supported releases of MATLAB, package toolbox, create release
+
+name: MATLAB Release
+
+# Run workflow when a tag is created
+on:
+  push:
+    tags:
+      - 'test'
+
+jobs:
+  # This workflow contains a matrixed test job run across a bunch of releases of MATLAB, and then a reporting job
+  package:
+
+    runs-on: ubuntu-latest
+    
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+
+      - name: Set up MATLAB
+        uses: matlab-actions/setup-matlab@v1
+        with:
+          release: ${{ matrix.MATLABVersion }}
+
+      # Package the MLTBX
+      - name: Package Toolbox
+        uses: matlab-actions/run-command@v1
+        with:
+          command: addpath("buildutil"),packageToolbox("${{  github.ref_name }}")     
+
+      # Create the release
+      - name: Create GitHub Release
+        uses: ncipollo/release-action@v1
+        with:
+          draft: true        
