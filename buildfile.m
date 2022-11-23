@@ -14,19 +14,37 @@ function plan = buildfile()
 end
 
 function checkTask(context)
+    % Temporarily add buildutil to the path (remove it at the end of the function)
+    oldPath = addpath(fullfile(context.Plan.RootFolder,"buildutil"));
+    raii = onCleanup(@()(path(oldPath)));
+    
     codecheckToolbox(context.Plan.RootFolder);
 end
 
-function testTask(~)
+function testTask(context)
+    % Temporarily add buildutil to the path (remove it at the end of the function)
+    oldPath = addpath(fullfile(context.Plan.RootFolder,"buildutil"));
+    raii = onCleanup(@()(path(oldPath)));
+    
     testToolbox()
 end
 
 function publishDocTask(context)
     % Generate HTML files
+
+    % Temporarily add buildutil to the path (remove it at the end of the function)
+    oldPath = addpath(fullfile(context.Plan.RootFolder,"buildutil"));
+    raii = onCleanup(@()(path(oldPath)));
+
     gendocToolbox(context.Plan.RootFolder)
 end
 
-function packageTask(~)
-    % Package the toolbox in an MLTBX, just incrementing build
+function packageTask(context)
+    % Package the toolbox in an MLTBX, just incrementing build.  Note that GitHub action calls packageToolbox directly.
+
+    % Temporarily add buildutil to the path (remove it at the end of the function)
+    oldPath = addpath(fullfile(context.Plan.RootFolder,"buildutil"));
+    raii = onCleanup(@()(path(oldPath)));
+
     packageToolbox("build")
 end 

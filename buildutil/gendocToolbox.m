@@ -11,7 +11,7 @@ function gendocToolbox(rootDir)
     mlxFiles = string({mlxFileInfo.name}');
     for iFile = 1:size(mlxFiles,1)
         [~, filename] = fileparts(mlxFiles(iFile));
-        export(mlxFiles(iFile),fullfile(htmlDir,filename + ".html"));
+        export(fullfile(docDir,mlxFiles(iFile)),fullfile(htmlDir,filename + ".html"));
     end
 end
 
