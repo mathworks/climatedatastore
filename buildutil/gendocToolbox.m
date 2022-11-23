@@ -1,11 +1,11 @@
-function gendocToolbox(toolboxDir)
+function gendocToolbox(rootDir)
 %GENDOCTOOLBOX Summary of this function goes here
 %   Detailed explanation goes here
     arguments
-        toolboxDir (1,1) string = pwd();
+        rootDir (1,1) string = pwd();
     end
 
-    docDir = fullfile(toolboxDir,"doc");
+    docDir = fullfile(rootDir,"climatedatastoreToolbox","doc");
     htmlDir = fullfile(docDir,"html");
     mlxFileInfo = dir(fullfile(docDir,"*.mlx"));
     mlxFiles = string({mlxFileInfo.name}');

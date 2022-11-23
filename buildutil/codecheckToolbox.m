@@ -15,9 +15,17 @@ function codecheckToolbox(rootDir)
     if isempty(filesToCheck)
         error("climatedatastore:codeissues","No files to check.")
     end
-    issues = checkcode(filesToCheck);
-    issues = [issues{:}];
-    issueCount = size(issues,1);
+
+    if verLessThan('matlab','9.13')
+        % Use the old check code before R2022b
+        issues = checkcode(filesToCheck);
+        issues = [issues{:}];
+        issueCount = size(issues,1);
+    else
+        % Use the new code analyzer in R2022b and later
+        issues = codeIssues(filesToCheck);
+        issueCount = size(issues.Issues,1);
+    end
 
     fprintf("checked %d files with %d issue(s).\n",numel(filesToCheck),issueCount)
 
@@ -33,7 +41,13 @@ function codecheckToolbox(rootDir)
     writeBadgeJSONFile("code issues",string(issueCount), color)
     
     if issueCount ~= 0
-        checkcode(filesToCheck)
+        if verLessThan('matlab','9.13')
+            % pre R2022b, run checkcode without a RHS argument to display issues
+            checkcode(filesToCheck)
+        else
+            % R2022b and later, just display issues
+            disp(issues)
+        end
         error("climatedatastore:codeissues","Climate Data Toolbox requires all code check issues be resolved.")
     end
 end

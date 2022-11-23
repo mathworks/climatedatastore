@@ -50,7 +50,7 @@ function newVersion = packageToolbox(releaseType, versionString)
                 matlab.addons.toolbox.toolboxVersion(prjFiles(iPrjFile));
                 tbxPackagingProjectFilename = prjFiles(iPrjFile);
                 return
-            catch
+            catch %#ok<CTCH> 
                 tbxPackagingProjectFilename = "";
                 return
             end
