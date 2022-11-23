@@ -82,6 +82,10 @@ function newVersion = packageToolbox(releaseType, versionString)
             case "patch"
                 versionParts(3) = string(str2double(versionParts(3)) + 1);
             case "specific"        
+                if startsWith(versionString,"v")
+                    % if there's a "v" at the front, which is common in github, remove it
+                    versionString = extractAfter(versionString,1);
+                end
                 newVersionParts = extract(versionString,pat);
                 if any(size(newVersionParts) ~= [3 1])
                     error("releaseToolbox:versionMustBe3part","VersionString must be a 3 part semantic version (i.e. ""1.2.3"".")
