@@ -55,7 +55,8 @@ jobs:
           git config user.email "<>"
           git commit report/badge/code_issues.json -m "Update code issues badge"
           git fetch
-          git push
+          # git push returns error code 1 if there's nothing to push (which there often isn't in this case)
+          git push || true
           
       # Runs all tests in the project.
       #- name: Run tests
