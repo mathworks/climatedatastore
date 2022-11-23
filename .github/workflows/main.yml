@@ -34,12 +34,17 @@ jobs:
       - name: Set up MATLAB
         uses: matlab-actions/setup-matlab@v1
 
-      # Check for MATLAB code issues in the project.
-      - name: Check for MATLAB code issues
-        uses: matlab-actions/run-command@v1
-        if: always()
+      - name: Run code checks and tests using buildtool
+        uses: matlab-actions/run-build@v1
         with:
-          command: addpath("buildutil"),codecheckToolbox()     
+          tasks: test
+          
+      # Check for MATLAB code issues in the project.
+      #- name: Check for MATLAB code issues
+      #  uses: matlab-actions/run-command@v1
+      #  if: always()
+      #  with:
+      #    command: addpath("buildutil"),codecheckToolbox()     
 
       # Commit the JSON for the badge for the issues
       - name: commit code issues badge JSON
@@ -53,11 +58,11 @@ jobs:
           git push
           
       # Runs all tests in the project.
-      - name: Run tests
-        uses: matlab-actions/run-command@v1
-        if: always()
-        with:
-          command: addpath("buildutil"),testToolbox()     
+      #- name: Run tests
+      #  uses: matlab-actions/run-command@v1
+      #  if: always()
+      #  with:
+      #    command: addpath("buildutil"),testToolbox()     
 
       - name: Upload code coverage report to Codecov (https://app.codecov.io/gh/mathworks/climatedatastore)
         uses: codecov/codecov-action@v3
