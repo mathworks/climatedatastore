@@ -27,10 +27,18 @@ jobs:
         with:
           command: addpath("buildutil"),packageToolbox("specific","${{  github.ref_name }}")     
 
+      # Save the MLTBX.
+      - name: Save Packaged Toolbox
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: Climate_Data_Store_Toolbox_for_MATLAB.mltbx
+          path: release/Climate_Data_Store_Toolbox_for_MATLAB.mltbx
+
       # Create the release
       - name: Create GitHub Release
         uses: ncipollo/release-action@v1
         with:
           draft: true        
-          artifacts: "release/Climate_Data_Store_Toolbox_for_MATLAB.mltbx"
+          artifacts: "Climate_Data_Store_Toolbox_for_MATLAB.mltbx"
           generateReleaseNotes: true
