@@ -88,7 +88,7 @@ function newVersion = packageToolbox(releaseType, versionString)
                 end
                 newVersionParts = extract(versionString,pat);
                 if any(size(newVersionParts) ~= [3 1])
-                    error("releaseToolbox:versionMustBe3part","VersionString must be a 3 part semantic version (i.e. ""1.2.3"".")
+                    error("releaseToolbox:versionMustBe3part","VersionString must be a 3 part semantic version (i.e. ""1.2.3"").")
                 end
                 versionParts(1) = newVersionParts(1);
                 versionParts(2) = newVersionParts(2);
