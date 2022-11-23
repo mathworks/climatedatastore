@@ -5,6 +5,8 @@ name: MATLAB Release
 # Run workflow when a tag is created
 on:
   push:
+    tags: 
+    - '*'
 
 jobs:
   # This workflow contains a matrixed test job run across a bunch of releases of MATLAB, and then a reporting job
