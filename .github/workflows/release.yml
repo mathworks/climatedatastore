@@ -122,5 +122,5 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           draft: true        
-          artifacts: "Climate_Data_Store_Toolbox_for_MATLAB.mltbx"
+          artifacts: "release/Climate_Data_Store_Toolbox_for_MATLAB.mltbx"
           generateReleaseNotes: true
