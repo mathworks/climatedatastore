@@ -1,14 +1,21 @@
-function newVersion = packageToolbox(releaseType)
+function newVersion = packageToolbox(releaseType, versionString)
 % packageToolbox Package a new version of a toolbox. Package a new version
 % of the toolbox based on the toolbox packaging (.prj) file in current
-% working directory. MLTBX file is put in ./release directory. Version is
-% automatically incremented.  You can optionally set RELEASETYPE to
-% "major", "minor", or "patch" to update semantic version number
-% appropriately.
+% working directory. MLTBX file is put in ./release directory. 
+%
+% packageToolbox() Build is automatically incremented.  
+%
+% packageTookbox(releaseType) RELEASETYPE  can be "major", "minor", or "patch" 
+% to update semantic version number appropriately.  Build (fourth elecment in 
+% semantic versioning) is always updated automatically.
+%
+% packageTookbox('specific',versionString) VERSIONSTRING is a string containing
+% the specific 3 part semantic version (i.e. "2.3.4") to use.
 
-% Copyright 2021 The MathWorks, Inc.
+% Copyright 2022 The MathWorks, Inc.
     arguments
-        releaseType {mustBeTextScalar,mustBeMember(releaseType,["build","major","minor","patch"])} = "build"
+        releaseType {mustBeTextScalar,mustBeMember(releaseType,["build","major","minor","patch","specific"])} = "build"
+        versionString {mustBeTextScalar} = "";
     end
 
     outputDirectory = "release";
@@ -18,7 +25,7 @@ function newVersion = packageToolbox(releaseType)
     if tbxPackagingProjectFile == ""
         error("releaseToolbox:NoTbxPrjFound","No Toolbox Packaging Project found.")
     end
-    newVersion = incrementMLTBXVersion(tbxPackagingProjectFile,releaseType);
+    newVersion = updateMLTBXVersion(tbxPackagingProjectFile,releaseType, versionString);
     matlab.addons.toolbox.packageToolbox(tbxPackagingProjectFile);
     mltbxFile = findMLTBXFile(pwd);
     % Replace spaces with underscores to be GitHub friendly and move to releases directory
@@ -50,7 +57,7 @@ function newVersion = packageToolbox(releaseType)
         end
     end
 
-    function newVersion = incrementMLTBXVersion(packagingProjectFile, releaseType)
+    function newVersion = updateMLTBXVersion(packagingProjectFile, releaseType, versionString)
         oldVersion = string(matlab.addons.toolbox.toolboxVersion(packagingProjectFile));
         pat = digitsPattern;
         versionParts = extract(oldVersion,pat);
@@ -74,7 +81,16 @@ function newVersion = packageToolbox(releaseType)
                 versionParts(3) = "0";
             case "patch"
                 versionParts(3) = string(str2double(versionParts(3)) + 1);
+            case "specific"        
+                newVersionParts = extract(versionString,pat);
+                if any(size(newVersionParts) ~= [3 1])
+                    error("releaseToolbox:versionMustBe3part","VersionString must be a 3 part semantic version (i.e. ""1.2.3"".")
+                end
+                versionParts(1) = newVersionParts(1);
+                versionParts(2) = newVersionParts(2);
+                versionParts(3) = newVersionParts(3);
         end
+        % Always increment the build number
         versionParts(4) = string(str2double(versionParts(4)) + 1);
         newVersion = join(versionParts,".");
         matlab.addons.toolbox.toolboxVersion(packagingProjectFile,newVersion);    
