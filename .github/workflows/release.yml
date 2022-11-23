@@ -6,7 +6,7 @@ name: MATLAB Release
 on:
   push:
     tags:
-      - 'v*.*.*'
+      - 'v*'
 
 jobs:
   # This workflow contains a matrixed test job run across a bunch of releases of MATLAB, and then a reporting job
