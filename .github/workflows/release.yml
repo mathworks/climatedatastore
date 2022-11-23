@@ -23,7 +23,7 @@ jobs:
       - name: Package Toolbox
         uses: matlab-actions/run-command@v1
         with:
-          command: addpath("buildutil"),packageToolbox("${{  github.ref_name }}")     
+          command: addpath("buildutil"),packageToolbox("specific","${{  github.ref_name }}")     
 
       # Create the release
       - name: Create GitHub Release
