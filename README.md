@@ -79,7 +79,7 @@ Note that downloading the files can take some time, depending on how large they 
 
 ### First time Install
 
-* Requires MATLAB release R2019a or newer
+* Requires MATLAB release R2020a or later
 * Install the toolbox by using the Add-on explorer in MATLAB, or by downloading the `climatedatastore.mltbx` file attached to the latest release on GitHub, then doubleclicking on it.
 * This relies on the [CDS Python API](https://github.com/ecmwf/cdsapi) created by the European Centre for Medium-Range Weather Forecasts (ECMWF). You'll need to have python installed.  Get it from the [Python Download page](https://www.python.org/downloads/). See [this MATLAB documentation](https://www.mathworks.com/help/matlab/matlab_external/install-supported-python-implementation.html) for more information.
 * The toolbox will automatically configure python and download and install the CSAPI package (you can manually install using `pip3 install cdsapi`)
