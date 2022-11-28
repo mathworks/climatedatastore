@@ -1,6 +1,6 @@
 # Climate Data Store Toolbox for MATLAB
 
-[![View Climate Data Store Toolbox on File Exchange](https://www.mathworks.com/matlabcentral/images/matlab-file-exchange.svg)](https://www.mathworks.com/matlabcentral/fileexchange/104550-climate-data-store-toolbox-for-matlab) ![GitHub top language](https://img.shields.io/github/languages/top/mathworks/climatedatastore)  [![Climate Data CI/CD](https://github.com/mathworks/climatedatastore/actions/workflows/main.yml/badge.svg)](https://github.com/mathworks/climatedatastore/actions/workflows/main.yml) [![GitHub issues by-label](https://img.shields.io/github/issues-raw/mathworks/climatedatastore/bug)](https://github.com/mathworks/climatedatastore/issues?q=is%3Aissue+is%3Aopen+label%3Abug) ![GitHub Repo stars](https://img.shields.io/github/stars/mathworks/climatedatastore?style=social)
+[![View Climate Data Store Toolbox on File Exchange](https://www.mathworks.com/matlabcentral/images/matlab-file-exchange.svg)](https://www.mathworks.com/matlabcentral/fileexchange/104550-climate-data-store-toolbox-for-matlab) [![GitHub top language](https://img.shields.io/github/languages/top/mathworks/climatedatastore)](https://matlab.mathworks.com/)  [![Climate Data CI/CD](https://github.com/mathworks/climatedatastore/actions/workflows/main.yml/badge.svg)](https://github.com/mathworks/climatedatastore/actions/workflows/main.yml) [![GitHub issues by-label](https://img.shields.io/github/issues-raw/mathworks/climatedatastore/bug)](https://github.com/mathworks/climatedatastore/issues?q=is%3Aissue+is%3Aopen+label%3Abug) ![GitHub Repo stars](https://img.shields.io/github/stars/mathworks/climatedatastore?style=social)
 
 [![Codecov](https://img.shields.io/codecov/c/github/mathworks/climatedatastore)](https://app.codecov.io/gh/mathworks/climatedatastore) ![MATLAB Code Issues](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fmathworks%2Fclimatedatastore%2Fmain%2Freport%2Fbadge%2Fcode_issues.json) ![MATLAB Versions Tested](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fmathworks%2Fclimatedatastore%2Fmain%2Freport%2Fbadge%2Ftested_with.json) 
 
@@ -42,7 +42,12 @@ This demonstrates a number of MATLAB features, including:
 * [MATLAB Classes](https://www.mathworks.com/help/matlab/object-oriented-programming.html)
   * [Static Methods](https://www.mathworks.com/help/matlab/matlab_oop/static-methods.html)
   * [Property Access Methods](https://www.mathworks.com/help/matlab/matlab_oop/property-access-methods.html)
+* [`buildtool`](https://www.mathworks.com/help/matlab/matlab_prog/overview-of-matlab-build-tool.html) to run automated checks and tests
 * [GitHub Actions](https://github.com/matlab-actions/overview)
+  * [Action to setup MATLAB](https://github.com/matlab-actions/overview#setup-matlab) Configure a MATLAB session
+  * Multi-release testing: Run tests across a number of MATLAB releases [(see yaml)](https://github.com/mathworks/climatedatastore/blob/main/.github/workflows/release.yml)
+  * [Action to run MATLAB Build](https://github.com/matlab-actions/overview#run-matlab-build) Run automated checks and tests when new code is pushed to repo [(see yaml)](https://github.com/mathworks/climatedatastore/blob/main/.github/workflows/main.yml)
+  * [Action to run MATLAB Code](https://github.com/matlab-actions/overview#run-matlab-command) Run automated tests and release a new version when a new tag is created. [(see yaml)](https://github.com/mathworks/climatedatastore/blob/main/.github/workflows/release.yml)
 
 ## Using the Climate Data Store Toolbox
 
