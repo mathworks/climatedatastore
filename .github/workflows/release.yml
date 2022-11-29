@@ -6,7 +6,7 @@ name: MATLAB Release
 on:
   push:
     tags: 
-      - '*'
+      - 'v*'
 
 jobs:
   # This workflow contains:
