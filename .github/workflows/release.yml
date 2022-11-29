@@ -51,7 +51,9 @@ jobs:
           path: report
           
   # Report on what releases tested successfully.
-  report:
+  # Generate a draft release based on the tag
+  # Recreate the tag with the final version of JSON files and the ToolboxPackaging.prj
+  release:
     needs: test
     if: always()
     runs-on: ubuntu-latest
@@ -73,17 +75,6 @@ jobs:
         uses: matlab-actions/run-command@v1
         with:
           command: addpath("buildutil"),badgesforToolbox()     
-
-      # Commit the JSON for the releases tested badge
-      - name: commit changed files
-        if: always()
-        continue-on-error: true
-        run: |
-          git config user.name "${{ github.workflow }} by ${{ github.actor }}"
-          git config user.email "<>"
-          git commit report/badge/tested_with.json -m "Update tested with releases badge"
-          git fetch
-          git push
           
       # Publish test results from all the releases
       - name: Publish Test Results
@@ -91,18 +82,6 @@ jobs:
         if: always()
         with:
           files: "report/*/test-results.xml"
-
-  # Generate a draft release based on the tag
-  release:
-    runs-on: ubuntu-latest
-    needs: test
-    
-    steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
-
-      - name: Set up MATLAB
-        uses: matlab-actions/setup-matlab@v1
 
       # Package the MLTBX
       - name: Package Toolbox
@@ -116,6 +95,29 @@ jobs:
         with:
           name: Climate_Data_Store_Toolbox_for_MATLAB.mltbx
           path: release/Climate_Data_Store_Toolbox_for_MATLAB.mltbx
+
+      # Commit the JSON for the MATLAB releases badge and ToolboxPackaging.prj
+      - name: commit changed files
+        if: always()
+        continue-on-error: true
+        run: |
+          git config user.name "${{ github.workflow }} by ${{ github.actor }}"
+          git config user.email "<>"
+          git commit report/badge/tested_with.json -m "Final checkins for release ${{  github.ref_name }}"
+          git fetch
+          git push
+
+      # Retag the repo so that the updated files are included in the release tag
+      - name: update tag
+        if: always()
+        continue-on-error: true
+        run: |
+          git config user.name "${{ github.workflow }} by ${{ github.actor }}"
+          git config user.email "<>"
+          git tag -d "${{  github.ref_name }}" 
+          git push --delete origin ${{  github.ref_name }}
+          git tag -a -s -m "Release ${{  github.ref_name }}" ${{  github.ref_name }}
+          git push --tag
 
       # Create the release
       - name: Create GitHub Release
