@@ -60,6 +60,8 @@ jobs:
     
     steps:
       - uses: actions/checkout@v3
+        with:
+            ref: refs/heads/main
     
       - name: Set up MATLAB
         uses: matlab-actions/setup-matlab@v1
@@ -81,7 +83,7 @@ jobs:
         uses: EnricoMi/publish-unit-test-result-action@v2
         if: always()
         with:
-          files: "report/*/test-results.xml"
+          junit_files: "report/*/test-results.xml"
 
       # Package the MLTBX
       - name: Package Toolbox
