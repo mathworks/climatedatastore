@@ -100,12 +100,11 @@ jobs:
 
       # Commit the JSON for the MATLAB releases badge and ToolboxPackaging.prj
       - name: commit changed files
-        if: always()
-        continue-on-error: true
         run: |
           git config user.name "${{ github.workflow }} by ${{ github.actor }}"
           git config user.email "<>"
           git commit report/badge/tested_with.json -m "Final checkins for release ${{  github.ref_name }}"
+          git commit ToolboxPackaging.prj -m "Final checkins for release ${{  github.ref_name }}"
           git fetch
           git push
 
@@ -118,7 +117,7 @@ jobs:
           git config user.email "<>"
           git tag -d "${{  github.ref_name }}" 
           git push --delete origin ${{  github.ref_name }}
-          git tag -a -s -m "Release ${{  github.ref_name }}" ${{  github.ref_name }}
+          git tag -m "Release ${{  github.ref_name }}" ${{  github.ref_name }}
           git push --tag
 
       # Create the release
