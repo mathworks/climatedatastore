@@ -100,6 +100,7 @@ jobs:
 
       # Commit the JSON for the MATLAB releases badge and ToolboxPackaging.prj
       - name: commit changed files
+        continue-on-error: true
         run: |
           git config user.name "${{ github.workflow }} by ${{ github.actor }}"
           git config user.email "<>"
