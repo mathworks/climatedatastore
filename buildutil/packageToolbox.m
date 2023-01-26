@@ -12,7 +12,7 @@ function newVersion = packageToolbox(releaseType, versionString)
 % packageTookbox('specific',versionString) VERSIONSTRING is a string containing
 % the specific 3 part semantic version (i.e. "2.3.4") to use.
 
-% Copyright 2022 The MathWorks, Inc.
+% Copyright 2023 The MathWorks, Inc.
     arguments
         releaseType {mustBeTextScalar,mustBeMember(releaseType,["build","major","minor","patch","specific"])} = "build"
         versionString {mustBeTextScalar} = "";
@@ -25,16 +25,25 @@ function newVersion = packageToolbox(releaseType, versionString)
     if tbxPackagingProjectFile == ""
         error("releaseToolbox:NoTbxPrjFound","No Toolbox Packaging Project found.")
     end
+
+    % GitHub issue #11.  Toolbox packaging from GitHub action does not put <toolboxdir>/util and <toolboxdir>/doc on the path.
+    previouspath = addpath(fullfile(pwd,"climatedatastoreToolbox","util"),...
+            fullfile(pwd,"climatedatastoreToolbox","doc"));
+
     newVersion = updateMLTBXVersion(tbxPackagingProjectFile,releaseType, versionString);
     matlab.addons.toolbox.packageToolbox(tbxPackagingProjectFile);
+
+    % Revert path changes
+    path(previouspath);
+
     mltbxFile = findMLTBXFile(pwd);
     % Replace spaces with underscores to be GitHub friendly and move to releases directory
-    [path,filename,ext] = fileparts(mltbxFile);
+    [filepath,filename,ext] = fileparts(mltbxFile);
     newMltbxFilename = strrep(filename," ","_");
     if isempty(dir(outputDirectory))
         mkdir(outputDirectory)
     end
-    movefile(mltbxFile,fullfile(path,outputDirectory,newMltbxFilename+ext));
+    movefile(mltbxFile,fullfile(filepath,outputDirectory,newMltbxFilename+ext));
     
     function tbxPackagingProjectFilename = findTBXPackagingProjectFile(directoryToSearch)
         % Unfortunately, Toolbox Packaging Projects and MATLAB projects both use the
