@@ -42,7 +42,7 @@ This demonstrates a number of MATLAB features, including:
   * [Parameters in Unit Tests](https://www.mathworks.com/help/matlab/matlab_prog/use-parameters-in-class-based-tests.html)
 * [MATLAB Classes](https://www.mathworks.com/help/matlab/object-oriented-programming.html)
   * [Static Methods](https://www.mathworks.com/help/matlab/matlab_oop/static-methods.html)
-  * [Property Access Methods](https://www.mathworks.com/help/matlab/matlab_oop/property-access-methods.html)
+  * [Property Access Methods](https://www.mathworks.com/help/matlab/matlab_oop/property-set-methods.html)
 * [`buildtool`](https://www.mathworks.com/help/matlab/matlab_prog/overview-of-matlab-build-tool.html) to run automated checks and tests
 * [GitHub Actions](https://github.com/matlab-actions/overview)
   * [Action to setup MATLAB](https://github.com/matlab-actions/overview#setup-matlab) Configure a MATLAB session
