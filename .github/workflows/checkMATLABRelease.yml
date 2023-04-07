@@ -1,4 +1,4 @@
-name: Check MATLAB Release
+name: z - Check MATLAB Release
 
 on:
   workflow_dispatch:
