@@ -12,6 +12,11 @@ function badgesforToolbox(rootDir)
     releaseDirectoryInfo = releaseDirectoryInfo([releaseDirectoryInfo.isdir]);
     % with a name like R2*
     releaseDirectoryInfo = releaseDirectoryInfo(startsWith(string({releaseDirectoryInfo.name}),"R2","IgnoreCase",true));
+
+    % Sort releases newest to oldest
+    [~,ix] = sort(string({releaseDirectoryInfo.name}),"descend");
+    releaseDirectoryInfo = releaseDirectoryInfo(ix);
+    
     % go through the directories and check if tests passed
     for iReleaseDirectoryInfo = 1:numel(releaseDirectoryInfo)
         releaseName = string(releaseDirectoryInfo(iReleaseDirectoryInfo).name);
