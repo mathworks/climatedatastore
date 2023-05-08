@@ -37,5 +37,6 @@ codegen/
 **/*.csv
 **/*.zip
 **/*.grib
-climatedatastoreToolbox/doc/html/**
-report/**
+toolbox/doc/html/**
+reports/**
+releases/**
