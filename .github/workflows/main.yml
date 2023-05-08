@@ -44,7 +44,7 @@ jobs:
       #  uses: matlab-actions/run-command@v1
       #  if: always()
       #  with:
-      #    command: addpath("buildutil"),codecheckToolbox()     
+      #    command: addpath("buildUtilities"),codecheckToolbox()     
 
       # Commit the JSON for the badge for the issues
       - name: commit code issues badge JSON
@@ -63,7 +63,7 @@ jobs:
       #  uses: matlab-actions/run-command@v1
       #  if: always()
       #  with:
-      #    command: addpath("buildutil"),testToolbox()     
+      #    command: addpath("buildUtilities"),testToolbox()     
 
       - name: Upload code coverage report to Codecov (https://app.codecov.io/gh/mathworks/climatedatastore)
         uses: codecov/codecov-action@v3
