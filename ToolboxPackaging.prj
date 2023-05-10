@@ -6,15 +6,9 @@
     <param.company>MathWorks</param.company>
     <param.summary>MATLAB(R) Tools to access the Climate Data Store (https://cds.climate.copernicus.eu/)</param.summary>
     <param.description>MATLAB Tools to access the Climate Data Store (https://cds.climate.copernicus.eu/).  It is a wealth of information about the Earth's past, present and future climate. There are hundreds of data sets associated with climate change.  See the GettingStarted.mlx in the doc directory!</param.description>
-<<<<<<< HEAD
     <param.screenshot />
-    <param.version>2.2.3.50</param.version>
+    <param.version>2.2.3.52</param.version>
     <param.output>${PROJECT_ROOT}\Climate Data Store Toolbox for MATLAB.mltbx</param.output>
-=======
-    <param.screenshot>${PROJECT_ROOT}/img/ToolboxPackaging.jpg</param.screenshot>
-    <param.version>2.2.3.49</param.version>
-    <param.output>${PROJECT_ROOT}/Climate Data Store Toolbox for MATLAB.mltbx</param.output>
->>>>>>> fc1a8f4d69e1932bb2bed2682bb873974df2c3c4
     <param.products.name />
     <param.products.id />
     <param.products.version />

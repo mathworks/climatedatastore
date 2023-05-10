@@ -17,7 +17,7 @@ function newVersion = packageToolbox(releaseType, versionString)
         versionString {mustBeTextScalar} = "";
     end
 
-    outputDirectory = "releases";
+    outputDirectory = "release";
 
     % Look for the Toolbox packaging file in the current working directory
     tbxPackagingProjectFile = findTBXPackagingProjectFile(pwd);
@@ -60,7 +60,7 @@ function newVersion = packageToolbox(releaseType, versionString)
                 return
             catch %#ok<CTCH> 
                 tbxPackagingProjectFilename = "";
-                return
+                break
             end
         end
     end

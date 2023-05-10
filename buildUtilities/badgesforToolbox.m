@@ -1,5 +1,5 @@
 function badgesforToolbox(rootDir)
-    %BADGESFORTOOLBOX Take the test reports from the runs against multiple releases, and gnerate the "Tested with" badge
+    %BADGESFORTOOLBOX Take the test reports from the runs against multiple releases, and generate the "Tested with" badge
     
     arguments
         rootDir (1,1) string  = pwd();

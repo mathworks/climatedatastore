@@ -39,4 +39,4 @@ codegen/
 **/*.grib
 toolbox/doc/html/**
 reports/**
-releases/**
+release/**
