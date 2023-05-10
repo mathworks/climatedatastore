@@ -33,13 +33,13 @@ jobs:
       - name: Run tests
         uses: matlab-actions/run-command@v1
         with:
-          command: addpath("buildutil"),testToolbox('ReportSubdirectory',"${{ matrix.MATLABVersion }}")     
+          command: addpath("buildUtilities"),testToolbox('ReportSubdirectory',"${{ matrix.MATLABVersion }}")     
 
       # Upload code coverage information to Codecov
       - name: Upload code coverage report to Codecov (https://app.codecov.io/gh/mathworks/climatedatastore)
         uses: codecov/codecov-action@v3
         with:
-          files: report/codecoverage.xml
+          files: reports/codecoverage.xml
           env_vars: ${{ matrix.MATLABVersion }}
 
       # Save the contents of the report directory from each release into a single artifact.  Since each release makes their own directory, they all update the same artifact.
@@ -47,8 +47,8 @@ jobs:
         uses: actions/upload-artifact@v3
         if: always()
         with:
-          name: report
-          path: report
+          name: reports
+          path: reports
           
   # Report on what releases tested successfully.
   # Generate a draft release based on the tag
@@ -69,27 +69,27 @@ jobs:
       # Copy all the reports down into the container
       - uses: actions/download-artifact@v3
         with:
-          name: report
-          path: report
+          name: reports
+          path: reports
 
       # Generate the JSON for the releases tested badge
       - name: Generate tested with badge
         uses: matlab-actions/run-command@v1
         with:
-          command: addpath("buildutil"),badgesforToolbox()     
+          command: addpath("buildUtilities"),badgesforToolbox()     
           
       # Publish test results from all the releases
       - name: Publish Test Results
         uses: EnricoMi/publish-unit-test-result-action@v2
         if: always()
         with:
-          junit_files: "report/*/test-results.xml"
+          junit_files: "reports/*/test-results.xml"
 
       # Package the MLTBX
       - name: Package Toolbox
         uses: matlab-actions/run-command@v1
         with:
-          command: addpath("buildutil"),packageToolbox("specific","${{  github.ref_name }}")     
+          command: addpath("buildUtilities"),packageToolbox("specific","${{  github.ref_name }}")     
 
       # Save the MLTBX.
       - name: Save Packaged Toolbox
@@ -104,7 +104,7 @@ jobs:
         run: |
           git config user.name "${{ github.workflow }} by ${{ github.actor }}"
           git config user.email "<>"
-          git commit report/badge/tested_with.json -m "Final checkins for release ${{  github.ref_name }}"
+          git commit reports/badge/tested_with.json -m "Final checkins for release ${{  github.ref_name }}"
           git commit ToolboxPackaging.prj -m "Final checkins for release ${{  github.ref_name }}"
           git fetch
           git push
