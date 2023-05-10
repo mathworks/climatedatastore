@@ -10,7 +10,7 @@ on:
     paths-ignore:
       - 'README.MD'
       - '.github/workflows/**'
-      - 'report/**'
+      - 'reports/**'
   pull_request:
     branches: [ "main" ]
 
@@ -69,19 +69,19 @@ jobs:
         uses: codecov/codecov-action@v3
         if: always()
         with:
-          files: report/codecoverage.xml
+          files: reports/codecoverage.xml
           
       # Publish test results
       - name: Publish Test Results
         uses: EnricoMi/publish-unit-test-result-action@v2
         if: always()
         with:
-          files: "report/test-results.xml"
+          files: "reports/test-results.xml"
           
      # Save the contents of the report directory as an artifact
       - name: Save Report Directory
         uses: actions/upload-artifact@v3
         if: always()
         with:
-          name: report
-          path: report
+          name: reports
+          path: reports
