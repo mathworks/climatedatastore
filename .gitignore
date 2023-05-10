@@ -38,5 +38,5 @@ codegen/
 **/*.zip
 **/*.grib
 toolbox/doc/html/**
-reports/**
+#reports/**
 release/**
