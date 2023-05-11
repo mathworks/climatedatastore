@@ -162,7 +162,7 @@ f = gcf;
 f.Position(3) = f.Position(3)*2;
 ```
 
-![figure_0.png](img/icevisualization.png)
+![figure_0.png](images/icevisualization.png)
 
 Citation: *Generated using Copernicus Climate Change Service information 2022*
 
