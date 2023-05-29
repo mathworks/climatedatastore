@@ -107,14 +107,11 @@
       <file>${PROJECT_ROOT}\toolbox\doc</file>
       <file>${PROJECT_ROOT}\toolbox\GettingStarted.mlx</file>
       <file>${PROJECT_ROOT}\toolbox\info.xml</file>
+      <file>${PROJECT_ROOT}\toolbox\internal</file>
       <file>${PROJECT_ROOT}\toolbox\resources</file>
-      <file>${PROJECT_ROOT}\toolbox\utilities</file>
     </fileset.rootfiles>
     <fileset.depfun.included />
-    <fileset.depfun.excluded>
-      <file>${PROJECT_ROOT}\tests\cdsapi_ClientMock.m</file>
-      <file>${PROJECT_ROOT}\tests\cdsapi_ResultMock.m</file>
-    </fileset.depfun.excluded>
+    <fileset.depfun.excluded />
     <fileset.package />
     <build-deliverables>
       <file location="${PROJECT_ROOT}" name="Climate Data Store Toolbox for MATLAB.mltbx" optional="false">C:\localProjects\climatedatastore\Climate Data Store Toolbox for MATLAB.mltbx</file>
