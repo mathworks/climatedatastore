@@ -53,7 +53,7 @@ jobs:
         run: |
           git config user.name "${{ github.workflow }} by ${{ github.actor }}"
           git config user.email "<>"
-          git commit report/badge/code_issues.json -m "Update code issues badge"
+          git commit reports/badge/code_issues.json -m "Update code issues badge"
           git fetch
           # git push returns error code 1 if there's nothing to push (which there often isn't in this case)
           git push || true
@@ -78,8 +78,8 @@ jobs:
         with:
           files: "reports/test-results.xml"
           
-     # Save the contents of the report directory as an artifact
-      - name: Save Report Directory
+     # Save the contents of the reports directory as an artifact
+      - name: Save Reports Directory
         uses: actions/upload-artifact@v3
         if: always()
         with:
