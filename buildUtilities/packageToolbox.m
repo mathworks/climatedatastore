@@ -25,8 +25,8 @@ function newVersion = packageToolbox(releaseType, versionString)
         error("releaseToolbox:NoTbxPrjFound","No Toolbox Packaging Project found.")
     end
 
-    % GitHub issue #11.  Toolbox packaging from GitHub action does not put <toolboxdir>/util and <toolboxdir>/doc on the path.
-    previouspath = addpath(fullfile(pwd,"toolbox","utilities"),...
+    % GitHub issue #11.  Toolbox packaging from GitHub action does not put <toolboxdir>/internal and <toolboxdir>/doc on the path.
+    previouspath = addpath(fullfile(pwd,"toolbox","internal"),...
             fullfile(pwd,"toolbox","doc"));
 
     newVersion = updateMLTBXVersion(tbxPackagingProjectFile,releaseType, versionString);
