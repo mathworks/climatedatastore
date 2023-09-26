@@ -12,6 +12,7 @@ jobs:
   # This workflow contains:
   # 1. a matrixed test job run across a bunch of releases of MATLAB
   # 2. a reporting job that summarizes the tests, and updates release badge
+  # Added support for R2023b
   test:
     strategy:
       fail-fast: false
