@@ -50,7 +50,7 @@ function testToolbox(options)
     results = runner.run(suite);
     cdsapi_Factory.useMocks(false);
 
-    if ~verLessThan('matlab','9.9') && ~isMATLABReleaseOlderThan("R2022a")
+    if ~verLessThan('matlab','9.9') && ~isMATLABReleaseOlderThan("R2022a") %#ok<VERLESSMATLAB>
         % This report is only available in R2022a and later.  isMATLABReleaseOlderThan wasn't added until MATLAB 2020b / version 9.9
         results.generateHTMLReport(outputDirectory,'MainFile',"testreport.html");
     end
