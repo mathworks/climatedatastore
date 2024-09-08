@@ -10,7 +10,7 @@ jobs:
     strategy:
         fail-fast: false
         matrix:
-          MATLABVersion: [R2020a, R2020b, R2021a, R2021b, R2022a, R2022b, R2023a, R2023b, R2024a]
+          MATLABVersion: [R2020b, R2021a, R2021b, R2022a, R2022b, R2023a, R2023b, R2024a]
     # The type of runner that the job will run on    # The type of runner that the job will run on
     runs-on: ubuntu-latest
   
