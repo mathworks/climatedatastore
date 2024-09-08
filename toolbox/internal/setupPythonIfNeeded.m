@@ -58,7 +58,13 @@ function setupPythonIfNeeded()
         % but for now....
         % This is based on
         % https://www.mathworks.com/content/dam/mathworks/mathworks-dot-com/support/sysreq/files/python-compatibility.pdf
-        versionInfo = ver('matlab');
+        if verLessThan('matlab','9.9') %#ok<VERLESSMATLAB>
+            versionInfo = ver('matlab'); %#ok<VERMATLAB>
+        else 
+            % matlabRelease ws introduced in R2020b
+            versionInfo = matlabRelease();
+            versionInfo = versionInfo.Release;
+        end
         MATLABrelease = extract(string(versionInfo.Release),alphanumericBoundary + alphanumericsPattern + alphanumericBoundary);
         switch MATLABrelease
             case "R2023a"

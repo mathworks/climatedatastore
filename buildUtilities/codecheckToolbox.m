@@ -16,7 +16,7 @@ function codecheckToolbox(rootDir)
         error("climatedatastore:codeissues","No files to check.")
     end
 
-    if verLessThan('matlab','9.13')
+    if verLessThan('matlab','9.13') %#ok<VERLESSMATLAB>
         % Use the old check code before R2022b
         issues = checkcode(filesToCheck);
         issues = [issues{:}];
@@ -41,7 +41,7 @@ function codecheckToolbox(rootDir)
     writeBadgeJSONFile("code issues",string(issueCount), color)
     
     if issueCount ~= 0
-        if verLessThan('matlab','9.13')
+        if verLessThan('matlab','9.13') %#ok<VERLESSMATLAB>
             % pre R2022b, run checkcode without a RHS argument to display issues
             checkcode(filesToCheck)
         else

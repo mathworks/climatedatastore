@@ -177,7 +177,7 @@ classdef smokeTest < matlab.unittest.TestCase
                 verifyClass(testCase, cdsFuture.RunningDuration,?duration)
                 % This can take a long time.  Limit the test to 10 seconds.
                 cdsFuture.wait(10);
-            catch e %#ok<NASGU> 
+            catch
                 assumeFail(testCase,"Timeout waiting for response");
                 return
             end
