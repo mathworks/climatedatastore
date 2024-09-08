@@ -1,0 +1,32 @@
+name: Manually run tests against MATLAB Release
+
+on:
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  test:
+    name: Test MATLAB Releases
+    strategy:
+        fail-fast: false
+        matrix:
+          MATLABVersion: [R2020a, R2020b, R2021a, R2021b, R2022a, R2022b, R2023a, R2023b, R2024a]
+    # The type of runner that the job will run on    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+  
+      # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Check out repo
+        uses: actions/checkout@v4
+      
+      - name: Set up MATLAB
+        uses: matlab-actions/setup-matlab@v1
+        with:
+          release: ${{ matrix.MATLABVersion }}
+
+      # Runs all tests in the project.  Put results in a version specific subdirectory
+      - name: Run tests
+        uses: matlab-actions/run-command@v2
+        with:
+          command: addpath("buildUtilities"),testToolbox('ReportSubdirectory',"${{ matrix.MATLABVersion }}")     
