@@ -15,10 +15,10 @@ end
     end
 
     % Call PIP to see if cdsapi is installed
-    [result, ~]  = system(fullfile(pythonInfo.Home,"Scripts","pip3")+" show cdsapi");
+    [result, ~]  = system(pythonInfo.Executable+" -m pip show cdsapi");
     if result ~= 0
         % it's not installed
-        [result, ~]  = system(fullfile(pythonInfo.Home,"Scripts","pip3")+" install cdsapi");
+        [result, ~]  = system(pythonInfo.Executable+" -m pip install cdsapi");
         if result ~= 0
             error("climateDataStore:unableToInstallCSAPI","Could not use PIP3 to install CDSAPI")
         end
