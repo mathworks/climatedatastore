@@ -1,4 +1,7 @@
+
 classdef cdsapi_Result < handle
+    
+% Copyright 2022-2025 The MathWorks, Inc.
     
     properties(GetAccess = public, SetAccess = private)
         request_id string = [];
@@ -23,23 +26,26 @@ classdef cdsapi_Result < handle
             obj.updateProperties;
         end
         
-        function filename = download(obj,url)
-            filename = string(obj.pythonObject.download(url));
+        function filename = download(obj)
+            filename = string(obj.pythonObject.download());
         end
     end
 
     methods(Access = private)
         function updateProperties(obj)
-            reply = obj.pythonObject.reply;
-            obj.state = string(reply{'state'});
-            obj.request_id = string(reply{'request_id'});
+            obj.state = string(obj.pythonObject.status);
+            obj.request_id = string(obj.pythonObject.request_id);
             switch obj.state
-                case "completed"
-                    obj.location = string(reply{'location'});
+                case "successful"
+                    obj.location = obj.pythonObject.url;
                 case "failed"
-                    error = reply{'error'};
-                    obj.errormessage = string(error{'message'});
-                    obj.errorreason = string(error{'reason'});
+                    error("climateDataStore:error", "CDS API error, no further info")
+                case "accepted"
+                    % No action required
+                case "running"
+                    % No action required
+                otherwise
+                    error("climateDataStore:unexpectedState", "CDS API result unexpected state: %s", obj.state)
             end
         end
     end

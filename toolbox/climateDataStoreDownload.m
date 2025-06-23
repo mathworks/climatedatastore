@@ -19,8 +19,8 @@ function [filePaths, citation] = climateDataStoreDownload(datasetName,datasetOpt
 % climateDataStoreDownloadAsync, which queues a request and returns, allowing you to keep working.
 %
 % You must have:
-%   * python 3.8 installed (https://www.python.org/ftp/python/3.8.10/python-3.8.10-amd64.exe)
-%   * the cdsapi python package (pip3 install cdsapi)
+%   * python 3.10 installed (https://www.python.org/ftp/python/3.10.9/python-3.10.9-amd64.exe)
+%   * the cdsapi python package (pip3 install cdsapi) version 0.7.2 or later
 %   * Your credentials need to be in a .cdsapirc file in your user directory. See https://cds.climate.copernicus.eu/api-how-to for more info
 %   * This function relies on the Python API to access the Copernicus Climate Data Store (CDS) (https://github.com/ecmwf/cdsapi) by the European
 %     Centre for Medium-Range Weather Forecasts (ECMWF)
@@ -36,7 +36,7 @@ function [filePaths, citation] = climateDataStoreDownload(datasetName,datasetOpt
 %
 % See Also: climateDataStoreDownloadAsync
 
-% Copyright 2021-2022 The MathWorks, Inc.
+% Copyright 2021-2025 The MathWorks, Inc.
 
     arguments
         datasetName (1,1) string
@@ -52,7 +52,9 @@ function [filePaths, citation] = climateDataStoreDownload(datasetName,datasetOpt
     if f.State == "failed"
         throwAsCaller(f.Error)
     end
-    assert(f.State == "completed","climateDataStore:UnexpectedState","cdsRequestState should be complete, it's %s",f.State)
+    assert(f.State == "successful","climateDataStore:UnexpectedState","cdsRequestState should be `successful`, it's `%s`",f.State)
+    assert(f.NumOutputArguments == 2,"climateDataStore:UnexpectedArgOut","NumOutputArguments should be 2, it's %d",f.NumOutputArguments)
+    assert(all(size(f.OutputArguments) == [1 2]),"climateDataStore:UnexpectedArgOut","NumOutputArguments should be [1 2], it's %s",mat2str(size(f.OutputArguments)))
 
     filePaths = f.OutputArguments{1};
     citation = f.OutputArguments{2};

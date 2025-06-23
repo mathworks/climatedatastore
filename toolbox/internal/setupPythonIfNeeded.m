@@ -1,10 +1,10 @@
 function setupPythonIfNeeded()
-    %setupPythonIfNeeded Check if python is installed and configured.  If it's
+    %setupPythonIfNeeded Check if python 3.10 is installed and configured.  If it's
     %not, download and install it
 
-    % Python setup is only supported in R2019a (ver 9.6) and later 
-    if verLessThan('matlab','9.6')
-        error("setupPythonIfNeeded:unsupportedVersion","Only version R2019a and later are supported")
+    % Python setup is only supported in R2022b and later 
+    if verLessThan('matlab','9.9') || isMATLABReleaseOlderThan("R2022b") %#ok<VERLESSMATLAB> isMATLABReleaseOlderThan was introduced in R2020b / version 9.9
+        error("setupPythonIfNeeded:unsupportedVersion","Only version R2022b and later are supported")
     end        
 
     % Check if MATLAB has python set up
@@ -29,18 +29,19 @@ function setupPythonIfNeeded()
         if pythonExecutable == ""
             % Trigger an install here
             
-            filename = "python-3.9.7-amd64.exe";
+            webpath = "https://www.python.org/ftp/python/3.10.9/";
+            filename = "python-3.10.9-amd64.exe";
             downloadPath = fullfile(tempdir,filename);
-            installEXEPath = websave(downloadPath,"https://www.python.org/ftp/python/3.9.7/" + filename);
+            installEXEPath = websave(downloadPath,webpath + filename);
             status = system(installEXEPath);
             if status ~= 0
-                error("setupPythonIfNeeded:pythonNotInstalled",'Could not install python.  <a href="https://www.python.org/ftp/python/3.9.7/python-3.9.7-amd64.exe">Download and install version 3.9</a>')
+                error("setupPythonIfNeeded:pythonNotInstalled",'Could not install python.  <a href="%s%s">Download and install version 3.10/a>',webpath,filename)
             end
             pythonExecutable = locatePythonInstallations(getUserPythonDir(),pythonVersionToLookFor);
             if pythonExecutable == ""
                 pythonExecutable = locatePythonInstallations(getProgramFilesDir(),pythonVersionToLookFor);
                 if pythonExecutable == ""
-                    error("setupPythonIfNeeded:pythonNotInstalled",'Could not install python.  <a href="https://www.python.org/ftp/python/3.9.7/python-3.9.7-amd64.exe">Download and install version 3.9</a>')
+                    error("setupPythonIfNeeded:pythonNotInstalled",'Could not install python.  <a href="%s%s">Download and install version 3.10</a>',webpath,filename)
                 end
             end
         end
@@ -61,33 +62,27 @@ function setupPythonIfNeeded()
         if verLessThan('matlab','9.9') %#ok<VERLESSMATLAB>
             versionInfo = ver('matlab'); %#ok<VERMATLAB>
         else 
-            % matlabRelease ws introduced in R2020b
+            % matlabRelease was introduced in R2020b
             versionInfo = matlabRelease();
             versionInfo = versionInfo.Release;
         end
         MATLABrelease = extract(string(versionInfo.Release),alphanumericBoundary + alphanumericsPattern + alphanumericBoundary);
         switch MATLABrelease
+            case "R2025a"
+                pythonVersion = ["3.9";"3.10";"3.11";"3.12"];
+            case "R2024b"
+                pythonVersion = ["3.9";"3.10";"3.11";"3.12"];
+            case "R2024a"
+                pythonVersion = ["3.9";"3.10";"3.11"];
+            case "R2023b"
+                pythonVersion = ["3.9";"3.10";"3.11"];
             case "R2023a"
                 pythonVersion = ["3.8";"3.9";"3.10"];
             case "R2022b"
                 pythonVersion = ["3.8";"3.9";"3.10"];
-            case "R2022a"
-                pythonVersion = ["3.8";"3.9"];
-            case "R2021b"
-                pythonVersion = ["3.7";"3.8";"3.9"];
-            case "R2021a"
-                pythonVersion = ["3.7";"3.8"];
-            case "R2020b"
-                pythonVersion = ["3.6";"3.7";"3.8"];
-            case "R2020a"
-                pythonVersion = ["3.6";"3.7"];
-            case "R2019b"
-                pythonVersion = ["3.6";"3.7"];
-            case "R2019a"
-                pythonVersion = ["3.5";"3.6";"3.7"];
             otherwise
-                % Lets assume 3.9 will work for a while
-                pythonVersion = "3.9";
+                % Lets assume 3.10 will work for a while
+                pythonVersion = "3.10";
         end
     end
 
