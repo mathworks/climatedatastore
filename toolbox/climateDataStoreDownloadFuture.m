@@ -22,15 +22,15 @@ classdef climateDataStoreDownloadFuture < handle
 %       Function           - Function to evaluate
 %       ID                 - CDS query identifier
 %       InputArguments     - Input arguments to function
-%       NumOutputArguments - Number of arguments returned by function (filled in if State is "completed")
-%       OutputArguments    - Output arguments from running Function (filled in if State is "completed")
+%       NumOutputArguments - Number of arguments returned by function (filled in if State is "successful")
+%       OutputArguments    - Output arguments from running Function (filled in if State is "successful")
 %       RunningDuration    - The duration of time the request has been running for, if it has started
 %       StartDateTime      - Date and time at which this future request running
-%       State              - Current state of request from CDS (completed|queued|running|failed)
+%       State              - Current state of request from CDS (completed|accepted|running|failed)
 %
 % See Also: climateDataStoreDownloadAsync, Future
 
-% Copyright 2022 The MathWorks, Inc.
+% Copyright 2022-2025 The MathWorks, Inc.
     
     properties (SetAccess=private)
         % Date and time at which this request was created
@@ -51,10 +51,10 @@ classdef climateDataStoreDownloadFuture < handle
         % Input arguments to function
         InputArguments cell
 
-        % Number of arguments returned by function.  Filled in if State is "completed"
+        % Number of arguments returned by function.  Filled in if State is "successful"
         NumOutputArguments (1,1) double = 0;
 
-        % Output arguments from running Function filled in if State is "completed". filepaths is in element 1, citation in element 2.
+        % Output arguments from running Function filled in if State is "successful". filepaths is in element 1, citation in element 2.
         OutputArguments cell = {};
 
         % The duration of time the request has been running for, if it has started
@@ -63,7 +63,7 @@ classdef climateDataStoreDownloadFuture < handle
         % Date and time at which this future request running
         StartDateTime datetime = datetime.empty();
 
-        % Current state of request from CDS (completed|queued|running|failed)
+        % Current state of request from CDS (successful|queued|running|failed)
         State (1,1) string = "unavailable"
     end
     
@@ -93,12 +93,14 @@ classdef climateDataStoreDownloadFuture < handle
             catch e
                 obj.FinishDateTime = datetime('now');
                 if e.identifier == "MATLAB:Python:PyException"
-                    if contains(string(e.message),"name not found")
+                    if contains(string(e.message),"process not found")
                         obj.Error = MException("climateDataStore:NameNotFound","Data Set Name not found");
-                    elseif contains(string(e.message),"not agreed to the required terms and conditions")
+                    elseif contains(string(e.message),"invalid request")
+                        obj.Error = MException("climateDataStore:InvalidRequest","datasetOptions has not produced a valid combination of values");
+                    elseif contains(string(e.message),"required licences not accepted")
                         obj.Error = MException("climateDataStore:agreeToTC",string(e.message));
                     else
-                        obj.Error = e;
+                        obj.Error = MException(e.identifier,string(e.message));
                     end
                 else
                     obj.Error = e;
@@ -120,7 +122,7 @@ classdef climateDataStoreDownloadFuture < handle
             end
 
             obj.update();
-            if obj.StateInternal ~= "completed" && obj.StateInternal ~= "failed"
+            if obj.StateInternal ~= "successful" && obj.StateInternal ~= "failed"
                 % Deleting the python result object will cancel the request with CDS.
                 obj.CdsResult = [];
                 obj.FinishDateTime = datetime('now');
@@ -148,12 +150,12 @@ classdef climateDataStoreDownloadFuture < handle
 
             obj.update();
             waitTimer = tic;
-            while obj.StateInternal ~= "completed" && obj.StateInternal ~= "failed" && toc(waitTimer) < timeout
+            while obj.StateInternal ~= "successful" && obj.StateInternal ~= "failed" && toc(waitTimer) < timeout
                 drawnow();
                 pause(.1);
                 obj.update();
             end
-            if obj.StateInternal ~= "completed" && obj.StateInternal ~= "failed"
+            if obj.StateInternal ~= "successful" && obj.StateInternal ~= "failed"
                 error("climateDataStore:timeout","The wait operation timed out.")
             end
         end
@@ -211,7 +213,7 @@ classdef climateDataStoreDownloadFuture < handle
                 return
             end
             obj.StateInternal = obj.CdsResult.state;
-            if obj.StateInternal == "completed"
+            if obj.StateInternal == "successful"
                 obj.getResultsIfAvailable();
             elseif obj.StateInternal == "failed"
                 obj.getErrorInfo();
@@ -223,22 +225,22 @@ classdef climateDataStoreDownloadFuture < handle
                 return
             end
                
-            if obj.CdsResult.state == "completed"
+            if obj.CdsResult.state == "successful"
                 obj.FinishDateTime = datetime('now');
-                [~,filenameOnCDS,extOnCDS] = fileparts(obj.CdsResult.location);
-                filenameOnCDS = filenameOnCDS + extOnCDS;
-                localFilename = obj.InputArguments{1} + "-" + string(obj.FinishDateTime,"yyyyMMddhhmmss");
-                downloadedFileName = string(obj.CdsResult.download(filenameOnCDS));
+                downloadedFileName = string(obj.CdsResult.download());
 
                 % Generate the citation
                 citation = "Generated using Copernicus Climate Change Service information " + string(datetime('now','Format','y'));
 
                 % check if file exists
                 if exist(downloadedFileName,"file") ~= 2
-                    %error
+                    error("climateDataStore:downloadfailed", "Downloaded from `%s` as %s, but it isn't there.", obj.CdsResult.location, downloadedFileName)
                 end
 
-                if lower(extOnCDS) == ".zip" && obj.ExpandZip
+                % The file name, minus the .ZIP, becomes the directory name files are expanded into
+                [~,~,downloadedFileExt] = fileparts(downloadedFileName);
+                localFilename = obj.InputArguments{1} + "-" + string(obj.FinishDateTime,"yyyyMMddhhmmss");
+                if lower(downloadedFileExt) == ".zip" && obj.ExpandZip
                     % Expand the ZIP in a directory
                     filePaths = string(unzip(downloadedFileName,localFilename)');
                     obj.OutputArguments = {filePaths,citation};
@@ -247,7 +249,7 @@ classdef climateDataStoreDownloadFuture < handle
                     delete(downloadedFileName);
                 else
                     % Rename the file to something better
-                    localFilename = localFilename + extOnCDS;
+                    localFilename = localFilename + downloadedFileExt;
                     movefile(downloadedFileName,localFilename);
                     obj.OutputArguments = {localFilename,citation};
                 end
@@ -262,7 +264,7 @@ classdef climateDataStoreDownloadFuture < handle
             end
                
             obj.FinishDateTime = datetime('now');
-            if contains(obj.CdsResult.errormessage ,"not valid")
+            if contains(obj.CdsResult.errormessage ,"invalid request")
                 obj.Error = MException("climateDataStore:InvalidRequest",obj.CdsResult.errorreason);
             else
                 obj.Error = MException("climateDataStore:UnknownError",obj.CdsResult.errorreason);

@@ -22,8 +22,8 @@ function F = climateDataStoreDownloadAsync(datasetName,datasetOptions,options)
 %
 % Notes:
 % You must have:
-%   * python 3.8 installed (https://www.python.org/ftp/python/3.8.10/python-3.8.10-amd64.exe)
-%   * the cdsapi python package (pip3 install cdsapi)
+%   * python 3.10 installed (https://www.python.org/ftp/python/3.10.9/python-3.10.9-amd64.exe)
+%   * the cdsapi python package (pip3 install cdsapi) version 0.7.2 or later
 %   * Your credentials need to be in a .cdsapirc file in your user directory. See https://cds.climate.copernicus.eu/api-how-to for more info
 %   * This function relies on the Python API to access the Copernicus Climate Data Store (CDS) (https://github.com/ecmwf/cdsapi) by the European
 %     Centre for Medium-Range Weather Forecasts (ECMWF)
@@ -41,14 +41,14 @@ function F = climateDataStoreDownloadAsync(datasetName,datasetOptions,options)
 %     F = climateDataStoreDownloadAsync(datasetName, datasetOptions);         
 %     % Run whatever MATLAB code you want in here.
 %     F.wait();
-%     if F.state == "completed"
+%     if F.state == "successful"
 %       downloadedFilePaths = OutputArguments{1};
 %       citation = OutputArguments{2};
 %     end
 %
 % See Also: climateDataStoreDownload, climateDataStoreDownloadFuture
 
-% Copyright 2022 The MathWorks, Inc.
+% Copyright 2022-2025 The MathWorks, Inc.
 
     arguments
         datasetName (1,1) string

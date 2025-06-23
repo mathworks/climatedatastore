@@ -1,5 +1,6 @@
 classdef cdsapi_ResultMock < handle
-    
+% Copyright 2022-2025 The MathWorks, Inc.
+
     properties(GetAccess = public, SetAccess = private)
         request_id string = [];
         state string = [];
@@ -29,19 +30,19 @@ classdef cdsapi_ResultMock < handle
                     % for sea ice thickness, respond immediately, and download the zip file, unless there's an intentional invalid parameter
                     switch datasetOptions.satellite
                         case "invalidsat"
-                            obj.replyFailed("not valid","not valid")
+                             error("MATLAB:Python:PyException","invalid request\nRequest has not produced a valid combination of values, please check your selection.");
                         case "nocredentials"
                             error("climateDataStore:needCredentialFile","You must create a credential file.  Visit https://cds.climate.copernicus.eu/api-how-to for more info.")
                         otherwise
                             obj.replyComplete("satellite-sea-ice-thickness.zip");
                     end
                 case "satellite-fire-burned-area"
-                    error("MATLAB:Python:PyException","not agreed to the required terms and conditions");
+                    error("MATLAB:Python:PyException","required licences not accepted\nNot all the required licences have been accepted");
                 case "insitu-observations-surface-land"
                     obj.replyComplete("insitu-observations-surface-land.zip");
-                case "cems-glofas-reforecast"
-                    % for cems-glofas-reforecast, wait 2 seconds, and then give a .grib file
-                    obj.replyQueued("cems-glofas-reforecast.grib",2);
+                case "reanalysis-era5-pressure-levels"
+                    % for reanalysis-era5-pressure-levels, wait 2 seconds, and then give a .grib file
+                    obj.replyQueued("reanalysis-era5-pressure-levels.grib",2);
                 case "generate-python-error"
                     % for generate-python-error, give a python error with an message that's not a known one
                     error("MATLAB:Python:PyException","some other message");
@@ -58,13 +59,13 @@ classdef cdsapi_ResultMock < handle
                     % for external-cancel, Have the object delete itself
                         obj.replyQueued("cancel",.5);
                 otherwise
-                    error("MATLAB:Python:PyException","name not found");
+                    error("MATLAB:Python:PyException","process not found");
             end
 
         end
         
         function update(obj)
-            if obj.state == "queued" && datetime("now") > obj.WaitUntil
+            if obj.state == "accepted" && datetime("now") > obj.WaitUntil
                 switch obj.FilenameForDownload 
                     case "fail1"
                         replyFailed(obj,"climateDataStore:UnknownError","Simulated error after request")
@@ -79,7 +80,7 @@ classdef cdsapi_ResultMock < handle
         end
         
         function filename = download(obj,~)
-            if obj.state ~= "completed"
+            if obj.state ~= "successful"
                 error("climatedatastore:wrongstate","wrongstate")
             end
             [testDirectory] = fileparts(mfilename('fullpath'));
@@ -92,13 +93,13 @@ classdef cdsapi_ResultMock < handle
 
     methods(Access = private)
         function replyComplete(obj,filenameForDownload)
-            obj.state = "completed";
+            obj.state = "successful";
             obj.location = "https://" + filenameForDownload;
             obj.FilenameForDownload = filenameForDownload;
         end
 
         function replyQueued(obj,filenameForDownload,waitFor)
-            obj.state = "queued";
+            obj.state = "accepted";
             obj.FilenameForDownload = filenameForDownload;
             obj.WaitUntil = datetime("now") + seconds(waitFor);
         end

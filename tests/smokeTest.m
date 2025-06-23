@@ -1,6 +1,8 @@
 classdef smokeTest < matlab.unittest.TestCase
 % Basic tests to check majority of functionality.
 
+% Copyright 2022-2025 The MathWorks, Inc.
+
     methods(TestClassSetup)
         % Shared setup for the entire test class
     end
@@ -55,7 +57,7 @@ classdef smokeTest < matlab.unittest.TestCase
             verifyClass(testCase, cdsFuture.RunningDuration,?duration)
             verifyClass(testCase, cdsFuture.StartDateTime,?datetime)
             verifyClass(testCase, cdsFuture.State,?string)
-            verifyEqual(testCase, cdsFuture.State,"completed")
+            verifyEqual(testCase, cdsFuture.State,"successful")
             rmdir(filepath,"s")
         end
 
@@ -103,24 +105,24 @@ classdef smokeTest < matlab.unittest.TestCase
         end
         
         function cancelTest(testCase)
-            datasetName = "cems-glofas-reforecast";
-            datasetOptions.variable = "river_discharge_in_the_last_24_hours";
-            datasetOptions.product_type = "control_reforecast";
-            datasetOptions.format = "grib";
-            datasetOptions.system_version = "version_3_1";
-            datasetOptions.hydrological_model = "lisflood";
-            datasetOptions.hyear = "2018";
-            datasetOptions.hmonth = "january";
-            datasetOptions.hday = "03";
-            datasetOptions.leadtime_hour = "24";
-            datasetOptions.area = ["31","-91","29","-89"];
-            
+            datasetName = "reanalysis-era5-pressure-levels";
+            datasetOptions.product_type = "reanalysis";
+            datasetOptions.variable = "geopotential";
+            datasetOptions.year = "2024";
+            datasetOptions.month = "03";
+            datasetOptions.day = "01";
+            datasetOptions.hour = "13:00";
+            datasetOptions.pressure_level = "1000";
+            datasetOptions.data_format = "grib";
+
             cdsFuture = climateDataStoreDownloadAsync(datasetName, datasetOptions);
             % This test assumes it'll take a second or two to run.  If it return immediately, skip it
-            if cdsFuture.State ~= "queued"
-                assumeFail(testCase,"Got response before cancelling");
+            if cdsFuture.State == "successful"
+                assumeFail(testCase,"Got success response before cancelling");
                 return
             end
+            verifyEqual(testCase, cdsFuture.State,"accepted")
+
             % Get the running duration to exercise that code
             verifyClass(testCase, cdsFuture.RunningDuration,?duration)
 
@@ -133,24 +135,23 @@ classdef smokeTest < matlab.unittest.TestCase
         end
         
         function timeoutTest(testCase)
-            datasetName = "cems-glofas-reforecast";
-            datasetOptions.variable = "river_discharge_in_the_last_24_hours";
-            datasetOptions.product_type = "control_reforecast";
-            datasetOptions.format = "grib";
-            datasetOptions.system_version = "version_3_1";
-            datasetOptions.hydrological_model = "lisflood";
-            datasetOptions.hyear = "2018";
-            datasetOptions.hmonth = "january";
-            datasetOptions.hday = "03";
-            datasetOptions.leadtime_hour = "24";
-            datasetOptions.area = ["31","-91","29","-89"];
-            
+            datasetName = "reanalysis-era5-pressure-levels";
+            datasetOptions.product_type = "reanalysis";
+            datasetOptions.variable = "geopotential";
+            datasetOptions.year = "2024";
+            datasetOptions.month = "03";
+            datasetOptions.day = "01";
+            datasetOptions.hour = "13:00";
+            datasetOptions.pressure_level = "1000";
+            datasetOptions.data_format = "grib";
+
             cdsFuture = climateDataStoreDownloadAsync(datasetName, datasetOptions);
             % This test assumes it'll take a second or two to run.  If it return immediately, skip it
-            if cdsFuture.State ~= "queued"
-                assumeFail(testCase,"Got response before waiting");
+            if cdsFuture.State == "successful"
+                assumeFail(testCase,"Got success response before cancelling");
                 return
             end
+            verifyEqual(testCase, cdsFuture.State,"accepted")
             
             % Wait only .1 seconds, so it'll timeout.
             failingFunction = @()(cdsFuture.wait(.1));
@@ -159,18 +160,16 @@ classdef smokeTest < matlab.unittest.TestCase
         end
         
         function gribAsyncTest(testCase)
-            datasetName = "cems-glofas-reforecast";
-            datasetOptions.variable = "river_discharge_in_the_last_24_hours";
-            datasetOptions.product_type = "control_reforecast";
-            datasetOptions.format = "grib";
-            datasetOptions.system_version = "version_3_1";
-            datasetOptions.hydrological_model = "lisflood";
-            datasetOptions.hyear = "2018";
-            datasetOptions.hmonth = "january";
-            datasetOptions.hday = "03";
-            datasetOptions.leadtime_hour = "24";
-            datasetOptions.area = ["31","-91","29","-89"];
-            
+            datasetName = "reanalysis-era5-pressure-levels";
+            datasetOptions.product_type = "reanalysis";
+            datasetOptions.variable = "geopotential";
+            datasetOptions.year = "2024";
+            datasetOptions.month = "03";
+            datasetOptions.day = "01";
+            datasetOptions.hour = "13:00";
+            datasetOptions.pressure_level = "1000";
+            datasetOptions.data_format = "grib";
+
             cdsFuture = climateDataStoreDownloadAsync(datasetName, datasetOptions);
             try
                 % Get the running duration to exercise that code
@@ -186,7 +185,7 @@ classdef smokeTest < matlab.unittest.TestCase
             verifyEqual(testCase, ext,".grib")
             verifyEqual(testCase, cdsFuture.OutputArguments{2}, "Generated using Copernicus Climate Change Service information " + string(datetime('today'),'yyyy'))
 
-            verifyEqual(testCase, cdsFuture.State,"completed")
+            verifyEqual(testCase, cdsFuture.State,"successful")
             delete(cdsFuture.OutputArguments{1})
         end
 
@@ -252,20 +251,6 @@ classdef smokeTest < matlab.unittest.TestCase
             verifyError(testCase,failingFunction,'climateDataStore:NameNotFound')
         end
 
-        function unknownPythonErrorTest(testCase)
-            datasetName ="generate-python-error";
-            datasetOptions.version = "1_0";
-            datasetOptions.variable = "all";
-            datasetOptions.satellite = "cryosat_2";
-            datasetOptions.cdr_type = ["cdr","icdr"]; 
-            datasetOptions.year = "2021"; 
-            datasetOptions.month = "03";
-            
-            failingFunction = @()(climateDataStoreDownload(datasetName, datasetOptions));
-
-            verifyError(testCase,failingFunction,'MATLAB:Python:PyException')
-        end
-
         function badParameterTest(testCase)
             datasetName ="satellite-sea-ice-thickness";
             datasetOptions.version = "1_0";
@@ -328,7 +313,7 @@ classdef smokeTest < matlab.unittest.TestCase
             
             cdsFuture = climateDataStoreDownloadAsync(datasetName, datasetOptions);
             % This test assumes it'll take a second or two to run.  If it return immediately, skip it
-            if cdsFuture.State ~= "queued"
+            if cdsFuture.State ~= "accepted"
                 assumeFail(testCase,"Got response before waiting");
                 return
             end
@@ -356,7 +341,7 @@ classdef smokeTest < matlab.unittest.TestCase
             
             cdsFuture = climateDataStoreDownloadAsync(datasetName, datasetOptions);
             % This test assumes it'll take a second or two to run.  If it return immediately, skip it
-            if cdsFuture.State ~= "queued"
+            if cdsFuture.State ~= "accepted"
                 assumeFail(testCase,"Got response before waiting");
                 return
             end
@@ -368,6 +353,20 @@ classdef smokeTest < matlab.unittest.TestCase
             verifyEqual(testCase, cdsFuture.NumOutputArguments,0)
             verifyEmpty(testCase, cdsFuture.OutputArguments)
             verifyEqual(testCase, cdsFuture.State,"failed")
+        end
+
+        function unknownPythonErrorTest(testCase)
+            datasetName ="generate-python-error";
+            datasetOptions.version = "1_0";
+            datasetOptions.variable = "all";
+            datasetOptions.satellite = "cryosat_2";
+            datasetOptions.cdr_type = ["cdr","icdr"]; 
+            datasetOptions.year = "2021"; 
+            datasetOptions.month = "03";
+            
+            failingFunction = @()(climateDataStoreDownload(datasetName, datasetOptions));
+
+            verifyError(testCase,failingFunction,'MATLAB:Python:PyException')
         end
 
         function externalCancelTest(testCase)
@@ -386,7 +385,7 @@ classdef smokeTest < matlab.unittest.TestCase
             
             cdsFuture = climateDataStoreDownloadAsync(datasetName, datasetOptions);
             % This test assumes it'll take a second or two to run.  If it return immediately, skip it
-            if cdsFuture.State ~= "queued"
+            if cdsFuture.State ~= "accepted"
                 assumeFail(testCase,"Got response before waiting");
                 return
             end
