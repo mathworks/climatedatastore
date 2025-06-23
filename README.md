@@ -142,7 +142,7 @@ head(ice2021)
 |7|01-Mar-2021|50.9112|147.6573|0.8933|
 |8|01-Mar-2021|50.6540|147.0948|0.1271|
 
-Citation: *Generated using Copernicus Climate Change Service information 2022*
+Citation: *Generated using Copernicus Climate Change Service information 2025*
 
 #### **Visually compare March ice thickness in 2011 and 2021**
 
@@ -164,7 +164,7 @@ f.Position(3) = f.Position(3)*2;
 
 ![figure_0.png](images/icevisualization.png)
 
-Citation: *Generated using Copernicus Climate Change Service information 2022*
+Citation: *Generated using Copernicus Climate Change Service information 2025*
 
 ## License
 
@@ -172,4 +172,4 @@ The license is available in the License file within this repository
 
 Note: *each data set in the Copernicus Climate Data Store has its own license terms.  You should review the license terms for the data set that you are planning to use to ensure that it can be used in the way that you have planned.*
 
-&copy; 2021-2022, The MathWorks, Inc.
+&copy; 2021-2025, The MathWorks, Inc.
