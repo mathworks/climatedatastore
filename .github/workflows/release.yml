@@ -48,7 +48,7 @@ jobs:
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: reports
+          name: reports-${{ matrix.MATLABVersion }}
           path: reports
           
   # Report on what releases tested successfully.
@@ -70,8 +70,9 @@ jobs:
       # Copy all the reports down into the container
       - uses: actions/download-artifact@v4
         with:
-          name: reports
+          pattern: reports-*
           path: reports
+          merge-multiple: true
 
       # Generate the JSON for the releases tested badge
       - name: Generate tested with badge
@@ -84,7 +85,7 @@ jobs:
         uses: EnricoMi/publish-unit-test-result-action@v2
         if: always()
         with:
-          junit_files: "reports/*/test-results.xml"
+          files: "reports/*/test-results.xml"
 
       # Package the MLTBX
       - name: Package Toolbox
