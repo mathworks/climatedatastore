@@ -99,6 +99,7 @@ datasetName ="satellite-sea-ice-thickness";
 Select the data to download from the dataset (see [this webpage](https://cds.climate.copernicus.eu/cdsapp#!/dataset/satellite-sea-ice-thickness?tab=form) for options). This is a "MATLABized" version of the python structure that is generated in the API request.
 
 ```matlab:Code
+datasetOptions = struct();
 datasetOptions.version = "1_0";
 datasetOptions.variable = "all";
 datasetOptions.satellite = "cryosat_2";

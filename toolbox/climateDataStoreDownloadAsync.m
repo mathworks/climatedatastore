@@ -30,6 +30,7 @@ function F = climateDataStoreDownloadAsync(datasetName,datasetOptions,options)
 %
 % Example: ERA5 hourly data on pressure levels (https://cds.climate.copernicus.eu/cdsapp#!/dataset/reanalysis-era5-pressure-levels)
 %     datasetName ="reanalysis-era5-pressure-levels";
+%     datasetOptions = struct();
 %     datasetOptions.product_type = "reanalysis";
 %     datasetOptions.format = "grib";
 %     datasetOptions.year = "2020";

@@ -16,6 +16,7 @@ classdef smokeTest < matlab.unittest.TestCase
 
         function climateDataStoreDownloadAsyncTest(testCase)
             datasetName ="satellite-sea-ice-thickness";
+            datasetOptions = struct();
             datasetOptions.version = "1_0";
             datasetOptions.variable = "all";
             datasetOptions.satellite = "cryosat_2";
@@ -84,6 +85,7 @@ classdef smokeTest < matlab.unittest.TestCase
         
         function seaIceTest(testCase)
             datasetName ="satellite-sea-ice-thickness";
+            datasetOptions = struct();
             datasetOptions.version = "1_0";
             datasetOptions.variable = "all";
             datasetOptions.satellite = "cryosat_2";
@@ -106,6 +108,7 @@ classdef smokeTest < matlab.unittest.TestCase
         
         function cancelTest(testCase)
             datasetName = "reanalysis-era5-pressure-levels";
+            datasetOptions = struct();
             datasetOptions.product_type = "reanalysis";
             datasetOptions.variable = "geopotential";
             datasetOptions.year = "2024";
@@ -161,6 +164,7 @@ classdef smokeTest < matlab.unittest.TestCase
         
         function gribAsyncTest(testCase)
             datasetName = "reanalysis-era5-pressure-levels";
+            datasetOptions = struct();
             datasetOptions.product_type = "reanalysis";
             datasetOptions.variable = "geopotential";
             datasetOptions.year = "2024";
@@ -191,6 +195,7 @@ classdef smokeTest < matlab.unittest.TestCase
 
         function csvTest(testCase)
             datasetName = "insitu-observations-surface-land";
+            datasetOptions = struct();
             datasetOptions.time_aggregation = "daily";
             datasetOptions.variable = "accumulated_precipitation";
             datasetOptions.usage_restrictions = "unrestricted";
@@ -217,6 +222,7 @@ classdef smokeTest < matlab.unittest.TestCase
 
         function badDatasetNameAsyncTest(testCase)
             datasetName ="invalidname";
+            datasetOptions = struct();
             datasetOptions.version = "1_0";
             datasetOptions.variable = "all";
             datasetOptions.satellite = "cryosat_2";
@@ -239,6 +245,7 @@ classdef smokeTest < matlab.unittest.TestCase
 
         function badDatasetNameTest(testCase)
             datasetName ="invalidname";
+            datasetOptions = struct();
             datasetOptions.version = "1_0";
             datasetOptions.variable = "all";
             datasetOptions.satellite = "cryosat_2";
@@ -253,6 +260,7 @@ classdef smokeTest < matlab.unittest.TestCase
 
         function badParameterTest(testCase)
             datasetName ="satellite-sea-ice-thickness";
+            datasetOptions = struct();
             datasetOptions.version = "1_0";
             datasetOptions.variable = "all";
             datasetOptions.satellite = "invalidsat";
@@ -268,6 +276,7 @@ classdef smokeTest < matlab.unittest.TestCase
 
         function noTandCTest(testCase)
             datasetName ="satellite-fire-burned-area";
+            datasetOptions = struct();
             datasetOptions.origin = 'esa_cci';
             datasetOptions.sensor = 'modis';
             datasetOptions.variable = 'grid_variables';
@@ -289,6 +298,7 @@ classdef smokeTest < matlab.unittest.TestCase
         function unknownErrorTest(testCase)
             % Generate an error when request made
             datasetName ="generate-error-at-request";
+            datasetOptions = struct();
             datasetOptions.version = "1_0";
             datasetOptions.variable = "all";
             datasetOptions.satellite = "cryosat_2";
@@ -300,6 +310,7 @@ classdef smokeTest < matlab.unittest.TestCase
     
             % Generate an error after request made
             datasetName = "generate-error-type1-after-request";
+            datasetOptions = struct();
             datasetOptions.variable = "river_discharge_in_the_last_24_hours";
             datasetOptions.product_type = "generate_error";
             datasetOptions.format = "grib";
@@ -328,6 +339,7 @@ classdef smokeTest < matlab.unittest.TestCase
     
             % Generate an slightly different error after request made
             datasetName = "generate-error-type2-after-request";
+            datasetOptions = struct();
             datasetOptions.variable = "river_discharge_in_the_last_24_hours";
             datasetOptions.product_type = "generate_error";
             datasetOptions.format = "grib";
@@ -357,6 +369,7 @@ classdef smokeTest < matlab.unittest.TestCase
 
         function unknownPythonErrorTest(testCase)
             datasetName ="generate-python-error";
+            datasetOptions = struct();
             datasetOptions.version = "1_0";
             datasetOptions.variable = "all";
             datasetOptions.satellite = "cryosat_2";
@@ -372,6 +385,7 @@ classdef smokeTest < matlab.unittest.TestCase
         function externalCancelTest(testCase)
             % Simulate a user cancelling the request on the web site
             datasetName = "external-cancel";
+            datasetOptions = struct();
             datasetOptions.variable = "river_discharge_in_the_last_24_hours";
             datasetOptions.product_type = "generate_error";
             datasetOptions.format = "grib";
@@ -409,6 +423,7 @@ classdef smokeTest < matlab.unittest.TestCase
             addTeardown(testCase,@movefile,fullfile(getUserDirectory,".cdsapirc_renamed"),fullfile(getUserDirectory,".cdsapirc"))
 
             datasetName ="satellite-sea-ice-thickness";
+            datasetOptions = struct();
             datasetOptions.version = "1_0";
             datasetOptions.variable = "all";
             datasetOptions.satellite = "nocredentials";
@@ -429,6 +444,33 @@ classdef smokeTest < matlab.unittest.TestCase
             verifyWarningFree(testCase,str2func("ComparingIceThickness"))
             rmpath(fullfile("toolbox","doc"))
             close(gcf)
+        end
+
+        function fjmachinIssue19(testCase)
+            % Test for https://github.com/mathworks/climatedatastore/issues/19
+
+            datasetName ="reanalysis-era5-single-levels";
+            datasetOptions = struct();
+            datasetOptions.product_type = "reanalysis";  % <--- ADDED
+            datasetOptions.variable = ["10m_u_component_of_wind", "10m_v_component_of_wind", "surface_sensible_heat_flux"];
+            datasetOptions.year = ["2000","2001"];
+            datasetOptions.month = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
+            datasetOptions.day = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"];
+            datasetOptions.time = ["00:00"];
+            datasetOptions.area = ["29.5", "-16", "28.5", "-15"];
+            datasetOptions.data_format = "netcdf"; % <--- MODIFIED
+            datasetOptions.download_format = "zip";  % <--- ADDED
+
+            [downloadedFilePaths,citation] = climateDataStoreDownload(datasetName,datasetOptions);  
+
+            verifySize(testCase,downloadedFilePaths,[2 1])
+            verifyTrue(testCase, exist(downloadedFilePaths(1),"file") == 2)
+            verifyTrue(testCase, exist(downloadedFilePaths(2),"file") == 2)
+            [filepath,~,ext] = fileparts(downloadedFilePaths);
+            verifyEqual(testCase, ext,[".nc";".nc"])
+            verifyEqual(testCase, citation, "Generated using Copernicus Climate Change Service information " + string(datetime('today'),'yyyy'))
+
+            rmdir(filepath(1),"s")
         end
     end
 

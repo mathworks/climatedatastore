@@ -39,7 +39,7 @@ classdef cdsapi_Result < handle
                 case "successful"
                     obj.location = obj.pythonObject.url;
                 case "failed"
-                    error("climateDataStore:error", "CDS API error, no further info")
+                    error("climateDataStore:error", 'CDS API error, visit <a href="https://cds.climate.copernicus.eu/requests">https://cds.climate.copernicus.eu/requests</a> for more info')
                 case "accepted"
                     % No action required
                 case "running"
