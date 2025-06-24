@@ -49,10 +49,12 @@ function [filePaths, citation] = climateDataStoreDownload(datasetName,datasetOpt
   
     f = climateDataStoreDownloadFuture(datasetName, datasetOptions,options);
     f.wait(options.Timeout);
-    if f.State == "failed"
+    state = f.State;
+    if state == "failed"
         throwAsCaller(f.Error)
     end
-    assert(f.State == "successful","climateDataStore:UnexpectedState","cdsRequestState should be `successful`, it's `%s`",f.State)
+    
+    assert(state == "successful","climateDataStore:UnexpectedState","cdsRequestState should be `successful`, it's `%s`",state)
     assert(f.NumOutputArguments == 2,"climateDataStore:UnexpectedArgOut","NumOutputArguments should be 2, it's %d",f.NumOutputArguments)
     assert(all(size(f.OutputArguments) == [1 2]),"climateDataStore:UnexpectedArgOut","NumOutputArguments should be [1 2], it's %s",mat2str(size(f.OutputArguments)))
 
