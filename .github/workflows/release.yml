@@ -36,13 +36,6 @@ jobs:
         with:
           command: addpath("buildUtilities"),testToolbox('ReportSubdirectory',"${{ matrix.MATLABVersion }}")     
 
-      # Upload code coverage information to Codecov
-      - name: Upload code coverage report to Codecov (https://app.codecov.io/gh/mathworks/climatedatastore)
-        uses: codecov/codecov-action@v4
-        with:
-          files: reports/codecoverage.xml
-          env_vars: ${{ matrix.MATLABVersion }}
-
       # Save the contents of the report directory from each release into a single artifact.  Since each release makes their own directory, they all update the same artifact.
       - name: Save Report Directory
         uses: actions/upload-artifact@v4

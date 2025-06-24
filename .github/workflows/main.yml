@@ -38,13 +38,6 @@ jobs:
         uses: matlab-actions/run-build@v2
         with:
           tasks: test
-          
-      # Check for MATLAB code issues in the project.
-      #- name: Check for MATLAB code issues
-      #  uses: matlab-actions/run-command@v1
-      #  if: always()
-      #  with:
-      #    command: addpath("buildUtilities"),codecheckToolbox()     
 
       # Commit the JSON for the badge for the issues
       - name: commit code issues badge JSON
@@ -57,21 +50,6 @@ jobs:
           git fetch
           # git push returns error code 1 if there's nothing to push (which there often isn't in this case)
           git push || true
-          
-      # Runs all tests in the project.
-      #- name: Run tests
-      #  uses: matlab-actions/run-command@v1
-      #  if: always()
-      #  with:
-      #    command: addpath("buildUtilities"),testToolbox()     
-
-      - name: Upload code coverage report to Codecov (https://app.codecov.io/gh/mathworks/climatedatastore)
-        uses: codecov/codecov-action@v5
-        if: always()
-        with:
-          files: reports/codecoverage.xml
-          token: ${{ secrets.CODECOV_TOKEN }}
-          verbose: true
           
       # Publish test results
       - name: Publish Test Results

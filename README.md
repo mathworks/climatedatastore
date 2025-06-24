@@ -2,7 +2,7 @@
 
 [![View Climate Data Store Toolbox on File Exchange](https://www.mathworks.com/matlabcentral/images/matlab-file-exchange.svg)](https://www.mathworks.com/matlabcentral/fileexchange/104550-climate-data-store-toolbox-for-matlab) [![GitHub top language](https://img.shields.io/github/languages/top/mathworks/climatedatastore)](https://matlab.mathworks.com/)  [![Climate Data CI/CD](https://github.com/mathworks/climatedatastore/actions/workflows/main.yml/badge.svg)](https://github.com/mathworks/climatedatastore/actions/workflows/main.yml) [![GitHub issues by-label](https://img.shields.io/github/issues-raw/mathworks/climatedatastore/bug)](https://github.com/mathworks/climatedatastore/issues?q=is%3Aissue+is%3Aopen+label%3Abug) ![GitHub Repo stars](https://img.shields.io/github/stars/mathworks/climatedatastore?style=social)
 
-[![Codecov](https://img.shields.io/codecov/c/github/mathworks/climatedatastore)](https://app.codecov.io/gh/mathworks/climatedatastore) ![MATLAB Code Issues](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fmathworks%2Fclimatedatastore%2Fmain%2Freports%2Fbadge%2Fcode_issues.json) ![MATLAB Versions Tested](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fmathworks%2Fclimatedatastore%2Fmain%2Freports%2Fbadge%2Ftested_with.json) 
+![MATLAB Code Issues](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fmathworks%2Fclimatedatastore%2Fmain%2Freports%2Fbadge%2Fcode_issues.json) ![MATLAB Versions Tested](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fmathworks%2Fclimatedatastore%2Fmain%2Freports%2Fbadge%2Ftested_with.json) 
 
 MATLAB&reg; Tools to access [The Climate Data Store](https://cds.climate.copernicus.eu/).  It is a wealth of information about the Earth's past, present and future climate. There are hundreds of data sets associated with climate change. This toolbox allows you to easily access data and download it for analysis in MATLAB.
 
@@ -37,7 +37,7 @@ This demonstrates a number of MATLAB features, including:
 * [Argument validation](https://www.mathworks.com/help/matlab/matlab_prog/function-argument-validation-1.html)
 * Code Issue detection using [Code Analyzer](https://www.mathworks.com/help/matlab/matlab_prog/check-code-for-errors-and-warnings.html) and [Code Issues](https://www.mathworks.com/help/matlab/ref/codeissues.html)
 * [Unit Tests](https://www.mathworks.com/help/matlab/matlab-unit-test-framework.html)
-  * [Code Coverage using Cobertura report format](https://www.mathworks.com/help/matlab/ref/matlab.unittest.plugins.codecoverage.coberturaformat-class.html) and [CodeCov](https://app.codecov.io/gh/mathworks/climatedatastore)
+  * [Code Coverage using Cobertura report format](https://www.mathworks.com/help/matlab/ref/matlab.unittest.plugins.codecoverage.coberturaformat-class.html)
   * [Mocking Framework](https://www.mathworks.com/help/matlab/mocking-framework.html)
   * [Parameters in Unit Tests](https://www.mathworks.com/help/matlab/matlab_prog/use-parameters-in-class-based-tests.html)
 * [MATLAB Classes](https://www.mathworks.com/help/matlab/object-oriented-programming.html)
