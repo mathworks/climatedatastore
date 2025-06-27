@@ -65,10 +65,10 @@ This demonstrates a number of MATLAB features, including:
 
    1. See the notes below for information on first time install
    2. type `help climateDataStoreDownload` or  `help climateDataStoreDownloadAsync` for help on using the functions
-   3. Find your dataset at [Climate Data Store](https://cds.climate.copernicus.eu/#!/home) and click on the "download data" tab.  Make your selections for the subset of data you want.  Click "show API request" at the bottom.
+   3. Find your dataset at [Climate Data Store](https://cds.climate.copernicus.eu/datasets) and click on the "download data" tab.  Make your selections for the subset of data you want.  Click "show API request" at the bottom.
    4. Use `climateDataStoreDownload` to get the data.  The first parameter is the name of the data set to retrieve.  The second parameter is a MATLAB version of the python structure that selects what subset of the data to download. `climateDataStoreDownload` downloads the files, and returns a list of files that were downloaded.
 
-Note that downloading the files can take some time, depending on how large they are. If you have really large files, `climateDataStoreDownloadAsync` can be helpful. You can check on the status of your request by visiting [the CDS request status page](https://cds.climate.copernicus.eu/cdsapp#!/yourrequests).
+Note that downloading the files can take some time, depending on how large they are. If you have really large files, `climateDataStoreDownloadAsync` can be helpful. You can check on the status of your request by visiting [the CDS request status page](https://cds.climate.copernicus.eu/requests?tab=all).
 
    Typically, files returned are:
 
@@ -84,11 +84,11 @@ Note that downloading the files can take some time, depending on how large they 
 * Install the toolbox by using the Add-on explorer in MATLAB, or by downloading the `climatedatastore.mltbx` file attached to the latest release on GitHub, then doubleclicking on it.
 * This relies on the [CDS Python API](https://github.com/ecmwf/cdsapi) created by the European Centre for Medium-Range Weather Forecasts (ECMWF). You'll need to have python installed.  Get it from the [Python Download page](https://www.python.org/downloads/). See [this MATLAB documentation](https://www.mathworks.com/help/matlab/matlab_external/install-supported-python-implementation.html) for more information.
 * The toolbox will automatically configure python and download and install the CSAPI package (you can manually install using `pip3 install cdsapi`)
-* The toolbox will prompt you the first time for CSAPI credentials.  Visit [How to use the CDS API](https://cds.climate.copernicus.eu/api-how-to) for more info.
+* The toolbox will prompt you the first time for CSAPI credentials.  Visit [How to use the CDS API](https://cds.climate.copernicus.eu/how-to-api) for more info.
 
 ### Example: Getting Started with Copernicus Climate Data Store Toolbox
 
-[The sea ice thickness dataset](https://cds.climate.copernicus.eu/cdsapp#!/dataset/satellite-sea-ice-thickness) provides monthly gridded data of sea ice thickness for the Arctic region based on satellite radar altimetry observations. Sea ice is an important component of our climate system and a sensitive indicator of climate change. Its presence or its retreat has a strong impact on air-sea interactions, the Earth’s energy budget as well as marine ecosystems. It is recognized by the Global Climate Observing System as an Essential Climate Variable. Sea ice thickness is one of the parameters commonly used to characterize sea ice, alongside sea ice concentration, sea ice edge, and sea ice type, also available in the Climate Data Store.
+[The sea ice thickness dataset](https://cds.climate.copernicus.eu/datasets/satellite-sea-ice-thickness?tab=overview) provides monthly gridded data of sea ice thickness for the Arctic region based on satellite radar altimetry observations. Sea ice is an important component of our climate system and a sensitive indicator of climate change. Its presence or its retreat has a strong impact on air-sea interactions, the Earth’s energy budget as well as marine ecosystems. It is recognized by the Global Climate Observing System as an Essential Climate Variable. Sea ice thickness is one of the parameters commonly used to characterize sea ice, alongside sea ice concentration, sea ice edge, and sea ice type, also available in the Climate Data Store.
 
 Select the sea ice thickness dataset.
 
@@ -96,7 +96,7 @@ Select the sea ice thickness dataset.
 datasetName ="satellite-sea-ice-thickness";
 ```
 
-Select the data to download from the dataset (see [this webpage](https://cds.climate.copernicus.eu/cdsapp#!/dataset/satellite-sea-ice-thickness?tab=form) for options). This is a "MATLABized" version of the python structure that is generated in the API request.
+Select the data to download from the dataset (see [this webpage](https://cds.climate.copernicus.eu/datasets/satellite-sea-ice-thickness?tab=download) for options). This is a "MATLABized" version of the python structure that is generated in the API request.
 
 ```matlab:Code
 datasetOptions = struct();
