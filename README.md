@@ -68,7 +68,7 @@ This demonstrates a number of MATLAB features, including:
    3. Find your dataset at [Climate Data Store](https://cds.climate.copernicus.eu/datasets) and click on the "download data" tab.  Make your selections for the subset of data you want.  Click "show API request" at the bottom.
    4. Use `climateDataStoreDownload` to get the data.  The first parameter is the name of the data set to retrieve.  The second parameter is a MATLAB version of the python structure that selects what subset of the data to download. `climateDataStoreDownload` downloads the files, and returns a list of files that were downloaded.
 
-Note that downloading the files can take some time, depending on how large they are. If you have really large files, `climateDataStoreDownloadAsync` can be helpful. You can check on the status of your request by visiting [the CDS request status page](https://cds.climate.copernicus.eu/requests?tab=all).
+Note that downloading the files can take some time, depending on how large they are. If you have really large files, `climateDataStoreDownloadAsync` can be helpful. For an example of using the asynchronous download, see `toolbox/doc/AsyncDownloadExample.m`. You can check on the status of your request by visiting [the CDS request status page](https://cds.climate.copernicus.eu/requests?tab=all).
 
    Typically, files returned are:
 
